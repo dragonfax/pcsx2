@@ -2,8 +2,8 @@
 AUTOMAKE_OPTIONS = foreign
 noinst_LIBRARIES = libZeroPAD.a
 
-libZeroPAD_a_CXXFLAGS = -I/usr/X11/include -L/usr/X11/lib -lX11 -D__LINUX__ $(shell pkg-config --cflags gtk+-2.0)
-libZeroPAD_a_CFLAGS =-I/usr/X11/include -L/usr/X11/lib -lX11 -D__LINUX__ $(shell pkg-config --cflags gtk+-2.0)
+libZeroPAD_a_CXXFLAGS = -I/usr/X11/include -L/usr/X11/lib -D__LINUX__ $(shell pkg-config --cflags gtk+-2.0)
+libZeroPAD_a_CFLAGS =-I/usr/X11/include -L/usr/X11/lib -D__LINUX__ $(shell pkg-config --cflags gtk+-2.0)
 
 if X86_64
 libZeroPAD_a_CXXFLAGS += -fPIC
@@ -23,7 +23,7 @@ traplib_PROGRAMS=libZeroPAD
 libZeroPAD_SOURCES=
 libZeroPAD_DEPENDENCIES = libZeroPAD.a
 libZeroPAD_LDFLAGS= @SHARED_LDFLAGS@
-libZeroPAD_LDFLAGS+=-dynamiclib -Wl,-install_name,libZeroPAD.so.0.2.0
+libZeroPAD_LDFLAGS+=-lX11 -dynamiclib -Wl,-install_name,libZeroPAD.so.0.2.0
 libZeroPAD_LDADD=$(libZeroPAD_a_OBJECTS)
 
 libZeroPAD_a_SOURCES = zeropad.cpp Linux/linux.cpp Linux/support.c Linux/interface.c
