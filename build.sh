@@ -40,7 +40,7 @@ make
 popd
 mv ./plugins/spu2null/libSPU2null.so.0.7.1 ./bin/libSPU2null.so
 mv ./plugins/cfg* ./bin
-chmod +x ./bin/cfg*
+chmod +x ./bin/*
 mv ./plugins/lib* ./bin
 echo "--------------"
 echo "Building pcsx2"
