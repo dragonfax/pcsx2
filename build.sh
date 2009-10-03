@@ -23,11 +23,22 @@ chmod +x ./configure
 make
 popd
 mv ./plugins/zeropad/libZeroPAD.so.0.2.0 ./bin/libZeroPad.so
-echo "Building spu2"
+echo "Building Peopsspu2"
 pushd ./plugins/PeopsSPU2_SDL
 make
 popd
 mv ./plugins/PeopsSPU2_SDL/libspu2PeopsSDL.so ./bin/
+echo "Building spu2null"
+pushd ./plugins/SPU2null
+aclocal
+autoconf
+automake
+chmod +x ./configure
+./configure
+make
+popd
+mv ./plugins/zeropad/libSPU2null.so.0.7.1 ./bin/libSPU2null.so
+
 echo "--------------"
 echo "Building pcsx2"
 echo "--------------"
