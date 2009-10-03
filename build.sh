@@ -15,6 +15,11 @@ popd
 mv ./plugins/CDVDnull/libCDVDnull.so ./bin/
 echo "Building zeropad"
 pushd ./plugins/zeropad
+aclocal
+autoconf
+automake
+chmod +x ./configure
+./configure
 make
 popd
 mv ./plugins/zeropad/libZeroPAD.so.0.2.0 ./bin/libZeroPad.so
