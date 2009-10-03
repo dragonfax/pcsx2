@@ -37,8 +37,7 @@ chmod +x ./configure
 ./configure
 make
 popd
-mv ./plugins/zeropad/libSPU2null.so.0.7.1 ./bin/libSPU2null.so
-
+mv ./plugins/spu2null/libSPU2null.so.0.7.1 ./bin/libSPU2null.so
 echo "--------------"
 echo "Building pcsx2"
 echo "--------------"
