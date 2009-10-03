@@ -1,0 +1,5 @@
+interlace = 2
+aliasing = 1
+bilinear  = 0
+options = 10
+gamesettings = 0
