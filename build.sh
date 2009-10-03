@@ -6,11 +6,13 @@ echo "-------------------"
 echo "Building CDVDiso..."
 pushd ./plugins/CDVDiso/Linux
 make 
+make clean
 popd
 mv ./plugins/CDVDiso/Linux/libCDVDiso.so ./bin/
 echo "Building CDVDnull..."
 pushd ./plugins/CDVDnull
 make
+make clean
 popd
 mv ./plugins/CDVDnull/libCDVDnull.so ./bin/
 echo "Building zeropad"
@@ -21,8 +23,15 @@ automake
 chmod +x ./configure
 ./configure
 make
+make clean
 popd
 mv ./plugins/zeropad/libZeroPAD.so.0.2.0 ./bin/libZeroPad.so
+echo "Building spu2"
+pushd ./plugins/PeopsSPU2_SDL
+make
+make clean
+popd
+mv ./plugins/PeopsSPU2_SDL/libspu2PeopsSDL.so ./bin/
 echo "--------------"
 echo "Building pcsx2"
 echo "--------------"
@@ -32,3 +41,4 @@ automake
 ./configure --enable-devbuild --enable-sse3
 make
 mv ./Linux/pcsx2 ./bin/
+make clean
