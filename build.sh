@@ -1,5 +1,12 @@
 #!/bin/sh
 mkdir bin
+pushd bin
+mkdir bios
+mkdir frames
+mkdir help
+mkdir logs
+mkdir sstates
+popd
 echo "-------------------"
 echo "Building plugins..."
 echo "-------------------"
