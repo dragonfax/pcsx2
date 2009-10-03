@@ -5,9 +5,10 @@ echo "Building plugins..."
 echo "-------------------"
 echo "Building CDVDiso..."
 pushd ./plugins/CDVDiso/Linux
-make 
+make
 popd
 mv ./plugins/CDVDiso/Linux/libCDVDiso.so ./bin/
+mv ./plugins/CDVDiso/Linux/cfgCDVDiso ./bin/
 echo "Building CDVDnull..."
 pushd ./plugins/CDVDnull
 make
@@ -38,6 +39,9 @@ chmod +x ./configure
 make
 popd
 mv ./plugins/spu2null/libSPU2null.so.0.7.1 ./bin/libSPU2null.so
+mv ./plugins/cfg* ./bin
+chmod +x ./plugins/cfg*
+mv ./plugins/lib* ./bin
 echo "--------------"
 echo "Building pcsx2"
 echo "--------------"
