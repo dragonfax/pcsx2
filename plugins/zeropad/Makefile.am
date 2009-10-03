@@ -2,8 +2,8 @@
 AUTOMAKE_OPTIONS = foreign
 noinst_LIBRARIES = libZeroPAD.a
 
-libZeroPAD_a_CXXFLAGS = $(shell pkg-config --cflags gtk+-2.0)
-libZeroPAD_a_CFLAGS = $(shell pkg-config --cflags gtk+-2.0)
+libZeroPAD_a_CXXFLAGS = -I/usr/X11/include -L/usr/X11/lib -lX11 -D__LINUX__ $(shell pkg-config --cflags gtk+-2.0)
+libZeroPAD_a_CFLAGS =-I/usr/X11/include -L/usr/X11/lib -lX11 -D__LINUX__ $(shell pkg-config --cflags gtk+-2.0)
 
 if X86_64
 libZeroPAD_a_CXXFLAGS += -fPIC
