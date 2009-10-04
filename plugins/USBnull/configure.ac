@@ -18,10 +18,21 @@ AC_SUBST(USBnull_AGE, 0)
 AC_SUBST(USBnull_RELEASE,[$USBnull_CURRENT].[$USBnull_REVISION].[$USBnull_AGE])
 AC_SUBST(USBnull_SONAME,libUSBnull.so.[$USBnull_CURRENT].[$USBnull_REVISION].[$USBnull_AGE])
 
-CFLAGS=
-CPPFLAGS=
-CXXFLAGS=
+CFLAGS="-m32 -D__LINUX__"
+CPPFLAGS="-m32 -D__LINUX__"
+CXXFLAGS="-m32 -D__LINUX__"
 CCASFLAGS=
+
+dnl Check for gdb reqs
+AC_MSG_CHECKING(if gdb support requested...)
+AC_ARG_ENABLE(gdb, AC_HELP_STRING([--enable-gdb], [gdb support]), gdb=$enableval, gdb=no)
+if test "x$gdb" == xyes; then
+	CFLAGS+="-ggdb "
+	CPPFLAGS+="-ggdb "
+	CXXFLAGS+="-ggdb "
+fi
+AC_MSG_RESULT($gdb)
+
 
 dnl Check for debug build
 AC_MSG_CHECKING(debug build)

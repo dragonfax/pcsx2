@@ -50,6 +50,13 @@ autoconf
 automake --add-missing
 popd
 mv ./plugins/SPU2null/libSPU2null.so.0.7.1 ./bin/plugins/libSPU2null.so
+echo "Building USBnull..."
+pushd ./plugins/USBnull
+aclocal
+autoconf
+automake --add-missing
+popd
+mv ./plugins/USBnull/libUSBnull.so.0.6.0 ./bin/plugins/libUSBnull.so
 echo "Building zzogl 0.17.156"
 pushd ./plugins/zzogl
 aclocal

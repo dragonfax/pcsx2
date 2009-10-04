@@ -19,7 +19,7 @@ traplib_PROGRAMS=libUSBnull
 libUSBnull_SOURCES=
 libUSBnull_DEPENDENCIES = libUSBnull.a
 libUSBnull_LDFLAGS= @SHARED_LDFLAGS@
-libUSBnull_LDFLAGS+=-Wl,-soname,@libUSBnull_SONAME@
+libUSBnull_LDFLAGS+=-dynamiclib -Wl,-install_name,@libUSBnull_SONAME@
 libUSBnull_LDADD=$(libUSBnull_a_OBJECTS)
 
 libUSBnull_a_SOURCES = USB.cpp Linux/Config.cpp Linux/Linux.cpp \
