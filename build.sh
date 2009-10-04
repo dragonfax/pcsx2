@@ -29,13 +29,20 @@ autoconf
 automake --add-missing
 popd
 mv ./plugins/CDVDiso/src/libCDVDiso.so.0.9.0 ./bin/plugins/libCDVDiso.so
-echo "Building dev9null..."
+echo "Building DEV9null..."
 pushd ./plugins/dev9null
 aclocal
 autoconf
 automake --add-missing
 popd
 mv ./plugins/dev9null/libDEV9null.so.0.4.0 ./bin/plugins/libDEV9null.so
+echo "Building FWnull..."
+pushd ./plugins/FWnull
+aclocal
+autoconf
+automake --add-missing
+popd
+mv ./plugins/FWnull/libFWnull.so.0.5.0 ./bin/plugins/libFWnull.so
 echo "Building zzogl 0.17.156"
 pushd ./plugins/zzogl
 aclocal

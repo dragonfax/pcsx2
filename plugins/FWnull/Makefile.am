@@ -19,7 +19,7 @@ traplib_PROGRAMS=libFWnull
 libFWnull_SOURCES=
 libFWnull_DEPENDENCIES = libFWnull.a
 libFWnull_LDFLAGS= @SHARED_LDFLAGS@
-libFWnull_LDFLAGS+=-Wl,-soname,@libFWnull_SONAME@
+libFWnull_LDFLAGS+=-dynamiclib -Wl,-install_name,@libFWnull_SONAME@
 libFWnull_LDADD=$(libFWnull_a_OBJECTS)
 
 libFWnull_a_SOURCES = FW.cpp FW.h Linux/Config.cpp Linux/Config.h
