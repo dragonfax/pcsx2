@@ -9,7 +9,6 @@ mkdir bios
 mkdir frames
 mkdir help
 mkdir logs
-mkdir plugins
 mkdir sstates
 popd
 echo "-------------------"
