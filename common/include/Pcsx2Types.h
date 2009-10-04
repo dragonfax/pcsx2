@@ -48,7 +48,7 @@ typedef unsigned int uint;
 
 #ifdef __LINUX__
 
-#ifdef HAVE_STDINT_H
+#if defined(HAVE_STDINT_H) && !defined(__APPLE__)
 #include "stdint.h"
 
 typedef int8_t s8;
@@ -73,7 +73,11 @@ typedef long long s64;
 
 typedef unsigned char u8;
 typedef unsigned short u16;
+#ifdef __APPLE__
+typedef unsigned long u32;
+#else
 typedef unsigned int u32;
+#endif
 typedef unsigned long long u64;
 
 #endif // HAVE_STDINT_H
