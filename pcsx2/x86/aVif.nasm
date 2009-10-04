@@ -19,14 +19,14 @@
 ; ported to nasm by zedr0n
 
 %ifdef __APPLE__
-	%define vifRegs __vifRegs
-	%define vifMaskRegs __vifMaskRegs
-	%define vifRow __vifRow
-	%define s_TempDecompress _s_TempDecompress
-%else
 	%define vifRegs _vifRegs
 	%define vifMaskRegs _vifMaskRegs
 	%define vifRow _vifRow
+	%define s_TempDecompress _s_TempDecompress
+%else
+	%define vifRegs vifRegs
+	%define vifMaskRegs vifMaskRegs
+	%define vifRow vifRow
 	%define s_TempDecompress s_TempDecompress
 %endif
 
