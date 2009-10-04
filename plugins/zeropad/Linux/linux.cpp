@@ -288,7 +288,7 @@ int GetLabelId(GtkWidget *label)
 		return -1;
 	}
 
-	return (int)(uptr)gtk_object_get_user_data(GTK_OBJECT(label));	
+	return (int)gtk_object_get_user_data(GTK_OBJECT(label));	
 }
 
 void OnConf_Key(GtkButton *button, gpointer user_data)

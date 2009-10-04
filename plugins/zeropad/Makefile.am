@@ -19,7 +19,7 @@ traplib_PROGRAMS=libZeroPAD
 libZeroPAD_SOURCES=
 libZeroPAD_DEPENDENCIES = libZeroPAD.a
 libZeroPAD_LDFLAGS= @SHARED_LDFLAGS@
-libZeroPAD_LDFLAGS+=-Wl,-soname,@ZEROPAD_SONAME@
+libZeroPAD_LDFLAGS+=-dynamiclib -Wl,-install_name,@ZEROPAD_SONAME@
 libZeroPAD_LDADD=$(libZeroPAD_a_OBJECTS)
 
 libZeroPAD_a_SOURCES = joystick.cpp analog.cpp analog.h zeropad.cpp zeropad.h \

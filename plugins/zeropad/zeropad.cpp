@@ -121,8 +121,11 @@ int curCmd;
 int cmdLen;
 int ds2mode = 0; // DS Mode at start
 FILE *padLog = NULL;
-
-pthread_spinlock_t s_mutexStatus;
+#ifdef __APPLE__
+static pthread_mutex_t s_mutexStatus; 
+#else
+static pthread_spinlock_t s_mutexStatus;
+#endif
 u32 s_keyPress[2], s_keyRelease[2];
 
 static void InitLibraryName()
@@ -265,7 +268,11 @@ s32 CALLBACK PADopen(void *pDsp)
 {
 	memset(&event, 0, sizeof(event));
 
+	#ifdef __APPLE__
+	pthread_mutex_init(&s_mutexStatus, 0);
+	#else
 	pthread_spin_init(&s_mutexStatus, PTHREAD_PROCESS_PRIVATE);
+	#endif
 	s_keyPress[0] = s_keyPress[1] = 0;
 	s_keyRelease[0] = s_keyRelease[1] = 0;
 	
@@ -277,28 +284,50 @@ s32 CALLBACK PADopen(void *pDsp)
 
 void CALLBACK PADclose()
 {
+	#ifdef __APPLE__
+	pthread_mutex_destroy(&s_mutexStatus);	
+	#else
 	pthread_spin_destroy(&s_mutexStatus);
+	#endif
 	_PADclose();
 }
 
 void _PADupdate(int pad)
 {
+	#ifdef __APPLE__
+	pthread_mutex_lock(&s_mutexStatus);	
+	#else
 	pthread_spin_lock(&s_mutexStatus);
+	#endif
 	status[pad] |= s_keyRelease[pad];
 	status[pad] &= ~s_keyPress[pad];
 	s_keyRelease[pad] = 0;
 	s_keyPress[pad] = 0;
+	#ifdef __APPLE__
+	pthread_mutex_unlock(&s_mutexStatus);	
+	#else
 	pthread_spin_unlock(&s_mutexStatus);
+	#endif
+
 }
 
 void UpdateKeys(int pad, int keyPress, int keyRelease)
 {
+	#ifdef __APPLE__
+	pthread_mutex_lock(&s_mutexStatus);	
+	#else
 	pthread_spin_lock(&s_mutexStatus);
+	#endif
+
 	s_keyPress[pad] |= keyPress;
 	s_keyPress[pad] &= ~keyRelease; 
 	s_keyRelease[pad] |= keyRelease;
 	s_keyRelease[pad] &= ~keyPress;
+	#ifdef __APPLE__
+	pthread_mutex_unlock(&s_mutexStatus);	
+	#else
 	pthread_spin_unlock(&s_mutexStatus);
+	#endif
 }
 
 u32 CALLBACK PADquery()
