@@ -68,7 +68,11 @@
 
 #ifndef __SIZE_T
 #define __SIZE_T
+#ifndef __APPLE__
 typedef unsigned int size_t;
+#else
+#include <stdio.h>
+#endif
 #endif
 
 /*** Stack frame juggling ***/

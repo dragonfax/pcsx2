@@ -18,10 +18,20 @@ AC_SUBST(CDVDnull_AGE, 0)
 AC_SUBST(CDVDnull_RELEASE,[$CDVDnull_CURRENT].[$CDVDnull_REVISION].[$CDVDnull_AGE])
 AC_SUBST(CDVDnull_SONAME,libCDVDnull.so.[$CDVDnull_CURRENT].[$CDVDnull_REVISION].[$CDVDnull_AGE])
 
-CFLAGS=
-CPPFLAGS=
-CXXFLAGS=
+CFLAGS="-m32 -D__LINUX__"
+CPPFLAGS="-m32 -D__LINUX__"
+CXXFLAGS="-m32 -D__LINUX__"
 CCASFLAGS=
+
+dnl Check for gdb reqs
+AC_MSG_CHECKING(if gdb support requested...)
+AC_ARG_ENABLE(gdb, AC_HELP_STRING([--enable-gdb], [gdb support]), gdb=$enableval, gdb=no)
+if test "x$gdb" == xyes; then
+	CFLAGS+="-ggdb "
+	CPPFLAGS+="-ggdb "
+	CXXFLAGS+="-ggdb "
+fi
+AC_MSG_RESULT($gdb)
 
 dnl Check for debug build
 AC_MSG_CHECKING(debug build)

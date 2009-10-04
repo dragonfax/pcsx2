@@ -19,7 +19,7 @@ traplib_PROGRAMS=libCDVDnull
 libCDVDnull_SOURCES=
 libCDVDnull_DEPENDENCIES = libCDVDnull.a
 libCDVDnull_LDFLAGS= @SHARED_LDFLAGS@
-libCDVDnull_LDFLAGS+=-Wl,-soname,@libCDVDnull_SONAME@
+libCDVDnull_LDFLAGS+=-dynamiclib -Wl,-install_name,@libCDVDnull_SONAME@
 libCDVDnull_LDADD=$(libCDVDnull_a_OBJECTS)
 
 libCDVDnull_a_SOURCES = CDVD.cpp CDVD.h Linux/Config.cpp
