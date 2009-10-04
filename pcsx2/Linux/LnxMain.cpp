@@ -21,7 +21,7 @@
 using namespace R5900;
 
 DIR *dir;
-GtkWidget *FileSel;
+extern GtkWidget *FileSel;
 GtkWidget *MsgDlg;
 const char* g_pRunGSState = NULL;
 
