@@ -1,5 +1,5 @@
 #!/bin/sh
-
+export PKG_CONFIG_PATH=/usr/X11/lib/pkgconfig
 # check if gdb support is requested
 if [ $1 == "--enable-gdb" ]; then
 	GDB="--enable-gdb"
