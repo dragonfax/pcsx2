@@ -16,7 +16,7 @@ traplib_PROGRAMS=libCDVDiso
 libCDVDiso_SOURCES=
 libCDVDiso_DEPENDENCIES = libCDVDiso.a
 libCDVDiso_LDFLAGS= @SHARED_LDFLAGS@
-libCDVDiso_LDFLAGS+=-Wl,-soname,@libCDVDiso_SONAME@
+libCDVDiso_LDFLAGS+=-dynamiclib -Wl,-install_name,@libCDVDiso_SONAME@
 libCDVDiso_LDADD=$(libCDVDiso_a_OBJECTS)
 
 libCDVDiso_a_SOURCES = CDVDisop.cpp CDVDiso.h libiso.cpp libiso.h mkiso/mkiso.cpp
