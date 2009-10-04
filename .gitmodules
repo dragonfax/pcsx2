@@ -1,0 +1,3 @@
+[submodule "plugins/zzogl"]
+	path = plugins/zzogl
+	url = http://quant0r.com/git/zzogl.git
