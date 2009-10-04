@@ -43,6 +43,13 @@ autoconf
 automake --add-missing
 popd
 mv ./plugins/FWnull/libFWnull.so.0.5.0 ./bin/plugins/libFWnull.so
+echo "Building SPU2null..."
+pushd ./plugins/SPU2null
+aclocal
+autoconf
+automake --add-missing
+popd
+mv ./plugins/SPU2null/libSPU2null.so.0.7.1 ./bin/plugins/libSPU2null.so
 echo "Building zzogl 0.17.156"
 pushd ./plugins/zzogl
 aclocal

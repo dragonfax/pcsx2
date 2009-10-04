@@ -19,7 +19,7 @@ traplib_PROGRAMS=libSPU2null
 libSPU2null_SOURCES=
 libSPU2null_DEPENDENCIES = libSPU2null.a
 libSPU2null_LDFLAGS= @SHARED_LDFLAGS@
-libSPU2null_LDFLAGS+=-Wl,-soname,@libSPU2null_SONAME@
+libSPU2null_LDFLAGS+=-dynamiclib -Wl,-install_name,@libSPU2null_SONAME@
 libSPU2null_LDADD=$(libSPU2null_a_OBJECTS)
 
 libSPU2null_a_SOURCES = SPU2.cpp SPU2.h Linux/Config.cpp 
