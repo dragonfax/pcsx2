@@ -19,7 +19,7 @@ traplib_PROGRAMS=libDEV9null
 libDEV9null_SOURCES=
 libDEV9null_DEPENDENCIES = libDEV9null.a
 libDEV9null_LDFLAGS= @SHARED_LDFLAGS@
-libDEV9null_LDFLAGS+=-Wl,-soname,@libDEV9null_SONAME@
+libDEV9null_LDFLAGS+=-dynamiclib -Wl,-install_name,@libDEV9null_SONAME@
 libDEV9null_LDADD=$(libDEV9null_a_OBJECTS)
 
 libDEV9null_a_SOURCES = DEV9.cpp DEV9.h Linux/Config.cpp Linux/Config.h

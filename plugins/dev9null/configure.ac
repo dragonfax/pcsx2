@@ -18,10 +18,20 @@ AC_SUBST(DEV9null_AGE, 0)
 AC_SUBST(DEV9null_RELEASE,[$DEV9null_CURRENT].[$DEV9null_REVISION].[$DEV9null_AGE])
 AC_SUBST(DEV9null_SONAME,libDEV9null.so.[$DEV9null_CURRENT].[$DEV9null_REVISION].[$DEV9null_AGE])
 
-CFLAGS=
-CPPFLAGS=
-CXXFLAGS=
+CFLAGS="-m32 -D__LINUX__"
+CPPFLAGS="-m32 -D__LINUX__"
+CXXFLAGS="-m32 -D__LINUX__"
 CCASFLAGS=
+
+dnl Check for gdb reqs
+AC_MSG_CHECKING(if gdb support requested...)
+AC_ARG_ENABLE(gdb, AC_HELP_STRING([--enable-gdb], [gdb support]), gdb=$enableval, gdb=no)
+if test "x$gdb" == xyes; then
+	CFLAGS+="-ggdb "
+	CPPFLAGS+="-ggdb "
+	CXXFLAGS+="-ggdb "
+fi
+AC_MSG_RESULT($gdb)
 
 dnl Check for debug build
 AC_MSG_CHECKING(debug build)
