@@ -26,7 +26,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
-#include <linux/cdrom.h>
 #include <zlib.h>
 #include <bzlib.h>
 #include <gtk/gtk.h>

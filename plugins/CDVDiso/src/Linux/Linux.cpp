@@ -32,11 +32,11 @@ bool stop;
 
 #define CD_LEADOUT	(0xaa)
 
-union
+/*union
 {
 	struct cdrom_msf msf;
 	unsigned char buf[CD_FRAMESIZE_RAW];
-} cr;
+} cr;*/
 
 void OnStop(GtkButton *button,  gpointer user_data)
 {
@@ -295,7 +295,7 @@ long CDR_close(void)
 // buffer:
 //  byte 0 - start track
 //  byte 1 - end track
-long CDR_getTN(unsigned char *buffer)
+/*long CDR_getTN(unsigned char *buffer)
 {
 	struct cdrom_tochdr toc;
 
@@ -305,44 +305,44 @@ long CDR_getTN(unsigned char *buffer)
 	buffer[1] = toc.cdth_trk1;	// end track
 
 	return 0;
-}
+}*/
 
 // return Track Time
 // buffer:
 //  byte 0 - frame
 //  byte 1 - second
 //  byte 2 - minute
-long CDR_getTD(unsigned char track, unsigned char *buffer)
-{
-	struct cdrom_tocentry entry;
+//long CDR_getTD(unsigned char track, unsigned char *buffer)
+//{
+//	struct cdrom_tocentry entry;
 
-	if (track == 0) track = 0xaa; // total time
-	entry.cdte_track = track;
-	entry.cdte_format = CDROM_MSF;
+//	if (track == 0) track = 0xaa; // total time
+//	entry.cdte_track = track;
+//	entry.cdte_format = CDROM_MSF;
 
-	if (ioctl(cddev, CDROMREADTOCENTRY, &entry) == -1) return -1;
+//	if (ioctl(cddev, CDROMREADTOCENTRY, &entry) == -1) return -1;
 
-	buffer[0] = entry.cdte_addr.msf.minute;	/* minute */
-	buffer[1] = entry.cdte_addr.msf.second;	/* second */
-	buffer[2] = entry.cdte_addr.msf.frame;	/* frame */
+//	buffer[0] = entry.cdte_addr.msf.minute;	/* minute */
+//	buffer[1] = entry.cdte_addr.msf.second;	/* second */
+//	buffer[2] = entry.cdte_addr.msf.frame;	/* frame */
 
-	return 0;
-}
+//	return 0;
+//}
 
 // read track
 // time:
 //  byte 0 - minute
 //  byte 1 - second
 //  byte 2 - frame
-char *CDR_readTrack(unsigned char *time)
-{
+/*char *CDR_readTrack(unsigned char *time)
+ {
 	cr.msf.cdmsf_min0 = time[0];
 	cr.msf.cdmsf_sec0 = time[1];
 	cr.msf.cdmsf_frame0 = time[2];
 
 	if (ioctl(cddev, CDROMREADRAW, &cr) == -1) return NULL;
 	return cr.buf;
-}
+}*/
 
 
 void OnCreate(GtkButton *button,  gpointer user_data)
@@ -380,7 +380,7 @@ void OnCreate(GtkButton *button,  gpointer user_data)
 		return;
 	}
 
-	if (CDR_getTD(ftrack, start) == -1)
+	/*if (CDR_getTD(ftrack, start) == -1)
 	{
 		printf("Error getting TD\n");
 
@@ -393,7 +393,7 @@ void OnCreate(GtkButton *button,  gpointer user_data)
 
 		CDR_close();
 		return;
-	}
+	}*/
 
 	f = fopen(IsoFile, "wb");
 	if (f == NULL)
@@ -417,7 +417,7 @@ void OnCreate(GtkButton *button,  gpointer user_data)
 	gtk_widget_set_sensitive(BtnCreate, FALSE);
 	gtk_widget_set_sensitive(BtnCreateZ, FALSE);
 
-	for (;;)   /* loop until end */
+	/*for (;;)  
 	{
 		float per;
 
@@ -464,7 +464,7 @@ void OnCreate(GtkButton *button,  gpointer user_data)
 		gtk_progress_bar_update(GTK_PROGRESS_BAR(Progress), per);
 		while (gtk_events_pending()) gtk_main_iteration();
 		if (stop) break;
-	}
+	}*/
 
 	Ttime = time(NULL) - Ttime;
 	Tm = gmtime(&Ttime);
@@ -539,7 +539,7 @@ void OnCreateZ(GtkButton *button,  gpointer user_data)
 	if (t == NULL) return;
 	if (CDR_open() == -1) return;
 
-	if (CDR_getTD(ftrack, start) == -1)
+	/*if (CDR_getTD(ftrack, start) == -1)
 	{
 		printf("Error getting TD\n");
 		CDR_close();
@@ -551,7 +551,7 @@ void OnCreateZ(GtkButton *button,  gpointer user_data)
 		printf("Error getting TD\n");
 		CDR_close();
 		return;
-	}
+	}*/
 
 	f = fopen(IsoFile, "wb");
 	if (f == NULL)
@@ -575,7 +575,7 @@ void OnCreateZ(GtkButton *button,  gpointer user_data)
 	gtk_widget_set_sensitive(BtnCreate, FALSE);
 	gtk_widget_set_sensitive(BtnCreateZ, FALSE);
 
-	for (;;)   /* loop until end */
+	/*for (;;)   
 	{
 		unsigned long size;
 		unsigned char Zbuf[CD_FRAMESIZE_RAW * 10 * 2];
@@ -646,7 +646,7 @@ void OnCreateZ(GtkButton *button,  gpointer user_data)
 		while (gtk_events_pending()) gtk_main_iteration();
 		
 		if (stop) break;
-	}
+	}*/
 	if (Zmode == 2) fwrite(&c, 1, 4, f);
 
 	if (!stop) gtk_entry_set_text(GTK_ENTRY(Edit), IsoFile);

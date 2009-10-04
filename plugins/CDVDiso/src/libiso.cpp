@@ -14,9 +14,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "zlib/zlib.h"
-#include "bzip2/bzlib.h"
+#include <zlib.h>
+#include <bzlib.h>
 
+#include "PS2Etypes.h"
 #include "CDVDiso.h"
 #include "libiso.h"
 
@@ -174,6 +175,12 @@ void _closefile(void *handle)
 }
 
 #else
+
+#ifdef __APPLE__
+	#define fopen64 fopen
+	#define fseeko64 fseeko
+	#define ftello64 ftello
+#endif
 
 void *_openfile(const char *filename, int flags)
 {
