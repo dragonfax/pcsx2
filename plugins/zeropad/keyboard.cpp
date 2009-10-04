@@ -56,7 +56,7 @@ void PollForKeyboardInput(int pad)
 
 void SetAutoRepeat(bool autorep)
 {
- #ifdef __LINUX__
+ #if defined(__LINUX__) && !defined(__APPLE__)
 	if (autorep)
 		XAutoRepeatOn(GSdsp);
 	else
@@ -138,11 +138,16 @@ void PollForX11KeyboardInput(int pad)
 				break;
 
 			case FocusIn:
+				#ifndef __APPLE__
 				XAutoRepeatOff(GSdsp);
+				#endif
 				break;
 
 			case FocusOut:
+				#ifndef __APPLE__
 				XAutoRepeatOn(GSdsp);
+				#endif
+
 				break;
 		}
 	}
