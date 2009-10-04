@@ -31,6 +31,22 @@ customcflags=$enableval,customcflags=no)
 AC_ARG_ENABLE(optimization, AC_HELP_STRING([--disable-optimization], [No optimizations when compiling]),
 optimization=$enableval,optimization=yes)
 
+CFLAGS="-m32 -O3 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__"
+CPPFLAGS="-m32 -O3 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__"
+CXXFLAGS="-m32 -O3 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__"
+
+LDFLAGS="-lX11 -Wl,-dylib_file,/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib:/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib -framework Cg"
+
+dnl Check for gdb reqs
+AC_MSG_CHECKING(if gdb support requested...)
+AC_ARG_ENABLE(gdb, AC_HELP_STRING([--enable-gdb], [gdb support]), gdb=$enableval, gdb=no)
+if test "x$gdb" == xyes; then
+	CFLAGS+="-ggdb "
+	CPPFLAGS+="-ggdb "
+	CXXFLAGS+="-ggdb "
+fi
+AC_MSG_RESULT($gdb)
+
 dnl Check for debug build
 AC_MSG_CHECKING(debug build)
 AC_ARG_ENABLE(debug, AC_HELP_STRING([--enable-debug], [debug build]),
