@@ -42,6 +42,12 @@
 #include <fcntl.h>
 #include <errno.h>
 
+#ifdef __APPLE__
+#define fopen64 fopen
+#define fseeko64 fseeko
+#define ftello64 ftello
+#endif
+
 extern void *_openfile(const char *filename, int flags);
 extern u64  _tellfile(void *handle);
 extern int  _seekfile(void *handle, u64 offset, int whence);

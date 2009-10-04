@@ -31,12 +31,6 @@ customcflags=$enableval,customcflags=no)
 AC_ARG_ENABLE(optimization, AC_HELP_STRING([--disable-optimization], [No optimizations when compiling]),
 optimization=$enableval,optimization=yes)
 
-CFLAGS="-m32 -O3 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__"
-CPPFLAGS="-m32 -O3 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__"
-CXXFLAGS="-m32 -O3 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__"
-
-LDFLAGS="-lX11 -Wl,-dylib_file,/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib:/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib -framework Cg"
-
 dnl Check for gdb reqs
 AC_MSG_CHECKING(if gdb support requested...)
 AC_ARG_ENABLE(gdb, AC_HELP_STRING([--enable-gdb], [gdb support]), gdb=$enableval, gdb=no)
@@ -119,6 +113,12 @@ then
   CCASFLAGS=
 fi
 
+CFLAGS="-m32 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__"
+CPPFLAGS="-m32 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__"
+CXXFLAGS="-m32 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__"
+
+LDFLAGS="-lX11 -Wl,-dylib_file,/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib:/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib -framework Cg"
+
 WARNING_FLAGS=
 NORMAL_FLAGS=
 
@@ -171,8 +171,8 @@ dnl Anything higher then -O0 seem to cause issues with GCC 4.4.0.
    NORMAL_FLAGS+=" -O0 "
  fi
   
- CFLAGS+=" ${NORMAL_FLAGS} -Xlinker -zmuldefs -m32 "
- CXXFLAGS+=" ${NORMAL_FLAGS} -fpermissive -Xlinker -zmuldefs -m32 "
+ CFLAGS+=" ${NORMAL_FLAGS} -m32 "
+ CXXFLAGS+=" ${NORMAL_FLAGS} -fpermissive -m32 "
  CCASFLAGS+=" ${NORMAL_FLAGS}  -m32 "
 
 if test "x$debug" == "xyes"
@@ -204,7 +204,6 @@ AC_OUTPUT([
  tinyxml/Makefile
  x86/Makefile
  x86/ix86/Makefile
- 3rdparty/zlib/Makefile
  ])
 
 dnl bindir = pcsx2exe

@@ -81,7 +81,7 @@ typedef int BOOL;
 // Begin Pcsx2 Includes: Add items here that are local to Pcsx2 but stay relatively
 // unchanged for long periods of time.
 
-#include "zlib/zlib.h"
+#include "zlib.h"
 #include "Pcsx2Defs.h"
 #include "MemcpyFast.h"
 #include "StringUtils.h"

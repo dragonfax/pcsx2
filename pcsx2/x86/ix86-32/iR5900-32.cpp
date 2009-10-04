@@ -655,7 +655,10 @@ static void recExecuteBlock()
 
 #else // _MSC_VER
 
-__forceinline void recExecute()
+extern void recExecute();
+extern void recExecuteBlock();
+
+/*__forceinline void recExecute()
 {
 	// Optimization note : Compared pushad against manually pushing the regs one-by-one.
 	// Manually pushing is faster, especially on Core2's and such. :)
@@ -703,7 +706,7 @@ static void recExecuteBlock()
 	);
 	g_EEFreezeRegs = false;
 	recEventTest();
-}
+}*/
 #endif
 
 namespace R5900 {

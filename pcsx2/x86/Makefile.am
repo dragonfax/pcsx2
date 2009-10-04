@@ -38,3 +38,15 @@ iCore.h        iR3000A.h  iR5900AritImm.h  iR5900LoadStore.h  iR5900Shift.h    s
 libx86recomp_a_DEPENDENCIES = ix86/libix86.a
 
 SUBDIRS = ix86
+
+fast_routines.o:
+	nasm -D__APPLE__ -f macho fast_routines.nasm 
+aR3000A.o:
+	nasm -D__APPLE__ -f macho aR3000A.nasm
+aR5900-32.o:
+	nasm -D__APPLE__ -f macho aR5900-32.nasm
+aVif.o:
+	nasm -D__APPLE__ -f macho aVif.nasm
+aVUzerorec.o:
+	nasm -D__APPLE__ -f macho aVUzerorec.nasm
+

@@ -129,7 +129,7 @@ namespace Threading
 		{
 			__asm__ __volatile__(
 				".intel_syntax noprefix\n"
-				 "lock xadd [%0], eax\n"
+				 "xadd [%0], eax\n"
 				 ".att_syntax\n" : : "r"(Addend), "a"(Value) : "memory");
 		}
 		else

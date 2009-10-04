@@ -77,6 +77,10 @@ static volatile PCSX2_ALIGNED16(const SSE2_Tables sse2_tables) =
 
 static PCSX2_ALIGNED16(u16 yuv2rgb_temp[3][8]);
 
+#ifdef __APPLE__
+extern "C" void yuv2rgb_sse2_mac();
+#endif 
+
 // This could potentially be improved for SSE4
 __releaseinline void yuv2rgb_sse2(void)
 {
@@ -215,6 +219,9 @@ ihatemsvc:
 		jne tworows
 	}
 #elif defined(__GNUC__)
+#ifdef __APPLE__
+	yuv2rgb_sse2();
+#else	
 	__asm__(
 		".intel_syntax noprefix\n"
 		"mov eax, 1\n"
@@ -349,6 +356,7 @@ ihatemsvc:
 			[yuv2rgb_temp]"i"(yuv2rgb_temp), [sse2_tables]"i"(&sse2_tables)
 		:
 	);
+#endif //__APPLE__
 #else
 #error Unsupported compiler
 #endif

@@ -93,7 +93,7 @@ typedef union _LARGE_INTEGER
 #endif // __LINUX__
 #endif //_MSC_VER
 
-#if !defined(__LINUX__) || !defined(HAVE_STDINT_H)
+#if !defined(__LINUX__) || !defined(HAVE_STDINT_H) || defined(__APPLE__)
 #if defined(__x86_64__)
 typedef u64 uptr;
 typedef s64 sptr;

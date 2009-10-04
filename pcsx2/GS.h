@@ -173,8 +173,8 @@ protected:
 
 protected:
 	// note: when g_pGSRingPos == g_pGSWritePos, the fifo is empty
-	uint m_RingPos;		// cur pos gs is reading from
-	uint m_WritePos;	// cur pos ee thread is writing to
+	u32 m_RingPos;		// cur pos gs is reading from
+	u32 m_WritePos;	// cur pos ee thread is writing to
 
 	// used to regulate thread startup and gsInit
 	Threading::Semaphore m_post_InitDone;

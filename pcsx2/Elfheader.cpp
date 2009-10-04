@@ -129,7 +129,7 @@ struct Elf32_Rel {
 
 //2002-09-19 (Florin)
 char args[256]="ez.m2v";	//to be accessed by other files
-uptr args_ptr;		//a big value; in fact, it is an address
+unsigned int args_ptr;		//a big value; in fact, it is an address
 
 static bool isEmpty(int addr)
 {
@@ -428,7 +428,7 @@ struct ElfObject
 			ELF_LOG( "Elf32 Section Header [%x] %s", i, &sections_names[ secthead[ i ].sh_name ] );
 
 			if ( secthead[i].sh_flags & 0x2 )
-				args_ptr = min( args_ptr, secthead[ i ].sh_addr & 0x1ffffff );
+				args_ptr = args_ptr > secthead[ i ].sh_addr & 0x1ffffff ? secthead[ i ].sh_addr & 0x1ffffff : args_ptr;
 			
 #ifdef PCSX2_DEVBULD
 			ELF_LOG("\n");

@@ -615,7 +615,7 @@ static void VIFunpack(u32 *data, vifCode *v, unsigned int size, const unsigned i
 			dest = (u32*)(VU->Mem + v->addr);
 		}
 
-		size = min(size, (int)vifRegs->num * ft->gsize); //size will always be the same or smaller
+		size = size < (int)vifRegs->num * ft->gsize ? size : (int)vifRegs->num * ft->gsize  ; //size will always be the same or smaller
 
 		tempsize = vif->tag.addr + ((((vifRegs->num-1) / vifRegs->cycle.wl) * 
 			(vifRegs->cycle.cl - vifRegs->cycle.wl)) * 16) + (vifRegs->num * 16);
