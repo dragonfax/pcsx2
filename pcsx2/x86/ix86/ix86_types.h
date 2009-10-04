@@ -92,7 +92,11 @@ extern CPUINFO cpuinfo;
 #ifdef _MSC_VER
 #define __threadlocal __declspec(thread)
 #else
+#ifndef __APPLE__
 #define __threadlocal __thread
+#else
+#define __threadlocal 
+#endif
 #endif
 
 // Register counts for x86/32 mode:
