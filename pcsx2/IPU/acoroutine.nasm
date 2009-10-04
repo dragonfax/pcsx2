@@ -20,11 +20,11 @@ extern g_pCurrentRoutine
 
 extern yuv2rgb_temp
 extern sse2_tables
-extern C_BIAS
-extern GCr_COEFF
-extern GCb_COEFF
-extern RCr_COEFF
-extern BCb_COEFF
+%define C_BIAS -0x40
+%define GCr_COEFF 0x10
+%define GCb_COEFF 0x20
+%define RCr_COEFF 0x30
+%define BCb_COEFF 0x40
 extern mb8
 
 global yuv2rgb_sse2
@@ -63,112 +63,6 @@ tworows:
 	pmulhw xmm2, [edx+BCb_COEFF]
 
 	ret
-
-
-%ifdef __x86_64__
-
-%define FUNC_OFFSET 0
-%define STACK_OFFSET 8
-%define RBX_OFFSET 16
-%define RBP_OFFSET 24
-%define R12_OFFSET 32
-%define R13_OFFSET 40
-%define R14_OFFSET 48
-%define R15_OFFSET 56
-%define DATA_OFFSET 64
-%define RESTORE_OFFSET 72
-
-global so_call
-so_call:
-	test dword [rdi+RESTORE_OFFSET], 1
-	jnz so_call_RestoreRegs
-	mov [rdi+RBP_OFFSET], rbp
-	mov [rdi+RBX_OFFSET], rbx
-	mov [rdi+R12_OFFSET], r12
-	mov [rdi+R13_OFFSET], r13
-	mov [rdi+R14_OFFSET], r14
-	mov [rdi+R15_OFFSET], r15        
-	mov dword [rdi+RESTORE_OFFSET], 1
-	jmp so_call_CallFn
-so_call_RestoreRegs:
-; have to load and save at the same time
-	mov rax, [rdi+RBP_OFFSET]
-	mov rcx, [rdi+RBX_OFFSET]
-	mov rdx, [rdi+R12_OFFSET]
-	mov [rdi+RBP_OFFSET], rbp
-	mov [rdi+RBX_OFFSET], rbx
-	mov [rdi+R12_OFFSET], r12
-	mov rbp, rax
-	mov rbx, rcx
-	mov r12, rdx
-	mov rax, [rdi+R13_OFFSET]
-	mov rcx, [rdi+R14_OFFSET]
-	mov rdx, [rdi+R15_OFFSET]
-	mov [rdi+R13_OFFSET], r13
-	mov [rdi+R14_OFFSET], r14
-	mov [rdi+R15_OFFSET], r15
-	mov r13, rax
-	mov r14, rcx
-	mov r15, rdx        
-
-so_call_CallFn:
-	mov [g_pCurrentRoutine], rdi
-
-; swap the stack
-	mov rax, [rdi+STACK_OFFSET]
-	mov [rdi+STACK_OFFSET], rsp
-	mov rsp, rax
-	mov rax, [rdi+FUNC_OFFSET]
-	mov rdi, [rdi+DATA_OFFSET]
-
-	jmp rax
-
-global so_resume
-so_resume:
-	mov rdi, [g_pCurrentRoutine]
-	mov rax, [rdi+RBP_OFFSET]
-	mov rcx, [rdi+RBX_OFFSET]
-	mov rdx, [rdi+R12_OFFSET]
-	mov [rdi+RBP_OFFSET], rbp
-	mov [rdi+RBX_OFFSET], rbx
-	mov [rdi+R12_OFFSET], r12
-	mov rbp, rax
-	mov rbx, rcx
-	mov r12, rdx
-	mov rax, [rdi+R13_OFFSET]
-	mov rcx, [rdi+R14_OFFSET]
-	mov rdx, [rdi+R15_OFFSET]
-	mov [rdi+R13_OFFSET], r13
-	mov [rdi+R14_OFFSET], r14
-	mov [rdi+R15_OFFSET], r15
-	mov r13, rax
-	mov r14, rcx
-	mov r15, rdx
-
-; put the return address in pcalladdr
-	mov rsi, [rsp]
-	mov [rdi], rsi
-	add rsp, 8 ; remove the return address
-
-; swap stack pointers
-	mov rax, [rdi+STACK_OFFSET]
-	mov [rdi+STACK_OFFSET], rsp
-	mov rsp, rax
-	
-	ret
-
-global so_exit
-so_exit:
-	mov rdi, [g_pCurrentRoutine]
-	mov rsp, [rdi+STACK_OFFSET]
-	mov rbp, [rdi+RBP_OFFSET]
-	mov rbx, [rdi+RBX_OFFSET]
-	mov r12, [rdi+R12_OFFSET]
-	mov r13, [rdi+R13_OFFSET]
-	mov r14, [rdi+R14_OFFSET]
-	mov r15, [rdi+R15_OFFSET]
-	ret
-%else
 
 global so_call
 so_call:
@@ -240,6 +134,3 @@ so_exit:
 	mov edi, [eax+16]
 	mov ebp, [eax+20]
 	ret
-
-%endif
-
