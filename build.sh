@@ -21,6 +21,7 @@ aclocal
 autoconf
 automake --add-missing
 ./configure $GDB
+make
 popd
 mv ./plugins/CDVDnull/libCDVDnull.so.0.8.0 ./bin/plugins/libCDVDnull.so
 echo "Building CDVDiso..."
@@ -29,6 +30,7 @@ aclocal
 autoconf
 automake --add-missing
 ./configure $GDB
+make
 popd
 mv ./plugins/CDVDiso/src/libCDVDiso.so.0.9.0 ./bin/plugins/libCDVDiso.so
 echo "Building DEV9null..."
@@ -37,6 +39,7 @@ aclocal
 autoconf
 automake --add-missing
 ./configure $GDB
+make
 popd
 mv ./plugins/dev9null/libDEV9null.so.0.4.0 ./bin/plugins/libDEV9null.so
 echo "Building FWnull..."
@@ -45,6 +48,7 @@ aclocal
 autoconf
 automake --add-missing
 ./configure $GDB
+make
 popd
 mv ./plugins/FWnull/libFWnull.so.0.5.0 ./bin/plugins/libFWnull.so
 echo "Building SPU2null..."
@@ -53,6 +57,7 @@ aclocal
 autoconf
 automake --add-missing
 ./configure $GDB
+make
 popd
 mv ./plugins/SPU2null/libSPU2null.so.0.7.1 ./bin/plugins/libSPU2null.so
 echo "Building USBnull..."
@@ -61,6 +66,7 @@ aclocal
 autoconf
 automake --add-missing
 ./configure $GDB
+make
 popd
 mv ./plugins/USBnull/libUSBnull.so.0.6.0 ./bin/plugins/libUSBnull.so
 echo "Building zeropad..."
@@ -69,6 +75,7 @@ aclocal
 autoconf
 automake --add-missing
 ./configure $GDB
+make
 popd
 mv ./plugins/zeropad/libZeroPad.so.0.3.0 ./bin/plugins/libZeroPad.so
 echo "Building zzogl 0.17.156"
