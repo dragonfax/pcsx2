@@ -18,9 +18,9 @@ AC_SUBST(USBnull_AGE, 0)
 AC_SUBST(USBnull_RELEASE,[$USBnull_CURRENT].[$USBnull_REVISION].[$USBnull_AGE])
 AC_SUBST(USBnull_SONAME,libUSBnull.so.[$USBnull_CURRENT].[$USBnull_REVISION].[$USBnull_AGE])
 
-CFLAGS="-m32 -D__LINUX__"
-CPPFLAGS="-m32 -D__LINUX__"
-CXXFLAGS="-m32 -D__LINUX__"
+CFLAGS="-m32 -D__LINUX__ "
+CPPFLAGS="-m32 -D__LINUX__ "
+CXXFLAGS="-m32 -D__LINUX__ "
 CCASFLAGS=
 
 dnl Check for gdb reqs

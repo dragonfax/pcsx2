@@ -18,9 +18,9 @@ AC_SUBST(FWnull_AGE, 0)
 AC_SUBST(FWnull_RELEASE,[$FWnull_CURRENT].[$FWnull_REVISION].[$FWnull_AGE])
 AC_SUBST(FWnull_SONAME,libFWnull.so.[$FWnull_CURRENT].[$FWnull_REVISION].[$FWnull_AGE])
 
-CFLAGS="-m32 -D__LINUX__"
-CPPFLAGS="-m32 -D__LINUX__"
-CXXFLAGS="-m32 -D__LINUX__"
+CFLAGS="-m32 -D__LINUX__ "
+CPPFLAGS="-m32 -D__LINUX__ "
+CXXFLAGS="-m32 -D__LINUX__ "
 CCASFLAGS=
 
 dnl Check for gdb reqs
