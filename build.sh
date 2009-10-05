@@ -91,11 +91,12 @@ cp ./plugins/zzogl/ps2hw.dat ./bin/plugins
 echo "--------------"
 echo "Building pcsx2"
 echo "--------------"
+pushd pcsx2
 aclocal
 autoconf
 automake
 ./configure --enable-devbuild --enable-sse3 $GDB
 make
-mv ./Linux/pcsx2 ./bin/
-
+mv ./Linux/pcsx2 ../bin/
+popd
 chmod +x ./bin/*
