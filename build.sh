@@ -87,4 +87,15 @@ make
 popd
 mv ./plugins/zzogl/libZeroGSogl.so.* ./bin/plugins/libZeroGSogl.so
 cp ./plugins/zzogl/ps2hw.dat ./bin/plugins
+
+echo "--------------"
+echo "Building pcsx2"
+echo "--------------"
+aclocal
+autoconf
+automake
+./configure --enable-devbuild --enable-sse3 $GDB
+make
+mv ./Linux/pcsx2 ./bin/
+
 chmod +x ./bin/*
