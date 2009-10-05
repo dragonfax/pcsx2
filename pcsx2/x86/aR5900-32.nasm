@@ -12,6 +12,7 @@
 	%define JITCompile				_JITCompile
 	%define JITCompileInBlock	_JITCompileInBlock
 	%define DispatcherReg		_DispatcherReg
+	%define recExecute				_recExecute_asm
 %else
 	%define cpuRegs						cpuRegs
 	%define recLUT	        	recLUT
@@ -19,12 +20,31 @@
 	%define JITCompile				JITCompile
 	%define JITCompileInBlock	JITCompileInBlock
 	%define DispatcherReg		DispatcherReg
+	%define recExecute				recExecute_asm
 %endif
 
 extern REGINFO 
 extern RECLUT
 extern recRecompile
+extern g_EEFreezerRegs
 
+global recExecute
+recExecute:
+	push ebx
+	push esi
+	push edi
+	push ebp							; 4x4 = 10
+
+	call DispatcherReg
+
+	pop ebp
+	pop edi
+	pop esi
+	pop ebx
+
+	ret
+
+	
 ;//////////////////////////////////////////////////////////////////////////
 ;// The address for all cleared blocks.  It recompiles the current pc and then
 ;// dispatches to the recompiled block address.

@@ -58,6 +58,31 @@ enum
 	BCb_COEFF   = 0x40
 };
 
+
+#ifdef __APPLE__
+extern "C" void yuv2rgb_sse2_mac();
+extern "C" PCSX2_ALIGNED16(u16 yuv2rgb_temp[3][8]);
+
+PCSX2_ALIGNED16(u16 yuv2rgb_temp[3][8]);
+
+extern "C" volatile PCSX2_ALIGNED16(const SSE2_Tables sse2_tables) = 
+{
+	{0x8000,0x8000,0x8000,0x8000,0x8000,0x8000,0x8000,0x8000},	// c_bias
+	{16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16},			// y_bias
+	{0xff00,0xff00,0xff00,0xff00,0xff00,0xff00,0xff00,0xff00},	// y_mask
+	
+	// Specifying round off instead of round down as everywhere else
+	// implies that this is right
+	{1,1,1,1,1,1,1,1},		// round_1bit
+	
+	SSE_COEFFICIENTS(0x95),   // 1.1640625 [Y_coefficients]
+	SSE_COEFFICIENTS(-0x68),  // -0.8125 [GCr_coefficients]
+	SSE_COEFFICIENTS(-0x32),  // -0.390625 [GCb_coefficients]
+	SSE_COEFFICIENTS(0xcc),   // 1.59375 [RCr_coefficients]
+	SSE_COEFFICIENTS(0x102),  // 2.015625 [BCb_coefficients]
+};
+
+#else
 static volatile PCSX2_ALIGNED16(const SSE2_Tables sse2_tables) = 
 {
 	{0x8000,0x8000,0x8000,0x8000,0x8000,0x8000,0x8000,0x8000},	// c_bias
@@ -77,8 +102,6 @@ static volatile PCSX2_ALIGNED16(const SSE2_Tables sse2_tables) =
 
 static PCSX2_ALIGNED16(u16 yuv2rgb_temp[3][8]);
 
-#ifdef __APPLE__
-extern "C" void yuv2rgb_sse2_mac();
 #endif 
 
 // This could potentially be improved for SSE4
@@ -220,7 +243,7 @@ ihatemsvc:
 	}
 #elif defined(__GNUC__)
 #ifdef __APPLE__
-	yuv2rgb_sse2();
+	yuv2rgb_sse2_mac();
 #else	
 	__asm__(
 		".intel_syntax noprefix\n"
@@ -362,7 +385,7 @@ ihatemsvc:
 #endif
 
 	FreezeXMMRegs(0);
-}
+} 
 
 void yuv2rgb_init(void)
 {

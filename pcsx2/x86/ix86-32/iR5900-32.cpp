@@ -655,15 +655,17 @@ static void recExecuteBlock()
 
 #else // _MSC_VER
 
-extern void recExecute();
-extern void recExecuteBlock();
+#ifdef __APPLE__
+extern "C" void recExecute_asm();
+#endif
 
-/*__forceinline void recExecute()
+__forceinline void recExecute()
 {
 	// Optimization note : Compared pushad against manually pushing the regs one-by-one.
 	// Manually pushing is faster, especially on Core2's and such. :)
 	do {
 		g_EEFreezeRegs = true;
+		#ifndef __APPLE__
 		__asm__
 		(
 			".intel_syntax noprefix\n"
@@ -680,6 +682,9 @@ extern void recExecuteBlock();
 			"pop ebx\n"
 			".att_syntax\n"
 		);
+		#else
+			recExecute_asm();
+		#endif
 		g_EEFreezeRegs = false;
 	}
 	while( !recEventTest() );
@@ -688,6 +693,7 @@ extern void recExecuteBlock();
 static void recExecuteBlock()
 {
 	g_EEFreezeRegs = true;
+	#ifndef __APPLE__
 	__asm__
 	(
 		".intel_syntax noprefix\n"
@@ -704,9 +710,12 @@ static void recExecuteBlock()
 		"pop ebx\n"
 		".att_syntax\n"
 	);
+	#else
+		recExecute_asm();
+	#endif
 	g_EEFreezeRegs = false;
 	recEventTest();
-}*/
+}
 #endif
 
 namespace R5900 {

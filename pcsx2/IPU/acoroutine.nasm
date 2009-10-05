@@ -16,6 +16,9 @@ extern g_pCurrentRoutine
 
 %ifdef __APPLE__
 	%define yuv2rgb_sse2		_yuv2rgb_sse2_mac
+	%define yuv2rgb_temp		_yuv2rgb_temp
+	%define sse2_tables			_sse2_tables
+	%define mb8							_mb8
 %endif
 
 extern yuv2rgb_temp
