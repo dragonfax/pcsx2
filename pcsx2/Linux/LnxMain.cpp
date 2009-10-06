@@ -547,6 +547,8 @@ void OnFile_Exit(GtkMenuItem *menuitem, gpointer user_data)
 
 void OnEmu_Run(GtkMenuItem *menuitem, gpointer user_data)
 {
+	if(CDVD == 0)
+		CDVDsys_ChangeSource( CDVDsrc_NoDisc );
 	SysPrepareExecution(NULL, true);	// boots bios if no savestate is to be recovered
 }
 
