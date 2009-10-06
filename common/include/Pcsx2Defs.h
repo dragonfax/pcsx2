@@ -161,13 +161,13 @@ This theoretically unoptimizes. Not having much luck so far.
 #endif
 
 // stack alignment
-#define ALIGN_STACK()  \
+#define ALIGN_STACK();  \
 		u32 saveEsp; \
 		__asm__("mov %%esp, %0 \n" \
 			"and $0xfffffff0, %%esp\n" \
 			:"=r"(saveEsp)); 
 
-#define RESTORE_STACK() \
+#define RESTORE_STACK(); \
 		__asm__("mov %0, %%esp \n" \
 			: :"r"(saveEsp)); \
 
