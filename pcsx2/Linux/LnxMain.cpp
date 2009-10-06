@@ -27,6 +27,59 @@ const char* g_pRunGSState = NULL;
 
 int efile = 0;
 
+char cfgfile[g_MaxPath];
+
+char ee_log_names[17][32] =
+{ 
+	"Cpu Log",
+	"Mem Log",
+	"HW Log",
+	"Dma Log",
+	"Bios Log",
+	"Elf Log",
+	"Fpu Log",
+	"MMI Log",
+	"VU0 Log",
+	"Cop0 Log",
+	"Vif Log",
+	"SPR Log",
+	"GIF Log",
+	"Sif Log",
+	"IPU Log",
+	"VU Micro Log",
+	"RPC Log"
+};
+
+char iop_log_names[9][32] =
+{
+	"IOP Log",
+	"Mem Log",
+	"HW Log",
+	"Bios Log",
+	"Dma Log",
+	"Pad Log",
+	"Gte Log",
+	"Cdr Log",
+	"GPU Log"
+};
+
+char vu_stealing_labels[5][256] = 
+{
+	"0: No speedup.",
+	"1: Slight speedup, should work with most games.",
+	"2: Moderate speedup, should work with most games with minor problems.",
+	"3: Large speedup, may break many games and make others skip frames.",
+	"4: Very large speedup, will break games in interesting ways."
+};
+
+char ee_cycle_labels[3][256] = 
+{
+	"Default Cycle Rate: Most compatible option - recommended for everyone with high-end machines.",
+	"x1.5 Cycle Rate: Moderate speedup, and works well with most games.",
+	"x2 Cycle Rate: Big speedup! Works well with many games."
+};
+
+
 int main(int argc, const char *argv[])
 {
 
@@ -44,7 +97,7 @@ int main(int argc, const char *argv[])
 	// Note: Config.Paths.Inis won't do anything till we set up windows and the plugins to use it.
 #ifndef LOCAL_PLUGIN_INIS
 	mkdir(DEFAULT_INIS_DIR, 0755);
-	Config.Paths.Inis = Config.Paths.Working + "/" + string(DEFAULT_INIS_DIR) + "/";
+	Config.Paths.Inis = Config.Paths.Working + "/" + string(DEFAULT_INIS_DIR);
 	sprintf(cfgfile, "%s/pcsx2.cfg", Config.Paths.Inis.c_str());
 #else
 	Path::CreateDirectory("~/.pcsx2");
