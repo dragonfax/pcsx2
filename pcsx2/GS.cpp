@@ -484,7 +484,11 @@ void __fastcall gsWrite64_generic( u32 mem, const mem64_t* value )
 	*(u64*)PS2GS_BASE(mem) = *value;
 
 	if( mtgsThread != NULL )
+	{
+		ALIGN_STACK();
 		mtgsThread->SendSimplePacket(GS_RINGTYPE_MEMWRITE64, mem&0x13ff, srcval32[0], srcval32[1]);
+		RESTORE_STACK();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

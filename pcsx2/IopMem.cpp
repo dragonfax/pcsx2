@@ -331,7 +331,9 @@ void iopMemWrite8(u32 mem, u8 value)
 	}
 	else if (t == 0x1f40)
 	{
+		ALIGN_STACK();
 		psxHw4Write8(mem, value);
+		RESTORE_STACK();
 	}
 	else
 	{
@@ -479,7 +481,9 @@ void iopMemWrite32(u32 mem, u32 value)
 		if( p != NULL && !(psxRegs.CP0.n.Status & 0x10000) )
 		{
 			*(u32 *)(p + (mem & 0xffff)) = value;
+			ALIGN_STACK();
 			psxCpu->Clear(mem&~3, 1);
+			RESTORE_STACK();
 		}
 		else 
 		{
