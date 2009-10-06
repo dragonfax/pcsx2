@@ -160,6 +160,18 @@ This theoretically unoptimizes. Not having much luck so far.
 #define __nooptimization
 #endif
 
+// stack alignment
+#define ALIGN_STACK()  \
+		u32 saveEsp; \
+		__asm__("mov %%esp, %0 \n" \
+			"and $0xfffffff0, %%esp\n" \
+			:"=r"(saveEsp)); 
+
+#define RESTORE_STACK() \
+		__asm__("mov %0, %%esp \n" \
+			: :"r"(saveEsp)); \
+
+
 typedef struct {
 	int size;
 	s8 *data;
