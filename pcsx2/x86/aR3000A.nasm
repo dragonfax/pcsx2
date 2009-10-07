@@ -13,6 +13,7 @@
 	%define iopJITCompile				_iopJITCompile
 	%define iopJITCompileInBlock	_iopJITCompileInBlock
 	%define iopDispatcherReg		iopDispatcherReg
+	%define ioprecExecute					_ioprecExecute_asm	
 %else
 	%define psxRegs							psxRegs
 	%define psxRecLUT        		psxRecLUT
@@ -20,11 +21,28 @@
 	%define iopJITCompile				iopJITCompile
 	%define iopJITCompileInBlock	iopJITCompileInBlock
 	%define iopDispatcherReg		iopDispatcherReg
+	%define ioprecExecute					_ioprecExecute_asm		
 %endif
 
 extern REGINFO 
 extern RECLUT
 extern iopRecRecompile
+
+global ioprecExecute
+ioprecExecute:
+	push ebx
+	push esi
+	push edi
+	push ebp							; 4x4 = 10
+
+	call iopDispatcherReg
+
+	pop ebp
+	pop edi
+	pop esi
+	pop ebx
+
+	ret
 
 ;//////////////////////////////////////////////////////////////////////////
 ;// The address for all cleared blocks.  It recompiles the current pc and then

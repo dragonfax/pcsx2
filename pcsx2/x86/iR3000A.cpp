@@ -638,6 +638,10 @@ static void recExecute()
 	//for (;;) R3000AExecute();
 }
 
+#ifdef __APPLE__
+extern "C" void ioprecExecute_asm();
+#endif
+
 static __forceinline s32 recExecuteBlock( s32 eeCycles )
 {
 	psxBreak = 0;
@@ -663,6 +667,7 @@ static __forceinline s32 recExecuteBlock( s32 eeCycles )
 		pop ebx
 	}
 #else
+#ifndef __APPLE__
 	__asm__
 	(
 		".intel_syntax noprefix\n"
@@ -679,6 +684,9 @@ static __forceinline s32 recExecuteBlock( s32 eeCycles )
 		"pop ebx\n"
 		".att_syntax\n"
 	);
+#else
+	ioprecExecute_asm();
+#endif // __APPLE__
 #endif
 
 	return psxBreak + psxCycleEE;
