@@ -450,10 +450,12 @@ static __forceinline void ClearVuFunc( u32 addr, u32 size )
 {
 	if( dynarec )
 	{
+		ALIGN_STACK();
 		if( vunum==0 )
 			VU0micro::recClear(addr,size);
 		else
 			VU1micro::recClear(addr,size);
+		RESTORE_STACK();
 	}
 	else
 	{
