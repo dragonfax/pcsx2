@@ -30,10 +30,16 @@ extern g_EEFreezerRegs
 
 global recExecute
 recExecute:
+
+	mov eax, esp												; save stack pointer
+	and esp, 0xFFFFFFF0									; align stack
+	push eax														; save on stack old stack pointer
+	sub esp, 0xC												; 0xC + 4 + 0x10 = 0x20
+
 	push ebx
 	push esi
 	push edi
-	push ebp							; 4x4 = 10
+	push ebp														; 4x4 = 10
 
 	call DispatcherReg
 
@@ -41,6 +47,9 @@ recExecute:
 	pop edi
 	pop esi
 	pop ebx
+
+	add esp, 0xC
+	pop esp															; restore stack
 
 	ret
 
