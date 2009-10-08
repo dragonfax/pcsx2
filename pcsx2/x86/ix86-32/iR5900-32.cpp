@@ -1519,7 +1519,7 @@ StartRecomp:
 
 	if(PageType!=-1)
 	{
-		if (PageType==0) {
+		if (0 && PageType==0) {
 			mmap_MarkCountedRamPage( inpage_ptr );
 			manual_page[inpage_ptr >> 12] = 0;
 		}
@@ -1687,7 +1687,9 @@ StartRecomp:
 void recRecompile(u32 startpc)
 {
 	recFailed = false;
+	ALIGN_STACK();
 	recRecompile2(startpc);
+	RESTORE_STACK();
 	if (recFailed) {
 		recFailed = false;
 		recResetEE();
