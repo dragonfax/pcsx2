@@ -355,8 +355,10 @@ void dmaGIF()
 
 	//Halflife sets a QWC amount in chain mode, no tadr set.
 	if (gif->qwc > 0) gspath3done = 1;
-	
+
+	ALIGN_STACK();
 	GIFdma();
+	RESTORE_STACK();
 }
 
 // called from only one location, so forceinline it:

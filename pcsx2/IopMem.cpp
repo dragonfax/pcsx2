@@ -462,7 +462,7 @@ void iopMemWrite32(u32 mem, u32 value)
 					IopMemory::iopHwWrite32_Page1(mem,value);
 			break;*/
 
-			case 0x1000: IopMemory::iopHwWrite32_Page1(mem,value); break;
+			case 0x1000: ALIGN_STACK(); IopMemory::iopHwWrite32_Page1(mem,value); RESTORE_STACK(); break;
 			case 0x3000: IopMemory::iopHwWrite32_Page3(mem,value); break;
 			case 0x8000: IopMemory::iopHwWrite32_Page8(mem,value); break;
 
