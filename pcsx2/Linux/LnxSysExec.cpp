@@ -20,11 +20,30 @@
 #include "LnxSysExec.h"
 #include "HostGui.h"
 
+
 static bool sinit = false;
 GtkWidget *FileSel;
 static uptr current_offset = 0;
 static uptr offset_counter = 0;
 bool Slots[5] = { false, false, false, false, false };
+
+#if defined(__APPLE__) && defined(MACH_EXCEPTIONS)
+#include <mach/mach.h>
+kern_return_t
+catch_exception_raise(mach_port_t exception_port,
+                      mach_port_t thread,
+                      mach_port_t task,
+                      exception_type_t exception,
+                      exception_data_t code_vector,
+                      mach_msg_type_number_t code_count)
+{
+	// get bad virtual address
+	uptr offset = (u8*)info->si_addr - psM;
+		
+	mmap_ClearCpuBlock( offset & ~m_pagemask );
+	return KERN_SUCCESS;
+}
+#endif
 
 __noinline void InstallLinuxExceptionHandler()
 {
@@ -33,7 +52,8 @@ __noinline void InstallLinuxExceptionHandler()
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = &SysPageFaultExceptionFilter;
-	sigaction(SIGSEGV, &sa, NULL); 
+	//int res = sigaction(SIGSEGV, &sa, NULL); 
+	int res = sigaction(SIGBUS,&sa, NULL);	
 }
 
 __noinline void ReleaseLinuxExceptionHandler()
@@ -49,7 +69,8 @@ __noinline void KillLinuxExceptionHandler()
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESETHAND;
 	//sa.sa_sigaction = &SysPageFaultExceptionFilter;
-	sigaction(SIGSEGV, &sa, NULL); 
+	//int res = sigaction(SIGSEGV, &sa, NULL);
+	int res = sigaction(SIGBUS,&sa, NULL);
 }
 static const uptr m_pagemask = getpagesize()-1;
 
