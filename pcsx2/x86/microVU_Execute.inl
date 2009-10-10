@@ -134,7 +134,16 @@ microVUx(void) mVUcleanUp() {
 //------------------------------------------------------------------
 
 void* __fastcall mVUexecuteVU0(u32 startPC, u32 cycles) { return mVUexecute<0>(startPC, cycles); }
-void* __fastcall mVUexecuteVU1(u32 startPC, u32 cycles) { return mVUexecute<1>(startPC, cycles); }
+void* __fastcall mVUexecuteVU1(u32 startPC, u32 cycles) {
+	ALIGN_STACK();
+	void* ptr =  mVUexecute<1>(startPC, cycles); 
+	RESTORE_STACK();
+	return ptr;
+}
 void  __fastcall mVUcleanUpVU0() { mVUcleanUp<0>(); }
-void  __fastcall mVUcleanUpVU1() { mVUcleanUp<1>(); }
+void  __fastcall mVUcleanUpVU1() {
+	ALIGN_STACK();
+	mVUcleanUp<1>();
+	RESTORE_STACK();
+}
 
