@@ -91,7 +91,7 @@ cp ./plugins/zzogl/ps2hw.dat ./bin/plugins
 echo "--------------"
 echo "Building pcsx2"
 echo "--------------"
-pushd pcsx2
+pushd ./pcsx2
 aclocal
 autoconf
 automake
