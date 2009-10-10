@@ -193,15 +193,17 @@ protected:
 	// the pointer into a local variable and use std (unsafe) C indexes.
 	T* _getPtr( uint i ) const
 	{
-#ifdef PCSX2_DEVBUILD
+#ifdef PCSX2_DEVBUILD 
 		if( i >= (uint)m_size )
 		{
 			assert( 0 );	// makes debugging easier sometimes. :)
-			throw Exception::IndexBoundsFault(
-				"Index out of bounds on SafeArray: " + std::string(Name) + 
+			std::string NameStr("");
+			if(Name != 0)
+				NameStr = std::string(Name);
+			std::string exc("Index out of bounds on SafeArray: " + NameStr + 
 				" (index=" + to_string(i) + 
-				", size=" + to_string(m_size) + ")"
-			);
+				", size=" + to_string(m_size) + ")");
+			throw Exception::IndexBoundsFault(exc);
 		}
 #endif
 		return &m_ptr[i];
