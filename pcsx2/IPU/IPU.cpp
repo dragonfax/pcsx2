@@ -350,7 +350,9 @@ __forceinline void ipuWrite32(u32 mem, u32 value)
 	{
 		ipucase(IPU_CMD): // IPU_CMD
 			IPU_LOG("Ipu write32: IPU_CMD=0x%08X", value);
+			ALIGN_STACK();
 			IPUCMD_WRITE(value);
+			RESTORE_STACK();
 			break;
 
 		ipucase(IPU_CTRL): // IPU_CTRL
@@ -410,7 +412,8 @@ static void ipuBCLR(u32 val)
 	g_BP.bufferhasnew = 0;
 	ipuRegs->ctrl.BUSY = 0;
 	ipuRegs->cmd.BUSY = 0;
-	memzero_ptr<80>(readbits);
+	if((u8 *)&readbits -readbits > 80)
+		memzero_ptr<80>(readbits);
 	IPU_LOG("Clear IPU input FIFO. Set Bit offset=0x%X", g_BP.BP);
 }
 
@@ -794,7 +797,9 @@ void IPUCMD_WRITE(u32 val)
 	switch (ipuRegs->cmd.CMD)
 	{
 		case SCE_IPU_BCLR:
+			ALIGN_STACK();
 			ipuBCLR(val);
+			RESTORE_STACK();
 			IPU_INTERRUPT(); //DMAC_TO_IPU
 			return;
 
