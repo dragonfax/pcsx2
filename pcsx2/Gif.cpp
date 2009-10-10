@@ -349,7 +349,9 @@ void dmaGIF()
 		GIF_LOG("gifdmaChain %8.8x_%8.8x size=%d, id=%d, addr=%lx", ptag[1], ptag[0], gif->qwc, (ptag[0] >> 28), gif->madr);
 
 		checkTieBit(ptag);
+		ALIGN_STACK();
 		GIFdma();
+		RESTORE_STACK();
 		return;
 	}
 
