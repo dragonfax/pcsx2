@@ -741,7 +741,9 @@ void* SuperVUGetProgram(u32 startpc, int vuindex)
 		}
 #endif
 
+		ALIGN_STACK();
 		*pheader = SuperVURecompileProgram(startpc, vuindex);
+		RESTORE_STACK();
 
 		if (*pheader == NULL)
 		{
