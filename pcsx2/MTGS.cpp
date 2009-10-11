@@ -744,7 +744,10 @@ void mtgsThreadObject::PostEventWait() const
 
 u8* mtgsThreadObject::GetDataPacketPtr() const
 {
-	return (u8*)m_RingBuffer.GetPtr( m_packet_ringpos );
+	ALIGN_STACK();
+	u8* ret = (u8*)m_RingBuffer.GetPtr( m_packet_ringpos ); 
+	RESTORE_STACK();
+	return ret;
 }
 
 // Closes the data packet send command, and initiates the gs thread (if needed).

@@ -498,7 +498,12 @@ void SIO_CommandWrite(u8 value,int way) {
 			return;
 	}
 
-	if(sio.count == 1 || way == 0) InitializeSIO(value);
+	if(sio.count == 1 || way == 0)
+	{
+		ALIGN_STACK();
+		InitializeSIO(value);
+		RESTORE_STACK();
+	}
 }
 
 void InitializeSIO(u8 value)
