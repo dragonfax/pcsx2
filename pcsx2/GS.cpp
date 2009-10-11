@@ -53,14 +53,16 @@ int g_nLeftGSFrames = 0; // when saving, number of frames left
 gzSavingState* g_fGSSave;
 
 void GSGIFTRANSFER1(u32 *pMem, u32 addr) { 
+	ALIGN_STACK();
 	if( g_SaveGSStream == 2) { 
 		u32 type = GSRUN_TRANS1; 
 		u32 size = (0x4000-(addr))/16;
 		g_fGSSave->Freeze( type );
 		g_fGSSave->Freeze( size );
 		g_fGSSave->FreezeMem( ((u8*)pMem)+(addr), size*16 );
-	} 
+	}
 	GSgifTransfer1(pMem, addr); 
+	RESTORE_STACK();
 }
 
 void GSGIFTRANSFER2(u32 *pMem, u32 size) { 
