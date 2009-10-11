@@ -35,7 +35,11 @@ static SafeArray<u8>* g_gsRecoveryState = NULL;
 // This class type creates a memory savestate using the existing Recovery information
 // (if present) to generate the savestate material.  If no recovery data is present,
 // the current emulation state is used instead.
+#if __GNUC__ > 3 && __GNUC_MINOR__ > 2 
 class RecoveryMemSavingState : public memSavingState, Sealed
+#else
+class RecoveryMemSavingState : public memSavingState
+#endif
 {
 public:
 	virtual ~RecoveryMemSavingState() { }
@@ -48,7 +52,11 @@ public:
 // This class type creates an on-disk (zipped) savestate using the existing Recovery
 // information (if present) to generate the savestate material.  If no recovery data is
 // present, the current emulation state is used instead.
+#if __GNUC__ > 3 && __GNUC_MINOR__ > 2 
 class RecoveryZipSavingState : public gzSavingState, Sealed
+#else
+class RecoveryZipSavingState : public gzSavingState
+#endif
 {
 public:
 	virtual ~RecoveryZipSavingState() { }
@@ -59,7 +67,11 @@ public:
 };
 
 // Special helper class used to save *just* the GS-relevant state information.
+#if __GNUC__ > 3 && __GNUC_MINOR__ > 2 
 class JustGsSavingState : public memSavingState, Sealed
+#else
+class JustGsSavingState : public memSavingState
+#endif
 {
 public:
 	virtual ~JustGsSavingState() { }

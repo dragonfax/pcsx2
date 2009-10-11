@@ -37,8 +37,7 @@ private:
 	const NoncopyableObject& operator=( const NoncopyableObject& );
 };
 
-#ifdef __COUNTER__
-
+#ifdef __COUNTER__ && __GNUC__ > 3 && __GNUC_MINOR__ > 2
 // Use this macro/class as a base to seal a class from being derived from.
 // This macro works by providing a unique base class with a protected constructor
 // for every class that derives from it. 
