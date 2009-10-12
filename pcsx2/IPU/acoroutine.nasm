@@ -19,11 +19,17 @@ extern g_pCurrentRoutine
 	%define yuv2rgb_temp		_yuv2rgb_temp
 	%define sse2_tables			_sse2_tables
 	%define mb8							_mb8
+	%define rgb32						_rgb32
 %endif
 
 extern yuv2rgb_temp
 extern sse2_tables
+extern rgb32
 %define C_BIAS -0x40
+%define Y_BIAS -0x30
+%define Y_MASK -0x20
+%define ROUND_1BIT -0x10
+%define Y_COEFF 0x00
 %define GCr_COEFF 0x10
 %define GCb_COEFF 0x20
 %define RCr_COEFF 0x30
@@ -64,6 +70,103 @@ tworows:
 	pmulhw xmm3, [edx+GCb_COEFF]
 	pmulhw xmm0, [edx+RCr_COEFF]
 	pmulhw xmm2, [edx+BCb_COEFF]
+	paddsw xmm1, xmm3
+	; store for the next line; looking at the code above
+	; compared to the code below, I have to wonder whether
+	; this was worth the hassle
+	movaps  [ecx], xmm0
+	movaps  [ecx+16], xmm1
+	movaps  [ecx+32], xmm2
+	jmp ihatemsvc
+
+	align 16
+onerow:
+	movaps xmm0,  [ecx]
+	movaps xmm1,  [ecx+16]
+	movaps xmm2,  [ecx+32]
+
+ ;If masm directives worked properly in inline asm, I'd be using them,
+ ;but I'm not inclined to write ~70 line #defines to simulate them.
+ ;Maybe the function's faster like this anyway because it's smaller?
+ ;I'd have to write a 70 line #define to benchmark it.
+
+ihatemsvc:
+	movaps xmm3, xmm0
+	movaps xmm4, xmm1
+	movaps xmm5, xmm2
+
+	movaps xmm6,  [mb8+edi]
+	psubusb xmm6,  [edx+Y_BIAS]
+	movaps xmm7, xmm6
+	psllw xmm6, 8                    			; xmm6 <- Y << 8 for pixels 0,2,4,6,8,10,12,14
+	pand xmm7,  [edx+Y_MASK]  	; xmm7 <- Y << 8 for pixels 1,3,5,7,9,11,13,15
+
+	pmulhuw xmm6,  [edx+Y_COEFF]
+	pmulhuw xmm7,  [edx+Y_COEFF]
+
+	paddsw xmm0, xmm6
+	paddsw xmm3, xmm7
+	paddsw xmm1, xmm6
+	paddsw xmm4, xmm7
+	paddsw xmm2, xmm6
+	paddsw xmm5, xmm7
+
+	; round
+	movaps xmm6,  [edx+ROUND_1BIT]
+	paddw xmm0, xmm6
+	paddw xmm1, xmm6
+	paddw xmm2, xmm6
+	paddw xmm3, xmm6
+	paddw xmm4, xmm6
+	paddw xmm5, xmm6
+	psraw xmm0, 1
+	psraw xmm1, 1
+	psraw xmm2, 1
+	psraw xmm3, 1
+	psraw xmm4, 1
+	psraw xmm5, 1
+
+	; combine even and odd bytes
+	packuswb xmm0, xmm3
+	packuswb xmm1, xmm4
+	packuswb xmm2, xmm5
+	movhlps xmm3, xmm0
+	movhlps xmm4, xmm1
+	movhlps xmm5, xmm2
+	punpcklbw xmm0, xmm3 ; Red bytes, back in order 
+	punpcklbw xmm1, xmm4 ; Green ""
+	punpcklbw xmm2, xmm5 ; Blue ""
+	movaps xmm3, xmm0
+	movaps xmm4, xmm1
+	movaps xmm5, xmm2
+
+	; Create RGBA (we could generate A here, but we don't) quads
+	punpcklbw xmm0, xmm1
+	punpcklbw xmm2, xmm7
+	movaps xmm1, xmm0
+	punpcklwd xmm0, xmm2
+	punpckhwd xmm1, xmm2
+
+	punpckhbw xmm3, xmm4
+	punpckhbw xmm5, xmm7
+	movaps xmm4, xmm3
+	punpcklwd xmm3, xmm5
+	punpckhwd xmm4, xmm5
+
+	; at last
+	movaps  [rgb32+edi*4+0], xmm0
+	movaps  [rgb32+edi*4+16], xmm1
+	movaps  [rgb32+edi*4+32], xmm3
+	movaps  [rgb32+edi*4+48], xmm4
+
+	add edi, 16
+
+	neg eax
+	jl onerow ; run twice
+
+	add esi, 8
+	cmp esi, 64
+	jne tworows
 
 	ret
 
