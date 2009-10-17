@@ -19,7 +19,8 @@ pushd ./plugins/CDVDnull >/dev/null
 aclocal
 autoconf
 automake --add-missing
-rm -rf autom4te.cache
+rm -rf autom4te.cache >/dev/null &>/dev/null
+rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
 ../configure $GDB
@@ -32,8 +33,9 @@ pushd ./plugins/CDVDiso/src >/dev/null
 aclocal
 autoconf
 automake --add-missing
-rm -rf autom4te.cache
+rm -rf autom4te.cache >/dev/null &>/dev/null
 cd ..
+rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
 ../src/configure $GDB
@@ -46,7 +48,8 @@ pushd ./plugins/dev9null >/dev/null
 aclocal
 autoconf
 automake --add-missing
-rm -rf autom4te.cache
+rm -rf autom4te.cache >/dev/null &>/dev/null
+rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
 ../configure $GDB
@@ -59,7 +62,8 @@ pushd ./plugins/FWnull >/dev/null
 aclocal
 autoconf
 automake --add-missing
-rm -rf autom4te.cache
+rm -rf autom4te.cache >/dev/null &>/dev/null
+rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
 ../configure $GDB
@@ -72,7 +76,8 @@ pushd ./plugins/SPU2null
 aclocal
 autoconf
 automake --add-missing
-rm -rf autom4te.cache
+rm -rf autom4te.cache >/dev/null &>/dev/null
+rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
 ../configure $GDB
@@ -85,7 +90,8 @@ pushd ./plugins/USBnull >/dev/null
 aclocal
 autoconf
 automake --add-missing
-rm -rf autom4te.cache
+rm -rf autom4te.cache >/dev/null &>/dev/null
+rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
 ../configure $GDB
@@ -98,7 +104,8 @@ pushd ./plugins/zeropad >/dev/null
 aclocal
 autoconf
 automake --add-missing
-rm -rf autom4te.cache
+rm -rf autom4te.cache >/dev/null &>/dev/null
+rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
 ../configure $GDB
@@ -111,7 +118,8 @@ pushd ./plugins/zzogl >/dev/null
 aclocal
 autoconf
 automake --add-missing
-rm -rf autom4te.cache
+rm -rf autom4te.cache >/dev/null &>/dev/null
+rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
 ../configure --enable-devbuild --enable-sse2 $GDB
@@ -128,7 +136,8 @@ pushd ./pcsx2 >/dev/null
 aclocal
 autoconf
 automake --add-missing
-rm -rf autom4te.cache
+rm -rf autom4te.cache >/dev/null &>/dev/null
+rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
 ../configure --enable-devbuild --enable-sse3 $GDB
