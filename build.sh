@@ -9,10 +9,9 @@ for i in "$@"; do
 	if [ "$i" == "--enable-debug" ]; then
 		DEBUG="--enable-debug"
 	fi
-#check if devbuild not requested
-	DEVBUILD="--enable-devbuild"
-	if [ "$i" == "--disable-devbuild" ]; then
-		DEVBUILD=""
+#check if devbuild requested
+	if [ "$i" == "--enable-devbuild" ]; then
+		DEVBUILD="--enable-devbuild"
 	fi
 done
 pushd bin >/dev/null
