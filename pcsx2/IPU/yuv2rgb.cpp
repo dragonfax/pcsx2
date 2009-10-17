@@ -243,7 +243,9 @@ ihatemsvc:
 	}
 #elif defined(__GNUC__)
 #ifdef __APPLE__
+	SAVE_REGISTERS();
 	yuv2rgb_sse2_mac();
+	RESTORE_REGISTERS();
 #else	
 	__asm__(
 		".intel_syntax noprefix\n"

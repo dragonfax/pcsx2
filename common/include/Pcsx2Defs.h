@@ -171,6 +171,12 @@ This theoretically unoptimizes. Not having much luck so far.
 		__asm__("mov %0, %%esp \n" \
 			: :"r"(saveEsp)); \
 
+// register backups
+#define SAVE_REGISTERS(); \
+	__asm__("pusha \n");
+
+#define RESTORE_REGISTERS(); \
+	__asm__("popa \n");
 
 typedef struct {
 	int size;
