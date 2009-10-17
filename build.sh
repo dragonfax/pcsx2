@@ -9,6 +9,11 @@ for i in "$@"; do
 	if [ "$i" == "--enable-debug" ]; then
 		DEBUG="--enable-debug"
 	fi
+#check if devbuild not requested
+	DEVBUILD="--enable-devbuild"
+	if [ "$i" == "--disable-devbuild" ]; then
+		DEVBUILD=""
+	fi
 done
 pushd bin >/dev/null
 mkdir bios &>/dev/null
@@ -146,7 +151,7 @@ rm -rf autom4te.cache >/dev/null &>/dev/null
 rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
-../configure --enable-devbuild --enable-sse3 $GDB $DEBUG
+../configure $DEVBUILD --enable-sse3 $GDB $DEBUG
 make
 popd >/dev/null
 mv ./build/Linux/pcsx2 ../bin/
