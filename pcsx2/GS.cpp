@@ -95,8 +95,10 @@ __forceinline void GSVSYNC(void) {
 }
 #else
 
-__forceinline void GSGIFTRANSFER1(u32 *pMem, u32 addr) { 
+__forceinline void GSGIFTRANSFER1(u32 *pMem, u32 addr) {
+	ALIGN_STACK();
 	GSgifTransfer1(pMem, addr); 
+	RESTORE_STACK();
 }
 
 __forceinline void GSGIFTRANSFER2(u32 *pMem, u32 size) { 

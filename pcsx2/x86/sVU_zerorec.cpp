@@ -4354,7 +4354,7 @@ void recVUMI_JALR(VURegs* vuu, s32 info)
 	branch |= 4;
 }
 
-#ifdef PCSX2_DEVBUILD
+#if defined(PCSX2_DEVBUILD) || defined(__APPLE__)
 void vu1xgkick(u32* pMem, u32 addr)
 {
 	assert(addr < 0x4000);
@@ -4362,7 +4362,9 @@ void vu1xgkick(u32* pMem, u32 addr)
 	StopSVUCounter();
 #endif
 
+	ALIGN_STACK();
 	GSGIFTRANSFER1(pMem, addr);
+	RESTORE_STACK();
 
 #ifdef SUPERVU_COUNT
 	StartSVUCounter();
@@ -4387,7 +4389,7 @@ void recVUMI_XGKICK_(VURegs *VU)
 		ADD32ItoR(ESP, 8);
 	}
 	else {
-#ifdef PCSX2_DEVBUILD
+#if defined(PCSX2_DEVBUILD) || defined(__APPLE__)
 		CALLFunc((uptr)vu1xgkick);
 		ADD32ItoR(ESP, 8);
 #else
