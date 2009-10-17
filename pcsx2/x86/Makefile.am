@@ -40,13 +40,13 @@ libx86recomp_a_DEPENDENCIES = ix86/libix86.a
 SUBDIRS = ix86
 
 fast_routines.o:
-	nasm -D__APPLE__ -f macho fast_routines.nasm 
+	nasm -D__APPLE__ -f macho $(x86_dir)/fast_routines.nasm -o ./fast_routines.o 
 aR3000A.o:
-	nasm -D__APPLE__ -f macho aR3000A.nasm
+	nasm -D__APPLE__ -f macho $(x86_dir)/aR3000A.nasm -o ./aR3000A.o
 aR5900-32.o:
-	nasm -D__APPLE__ -f macho aR5900-32.nasm
+	nasm -D__APPLE__ -f macho $(x86_dir)/aR5900-32.nasm -o ./aR5900-32.o
 aVif.o:
-	nasm -D__APPLE__ -f macho aVif.nasm
+	nasm -D__APPLE__ -f macho $(x86_dir)/aVif.nasm -o ./aVif.o
 aVUzerorec.o:
-	nasm -D__APPLE__ -f macho aVUzerorec.nasm
+	nasm -D__APPLE__ -f macho $(x86_dir)/aVUzerorec.nasm -o ./aVUzerorec.o
 

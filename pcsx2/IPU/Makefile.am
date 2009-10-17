@@ -20,4 +20,4 @@ SUBDIRS = mpeg2lib
 #libIPU_a_LIBADD = mpeg2lib/libmpeg2IPU.a
 
 acoroutine.o:
-	nasm -D__APPLE__ -f macho acoroutine.nasm
+	nasm -D__APPLE__ -f macho $(ipu_dir)/acoroutine.nasm -o ./acoroutine.o
