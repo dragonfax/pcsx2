@@ -1,9 +1,15 @@
 #!/bin/sh
 export PKG_CONFIG_PATH=/usr/X11/lib/pkgconfig
-# check if gdb support is requested
-if [ $1 == "--enable-gdb" ]; then
-	GDB="--enable-gdb"
-fi
+for i in "$@"; do
+#check if gdb support is requested
+	if [ "$i" == "--enable-gdb" ]; then
+		GDB="--enable-gdb "
+	fi
+#check if debug build enabled
+	if [ "$i" == "--enable-debug" ]; then
+		DEBUG="--enable-debug"
+	fi
+done
 pushd bin >/dev/null
 mkdir bios &>/dev/null
 mkdir frames &>/dev/null
@@ -140,7 +146,7 @@ rm -rf autom4te.cache >/dev/null &>/dev/null
 rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
-../configure --enable-devbuild --enable-sse3 $GDB
+../configure --enable-devbuild --enable-sse3 $GDB $DEBUG
 make
 popd >/dev/null
 mv ./build/Linux/pcsx2 ../bin/
