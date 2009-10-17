@@ -36,7 +36,7 @@ using namespace R5900;
 
 FILE *emuLog;
 
-#ifdef PCSX2_DEVBUILD
+#if defined(PCSX2_DEVBUILD) || defined(__APPLE__)
 u32 varLog;
 
 // these used by the depreciated _old_Log only

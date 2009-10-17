@@ -72,7 +72,7 @@ namespace R3000A
 }
 
 extern bool enableLogging;
-#ifdef PCSX2_DEVBUILD
+#if defined(PCSX2_DEVBUILD) || defined(__APPLE__)
 
 extern u32 varLog;
 extern bool enableLogging;

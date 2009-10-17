@@ -216,7 +216,7 @@ using Console::Color_White;
 //   Consts for using if() statements instead of uglier #ifdef macros.
 //   Abbreviated macros for dev/debug only consoles and msgboxes.
 
-#ifdef PCSX2_DEVBUILD
+#if defined(PCSX2_DEVBUILD) || defined(__APPLE__)
 #	define DevCon Console
 #	define DevMsg MsgBox
 #else
