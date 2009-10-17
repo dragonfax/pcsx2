@@ -210,6 +210,7 @@ void __fastcall WriteFIFO_page_7(u32 mem, const mem128_t *value)
 			mem/16, ((u32*)value)[3], ((u32*)value)[2], ((u32*)value)[1], ((u32*)value)[0]);
 
 		//committing every 16 bytes
+		SAVE_REGISTERS();
 		ALIGN_STACK();
 		while( FIFOto_write((u32*)value, 1) == 0 )
 		{ 
@@ -217,5 +218,6 @@ void __fastcall WriteFIFO_page_7(u32 mem, const mem128_t *value)
 			Threading::Timeslice();
 		}
 		RESTORE_STACK();
+		RESTORE_REGISTERS();
 	}
 }
