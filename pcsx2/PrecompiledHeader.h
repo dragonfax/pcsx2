@@ -61,7 +61,11 @@ default: \
 // might as well add them here)
 
 #include <stddef.h>
+#ifdef __APPLE__
+#include <stdlib.h>
+#else
 #include <malloc.h>
+#endif
 #include <assert.h>
 #include <sys/stat.h>
 #include <pthread.h>
