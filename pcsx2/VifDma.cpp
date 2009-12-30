@@ -595,6 +595,22 @@ static void VIFunpack(u32 *data, vifCode *v, unsigned int size, const unsigned i
 	// The unpack type
 	unpackType = v->cmd & 0xf;
 
+	if(unpackType == 0xC && vifRegs->cycle.cl == vifRegs->cycle.wl) { //No use when SSE is available
+		// v4-32
+		if(vifRegs->mode == 0 && !(vifRegs->code & 0x10000000)){
+			if (v->size != size){
+				vifRegs->num -= size>>2;
+				ProcessMemSkip(size << 2, unpackType, VIFdmanum);
+				} 
+			else vifRegs->num = 0;
+			
+			memcpy_fast((u8*)dest, cdata, size << 2);
+			size = 0;
+			return;
+		}
+	}
+
+
 	_mm_prefetch((char*)data + 128, _MM_HINT_NTA);
 	
 	ft = &VIFfuncTable[ unpackType ];
