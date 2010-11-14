@@ -19,6 +19,7 @@ mkdir bios &>/dev/null
 mkdir frames &>/dev/null
 mkdir help &>/dev/null
 mkdir logs &>/dev/null
+mkdir plugins &>/dev/null
 mkdir sstates &>/dev/null
 popd >/dev/null
 echo "-------------------"
