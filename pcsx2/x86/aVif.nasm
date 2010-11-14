@@ -83,7 +83,7 @@ extern vifRow
 ; masked write (dest needs to be in edi)
 ; UNPACK_Write0_WriteMask(r0, CL, DEST_OFFSET, MOVDQA)
 %macro UNPACK_Write0_WriteMask 4
-	%4 XMM_WRITEMASK,  [VIF_TMPADDR + 64*%2 + 48]
+	%4 XMM_WRITEMASK,  [VIF_TMPADDR + 64*(%2) + 48]
 	pand %1, XMM_WRITEMASK
 	pandn XMM_WRITEMASK,  [VIF_DST]
 	por %1, XMM_WRITEMASK
@@ -148,9 +148,9 @@ extern vifRow
 ; setting up masks
 %macro UNPACK_Setup_Mask_SSE 1
 	mov VIF_TMPADDR, [vifMaskRegs]
-	movdqa XMM_ROWMASK,  [VIF_TMPADDR + 64*%1 + 16]
-	movdqa XMM_ROWCOLMASK,  [VIF_TMPADDR + 64*%1 + 32]
-	movdqa XMM_WRITEMASK,  [VIF_TMPADDR + 64*%1]
+	movdqa XMM_ROWMASK,  [VIF_TMPADDR + 64*(%1) + 16]
+	movdqa XMM_ROWCOLMASK,  [VIF_TMPADDR + 64*(%1) + 32]
+	movdqa XMM_WRITEMASK,  [VIF_TMPADDR + 64*(%1)]
 	pand XMM_ROWMASK, XMM_ROW
 	pand XMM_ROWCOLMASK, XMM_COL
 	por XMM_ROWCOLMASK, XMM_ROWMASK
@@ -163,8 +163,8 @@ extern vifRow
 
 %macro UNPACK_Start_Setup_Mask_SSE_1 1
 	mov VIF_TMPADDR, [vifMaskRegs]
-	movdqa XMM_ROWMASK,  [VIF_TMPADDR + 64*%1 + 16]
-	movdqa XMM_ROWCOLMASK,  [VIF_TMPADDR + 64*%1 + 32]
+	movdqa XMM_ROWMASK,  [VIF_TMPADDR + 64*(%1) + 16]
+	movdqa XMM_ROWCOLMASK,  [VIF_TMPADDR + 64*(%1) + 32]
 	pand XMM_ROWMASK, XMM_ROW
 	pand XMM_ROWCOLMASK, XMM_COL
 	por XMM_ROWCOLMASK, XMM_ROWMASK
