@@ -12,7 +12,6 @@
 	%define iopRecRecompile  		_iopRecRecompile
 	%define iopJITCompile				_iopJITCompile
 	%define iopJITCompileInBlock	_iopJITCompileInBlock
-	%define iopDispatcherReg		iopDispatcherReg
 	%define ioprecExecute					_ioprecExecute_asm	
 %else
 	%define psxRegs							psxRegs
@@ -20,7 +19,6 @@
 	%define iopRecRecompile  		iopRecRecompile
 	%define iopJITCompile				iopJITCompile
 	%define iopJITCompileInBlock	iopJITCompileInBlock
-	%define iopDispatcherReg		iopDispatcherReg
 	%define ioprecExecute					_ioprecExecute_asm		
 %endif
 
