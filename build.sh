@@ -12,6 +12,7 @@ for i in "$@"; do
 #check if devbuild requested
 	if [ "$i" == "--enable-devbuild" ]; then
 		DEVBUILD="--enable-devbuild"
+		DEVBUILD_CMAKE="-DDEVBUILD=1"
 	fi
 done
 pushd bin >/dev/null
@@ -124,20 +125,15 @@ make
 popd >/dev/null
 popd >/dev/null
 mv ./plugins/zeropad/build/libZeroPad.so.0.3.0 ./bin/plugins/libZeroPad.so
-echo "Building zzogl 0.17.156"
+echo "Building zzogl 0.21.213"
 pushd ./plugins/zzogl >/dev/null
-aclocal
-autoconf
-automake --add-missing
-rm -rf autom4te.cache >/dev/null &>/dev/null
-rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
-../configure --enable-devbuild --enable-sse2 $GDB
+cmake ../ $DEVBUILD_CMAKE
 make
 popd >/dev/null
 popd >/dev/null
-mv ./plugins/zzogl/build/libZeroGSogl.so.* ./bin/plugins/libZeroGSogl.so
+mv ./plugins/zzogl/build/libZeroGSogl*.so.* ./bin/plugins/libZeroGSogl.so
 cp ./plugins/zzogl/ps2hw.dat ./bin/plugins
 
 echo "--------------"
