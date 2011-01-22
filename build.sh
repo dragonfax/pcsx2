@@ -130,7 +130,7 @@ echo "Building zzogl 0.21.213"
 pushd ./plugins/zzogl >/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
-cmake ../ $DEVBUILD_CMAKE
+cmake ../ $DEVBUILD_CMAKE $DEBUG_CMAKE
 make
 popd >/dev/null
 popd >/dev/null
