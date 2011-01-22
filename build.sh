@@ -8,6 +8,7 @@ for i in "$@"; do
 #check if debug build enabled
 	if [ "$i" == "--enable-debug" ]; then
 		DEBUG="--enable-debug"
+		DEBUG_CMAKE="-DCMAKE_BUILD_TYPE=Debug"
 	fi
 #check if devbuild requested
 	if [ "$i" == "--enable-devbuild" ]; then
@@ -135,6 +136,15 @@ popd >/dev/null
 popd >/dev/null
 mv ./plugins/zzogl/build/libZeroGSogl*.so.* ./bin/plugins/libZeroGSogl.so
 cp ./plugins/zzogl/ps2hw.dat ./bin/plugins
+echo "Building zeroSPU2"
+pushd ./plugins/zerospu2 >/dev/null
+mkdir build &>/dev/null
+pushd build >/dev/null
+cmake ../ $DEVBUILD_CMAKE $DEBUG_CMAKE
+make
+popd >/dev/null
+popd >/dev/null
+mv ./plugins/zerospu2/build/libZeroSPU2*.so.* ./bin/plugins/libZeroSPU2.so
 
 echo "--------------"
 echo "Building pcsx2"
