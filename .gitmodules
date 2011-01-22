@@ -1,0 +1,3 @@
+[submodule "plugins/zzogl"]
+	path = plugins/zzogl
+	url = ssh://root@pcsx2mac.net/home/admin/git.pcsx2mac.net/zzogl
