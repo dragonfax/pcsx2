@@ -27,26 +27,175 @@ static uptr current_offset = 0;
 static uptr offset_counter = 0;
 bool Slots[5] = { false, false, false, false, false };
 
-#if defined(__APPLE__) && defined(MACH_EXCEPTIONS)
+#ifdef __APPLE__
+
 #include <mach/mach.h>
-kern_return_t
-catch_exception_raise(mach_port_t exception_port,
-                      mach_port_t thread,
-                      mach_port_t task,
-                      exception_type_t exception,
-                      exception_data_t code_vector,
-                      mach_msg_type_number_t code_count)
+#include <mach/mach_error.h>
+#include <mach/thread_status.h>
+#include <mach/exception.h>
+#include <mach/task.h>
+#include <pthread.h>
+
+/* These are not defined in any header, although they are documented */
+extern "C" boolean_t exc_server(mach_msg_header_t *,mach_msg_header_t *);
+extern "C" kern_return_t exception_raise(
+    mach_port_t,mach_port_t,mach_port_t,
+    exception_type_t,exception_data_t,mach_msg_type_number_t);
+extern "C" kern_return_t exception_raise_state(
+    mach_port_t,mach_port_t,mach_port_t,
+    exception_type_t,exception_data_t,mach_msg_type_number_t,
+    thread_state_flavor_t*,thread_state_t,mach_msg_type_number_t,
+    thread_state_t,mach_msg_type_number_t*);
+extern "C" kern_return_t exception_raise_state_identity(
+    mach_port_t,mach_port_t,mach_port_t,
+    exception_type_t,exception_data_t,mach_msg_type_number_t,
+    thread_state_flavor_t*,thread_state_t,mach_msg_type_number_t,
+    thread_state_t,mach_msg_type_number_t*);
+
+#define MAX_EXCEPTION_PORTS 16
+
+static struct {
+    mach_msg_type_number_t count;
+    exception_mask_t      masks[MAX_EXCEPTION_PORTS];
+    exception_handler_t   ports[MAX_EXCEPTION_PORTS];
+    exception_behavior_t  behaviors[MAX_EXCEPTION_PORTS];
+    thread_state_flavor_t flavors[MAX_EXCEPTION_PORTS];
+} old_exc_ports;
+
+static mach_port_t exception_port;
+
+void *exception_handler(void *arg)
 {
-	// get bad virtual address
-	uptr offset = (u8*)info->si_addr - psM;
-		
-	mmap_ClearCpuBlock( offset & ~m_pagemask );
-	return KERN_SUCCESS;
+	mach_msg_server(exc_server, 2048, exception_port, 0);
 }
+
+/* The source code for Apple's GDB was used as a reference for the exception
+   forwarding code. This code is similar to be GDB code only because there is 
+   only one way to do it. */
+static kern_return_t forward_exception(
+        mach_port_t thread,
+        mach_port_t task,
+        exception_type_t exception,
+        exception_data_t data,
+        mach_msg_type_number_t data_count
+) {
+    int i;
+    kern_return_t r;
+    mach_port_t port;
+    exception_behavior_t behavior;
+    thread_state_flavor_t flavor;
+    
+    thread_state_data_t thread_state;
+    mach_msg_type_number_t thread_state_count = THREAD_STATE_MAX;
+        
+    for(i=0;i<old_exc_ports.count;i++)
+        if(old_exc_ports.masks[i] & (1 << exception))
+            break;
+    //if(i==old_exc_ports.count) ABORT("No handler for exception!");
+    
+    port = old_exc_ports.ports[i];
+    behavior = old_exc_ports.behaviors[i];
+    flavor = old_exc_ports.flavors[i];
+
+    if(behavior != EXCEPTION_DEFAULT) {
+        r = thread_get_state(thread,flavor,thread_state,&thread_state_count);
+        if(r != KERN_SUCCESS)
+    			return r;
+		}
+    
+    switch(behavior) {
+        case EXCEPTION_DEFAULT:
+            r = exception_raise(port,thread,task,exception,data,data_count);
+            break;
+        case EXCEPTION_STATE:
+            r = exception_raise_state(port,thread,task,exception,data,
+                data_count,&flavor,thread_state,thread_state_count,
+                thread_state,&thread_state_count);
+            break;
+        case EXCEPTION_STATE_IDENTITY:
+            r = exception_raise_state_identity(port,thread,task,exception,data,
+                data_count,&flavor,thread_state,thread_state_count,
+                thread_state,&thread_state_count);
+            break;
+        default:
+            r = KERN_FAILURE; /* make gcc happy */
+            break;
+    }
+    
+    if(behavior != EXCEPTION_DEFAULT) {
+        r = thread_set_state(thread,flavor,thread_state,thread_state_count);
+        if(r != KERN_SUCCESS)
+					return r;
+    }
+    
+    return r;
+}
+
+#define FWD() forward_exception(thread,task,exception,code,code_count)
+
+extern "C" __attribute__ ((visibility("default"))) 
+kern_return_t
+catch_exception_raise(
+   mach_port_t exception_port,mach_port_t thread,mach_port_t task,
+   exception_type_t exception,exception_data_t code,
+   mach_msg_type_number_t code_count
+) {
+	
+	kern_return_t r;
+
+	thread_state_flavor_t flavor = i386_EXCEPTION_STATE;
+	mach_msg_type_number_t exc_state_count = x86_EXCEPTION_STATE_COUNT;
+	i386_exception_state_t exc_state;
+
+	// forward all the exceptions which aren't EXC_BAD_ACCESS further just in case
+	if(exception != EXC_BAD_ACCESS) {
+			return FWD();
+	}
+
+	r = thread_get_state(thread,flavor,
+			(natural_t*)&exc_state,&exc_state_count);
+   
+	void* addr = (void *) exc_state.__faultvaddr;
+
+	Source_PageFault->Dispatch( PageFaultInfo( (uptr)(addr) & ~m_pagemask ) );   	
+   
+	// resumes execution right where we left off (re-executes instruction that
+	// caused the SIGSEGV).
+	if( Source_PageFault->WasHandled() ) return KERN_SUCCESS;
+
+	// Bad mojo!  Completely invalid address.
+	// Instigate a trap if we're in a debugger, and if not then do a SIGKILL.
+
+	wxTrap();
+
+	return KERN_INVALID_ARGUMENT;
+}
+#undef FWD
+
+/* These should never be called, but just in case...  */
+extern "C"  __attribute__ ((visibility("default"))) 
+kern_return_t catch_exception_raise_state(mach_port_name_t exception_port,
+    int exception, exception_data_t code, mach_msg_type_number_t codeCnt,
+    int flavor, thread_state_t old_state, int old_stateCnt,
+    thread_state_t new_state, int new_stateCnt)
+{
+    return(KERN_INVALID_ARGUMENT);
+}
+extern "C"  __attribute__ ((visibility("default"))) 
+kern_return_t catch_exception_raise_state_identity(
+    mach_port_name_t exception_port, mach_port_t thread, mach_port_t task,
+    int exception, exception_data_t code, mach_msg_type_number_t codeCnt,
+    int flavor, thread_state_t old_state, int old_stateCnt, 
+    thread_state_t new_state, int new_stateCnt)
+{
+    return(KERN_INVALID_ARGUMENT);
+}
+
 #endif
 
 __noinline void InstallLinuxExceptionHandler()
 {
+#ifndef __APPLE__
 	struct sigaction sa;
 	
 	sigemptyset(&sa.sa_mask);
@@ -54,14 +203,62 @@ __noinline void InstallLinuxExceptionHandler()
 	sa.sa_sigaction = &SysPageFaultExceptionFilter;
 	//int res = sigaction(SIGSEGV, &sa, NULL); 
 	int res = sigaction(SIGBUS,&sa, NULL);	
+#else
+	kern_return_t r;
+	mach_port_t me;
+	pthread_t thread;
+	pthread_attr_t attr;
+	exception_mask_t mask;
+
+	me = mach_task_self();
+	r = mach_port_allocate(me,MACH_PORT_RIGHT_RECEIVE,&exception_port);
+	if(r != MACH_MSG_SUCCESS) Console.WriteLn("mach_port_allocate failed...");
+	
+	r = mach_port_insert_right(me,exception_port,exception_port,
+		MACH_MSG_TYPE_MAKE_SEND);
+	if(r != MACH_MSG_SUCCESS) Console.WriteLn("mach_port_insert_right failed...");
+
+  mask = EXC_MASK_BAD_ACCESS;	// this is equivalent to SIGSEGV in linux world
+
+	/* get the old exception ports */
+	r = task_get_exception_ports(
+			me,
+			mask,
+			old_exc_ports.masks,
+			&old_exc_ports.count,
+			old_exc_ports.ports,
+			old_exc_ports.behaviors,
+			old_exc_ports.flavors
+	);
+	if(r != MACH_MSG_SUCCESS) Console.WriteLn("task_get_exception_ports failed...");
+
+	/* set the new exception ports */
+	r = task_set_exception_ports(
+			me,
+			mask,
+			exception_port,
+			EXCEPTION_DEFAULT,
+			MACHINE_THREAD_STATE
+	);
+	if(r != MACH_MSG_SUCCESS) Console.WriteLn("task_set_exception_ports failed...");	
+
+	// create the exception handling thread
+	if(pthread_attr_init(&attr) != 0) Console.WriteLn("pthread_attr_init failed...");
+	if(pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_DETACHED) != 0) 
+			Console.WriteLn("pthread_attr_setdetachedstate failed...");
+	
+	if(pthread_create(&thread,&attr,exception_handler,NULL) != 0)
+			Console.WriteLn("pthread_create for mach exception handler failed...");
+	pthread_attr_destroy(&attr);	
+#endif
 }
 
 __noinline void ReleaseLinuxExceptionHandler()
 {
 	// This may be called too early or something, since implementing it causes all games to segfault.
 	// I'll look in to it. --arcum42
-}
-
+} 
+ 
 __noinline void KillLinuxExceptionHandler()
 {
 	struct sigaction sa;
