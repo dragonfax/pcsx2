@@ -27,6 +27,8 @@ static uptr current_offset = 0;
 static uptr offset_counter = 0;
 bool Slots[5] = { false, false, false, false, false };
 
+static const uptr m_pagemask = getpagesize()-1;
+
 #ifdef __APPLE__
 
 #include <mach/mach.h>
@@ -157,18 +159,36 @@ catch_exception_raise(
    
 	void* addr = (void *) exc_state.__faultvaddr;
 
-	Source_PageFault->Dispatch( PageFaultInfo( (uptr)(addr) & ~m_pagemask ) );   	
-   
-	// resumes execution right where we left off (re-executes instruction that
-	// caused the SIGSEGV).
-	if( Source_PageFault->WasHandled() ) return KERN_SUCCESS;
+	// get bad virtual address
+	uptr offset = (u8*)addr - psM;
+	
+	if (offset != current_offset)
+	{
+		current_offset = offset;
+		offset_counter = 0;
+	}
+	else
+	{
+		offset_counter++;
+		if (offset_counter > 500) 
+		{
+			DevCon::Status( "Offset 0x%x endlessly repeating. Aborting.", params offset );
+			assert( false );
+			return KERN_INVALID_ARGUMENT;
+		}
+	}
 
-	// Bad mojo!  Completely invalid address.
-	// Instigate a trap if we're in a debugger, and if not then do a SIGKILL.
-
-	wxTrap();
-
-	return KERN_INVALID_ARGUMENT;
+	if (offset>=Ps2MemSize::Base)
+	{
+		// Bad mojo!  Completely invalid address.
+		// Instigate a crash or abort emulation or something.
+		DevCon::Status( "Offset 0x%x invalid. Legit SIGSEGV. Aborting.", params offset );
+		assert( false );
+		return KERN_INVALID_ARGUMENT;
+	}
+	
+	mmap_ClearCpuBlock( offset & ~m_pagemask );
+	return KERN_SUCCESS;
 }
 #undef FWD
 
@@ -212,11 +232,11 @@ __noinline void InstallLinuxExceptionHandler()
 
 	me = mach_task_self();
 	r = mach_port_allocate(me,MACH_PORT_RIGHT_RECEIVE,&exception_port);
-	if(r != MACH_MSG_SUCCESS) Console.WriteLn("mach_port_allocate failed...");
+	if(r != MACH_MSG_SUCCESS) DevCon::Status("mach_port_allocate failed...");
 	
 	r = mach_port_insert_right(me,exception_port,exception_port,
 		MACH_MSG_TYPE_MAKE_SEND);
-	if(r != MACH_MSG_SUCCESS) Console.WriteLn("mach_port_insert_right failed...");
+	if(r != MACH_MSG_SUCCESS) DevCon::Status("mach_port_insert_right failed...");
 
   mask = EXC_MASK_BAD_ACCESS;	// this is equivalent to SIGSEGV in linux world
 
@@ -230,7 +250,7 @@ __noinline void InstallLinuxExceptionHandler()
 			old_exc_ports.behaviors,
 			old_exc_ports.flavors
 	);
-	if(r != MACH_MSG_SUCCESS) Console.WriteLn("task_get_exception_ports failed...");
+	if(r != MACH_MSG_SUCCESS) DevCon::Status("task_get_exception_ports failed...");
 
 	/* set the new exception ports */
 	r = task_set_exception_ports(
@@ -240,15 +260,15 @@ __noinline void InstallLinuxExceptionHandler()
 			EXCEPTION_DEFAULT,
 			MACHINE_THREAD_STATE
 	);
-	if(r != MACH_MSG_SUCCESS) Console.WriteLn("task_set_exception_ports failed...");	
+	if(r != MACH_MSG_SUCCESS) DevCon::Status("task_set_exception_ports failed...");	
 
 	// create the exception handling thread
-	if(pthread_attr_init(&attr) != 0) Console.WriteLn("pthread_attr_init failed...");
+	if(pthread_attr_init(&attr) != 0) DevCon::Status("pthread_attr_init failed...");
 	if(pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_DETACHED) != 0) 
-			Console.WriteLn("pthread_attr_setdetachedstate failed...");
+			DevCon::Status("pthread_attr_setdetachedstate failed...");
 	
 	if(pthread_create(&thread,&attr,exception_handler,NULL) != 0)
-			Console.WriteLn("pthread_create for mach exception handler failed...");
+			DevCon::Status("pthread_create for mach exception handler failed...");
 	pthread_attr_destroy(&attr);	
 #endif
 }
@@ -269,7 +289,6 @@ __noinline void KillLinuxExceptionHandler()
 	//int res = sigaction(SIGSEGV, &sa, NULL);
 	int res = sigaction(SIGBUS,&sa, NULL);
 }
-static const uptr m_pagemask = getpagesize()-1;
 
 // Linux implementation of SIGSEGV handler.  Bind it using sigaction().
 __noinline void SysPageFaultExceptionFilter( int signal, siginfo_t *info, void * )
