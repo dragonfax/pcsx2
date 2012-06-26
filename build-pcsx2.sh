@@ -33,7 +33,7 @@ rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
 ../configure $DEVBUILD --enable-sse3 $GDB $DEBUG
-make
+make -j3
 popd >/dev/null
 mv ./build/Linux/pcsx2 ../bin/
 popd >/dev/null
