@@ -123,6 +123,8 @@ void OnConf_Cancel(GtkButton *button, gpointer user_data)
 
 EXPORT_C_(void) FWconfigure() 
 {
+	int *argc; char ***argv;
+	gtk_init(argc, argv);
 	LoadConfig();
 	Conf = create_Config();
 
