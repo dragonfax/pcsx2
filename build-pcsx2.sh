@@ -1,5 +1,5 @@
 #!/bin/sh
-export PKG_CONFIG_PATH=/usr/X11/lib/pkgconfig:/usr/local/pcsx2/lib/pgkconfig:/usr/local/lib/pkgconifg
+export PKG_CONFIG_PATH=/usr/X11/lib/pkgconfig:/usr/local/pcsx2/lib/pgkconfig:/usr/local/lib/pkgconfig
 for i in "$@"; do
 #check if gdb support is requested
 	if [ "$i" == "--enable-gdb" ]; then
