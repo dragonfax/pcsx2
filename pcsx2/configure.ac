@@ -103,9 +103,9 @@ then
   CCASFLAGS=
 fi
 
-CFLAGS="-m32 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__ "
-CPPFLAGS="-m32 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__ "
-CXXFLAGS="-m32 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__ "
+CFLAGS="-m32 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__ -fno-stack-protector -D_FORTIFY_SOURCE=0 "
+CPPFLAGS="-m32 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__ -fno-stack-protector -D_FORTIFY_SOURCE=0 "
+CXXFLAGS="-m32 -I/usr/X11/include -L/usr/X11/lib -D__LINUX__ -fno-stack-protector -D_FORTIFY_SOURCE=0 "
 
 LDFLAGS="-lX11 -Wl,-dylib_file,/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib:/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib -framework Cg"
 

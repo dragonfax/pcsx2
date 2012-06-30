@@ -1,5 +1,5 @@
 #!/bin/sh
-export PKG_CONFIG_PATH=/usr/X11/lib/pkgconfig:/usr/local/pcsx2/lib/pgkconfig:/usr/local/lib/pkgconfig
+export PKG_CONFIG_PATH=/usr/X11/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/local/pcsx2/lib/pkgconfig
 for i in "$@"; do
 #check if gdb support is requested
 	if [ "$i" == "--enable-gdb" ]; then
@@ -33,7 +33,7 @@ rm -rf build >/dev/null &>/dev/null
 mkdir build &>/dev/null
 pushd build >/dev/null
 ../configure $DEVBUILD --enable-sse3 $GDB $DEBUG
-make -j3
+make -j4
 popd >/dev/null
 mv ./build/Linux/pcsx2 ../bin/
 popd >/dev/null
