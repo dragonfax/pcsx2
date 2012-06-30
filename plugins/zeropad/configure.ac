@@ -56,14 +56,14 @@ AC_MSG_RESULT($debug)
 
 AC_CHECK_FUNCS([ _aligned_malloc _aligned_free ], AC_DEFINE(HAVE_ALIGNED_MALLOC))
 
-AC_CHECK_LIB(SDL,SDL_Init,[])
-
 dnl gtk
 AC_MSG_CHECKING(gtk2+)
 AC_CHECK_PROG(GTK_CONFIG, pkg-config, pkg-config)
 LIBS+=$(pkg-config --libs gtk+-2.0 sdl)
 CFLAGS+="$(pkg-config --cflags gtk+-2.0 sdl) "
 CXXFLAGS+="$(pkg-config --cflags gtk+-2.0 sdl) "
+
+AC_CHECK_LIB(SDL,SDL_Init,[])
 
 dnl AC_CHECK_HEADER([SDL/SDL.h], [AC_DEFINE(JOYSTICK_SUPPORT,1)])
 
