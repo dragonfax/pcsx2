@@ -10,11 +10,18 @@ if(AIO_INCLUDE_DIR AND AIO_LIBRARIES)
 endif(AIO_INCLUDE_DIR AND AIO_LIBRARIES)
 
 # include dir
-find_path(AIO_INCLUDE_DIR libaio.h)
+if(MacOSX)
+  # OSX implements aio in the kernel
+  find_path(AIO_INCLUDE_DIR aio.h)
+  set(AIO_LIBRARIES '')
+else(MacOSX)
+  find_path(AIO_INCLUDE_DIR libaio.h)
 
-# finally the library itself
-find_library(LIBAIO NAMES aio)
-set(AIO_LIBRARIES ${LIBAIO})
+  # finally the library itself
+  find_library(LIBAIO NAMES aio)
+  set(AIO_LIBRARIES ${LIBAIO})
+endif(MacOSX)
+
 
 # handle the QUIETLY and REQUIRED arguments and set AIO_FOUND to TRUE if
 # all listed variables are TRUE

@@ -68,8 +68,7 @@ else
     cmake $flags .. 2>&1 | tee -a ../install_log.txt
 fi
 
-CORE=`grep -w -c processor /proc/cpuinfo`
+CORE=`sysctl -n hw.ncpu`
 make -j $CORE 2>&1 | tee -a ../install_log.txt
-make install 2>&1 | tee -a ../install_log.txt
 
 cd ..
