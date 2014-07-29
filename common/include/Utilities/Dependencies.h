@@ -195,6 +195,9 @@ public:
 // --------------------------------------------------------------------------------------
 //  Handy Human-readable constants for common immediate values (_16kb -> _4gb)
 
+typedef u32 uptr;
+typedef s32 sptr;
+
 static const sptr _1kb		= 1024 * 1;
 static const sptr _16kb		= _1kb * 16;
 static const sptr _64kb		= _1kb * 64;

@@ -102,8 +102,8 @@ typedef union _LARGE_INTEGER
 typedef u64 uptr;
 typedef s64 sptr;
 #else
-typedef u32 uptr;
-typedef s32 sptr;
+// typedef u32 uptr;
+// typedef s32 sptr;
 #endif
 #endif
 
