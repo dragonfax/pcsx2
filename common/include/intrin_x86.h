@@ -849,10 +849,11 @@ static __inline__ __attribute__((always_inline)) unsigned long long __rdtsc(void
 
 
 /*** Interrupts ***/
-static __inline__ __attribute__((always_inline)) void __debugbreak(void)
+/*static __inline__ __attribute__((always_inline)) void __debugbreak(void)
 {
 	__asm__("int $3");
 }
+*/
 
 static __inline__ __attribute__((always_inline)) void __int2c(void)
 {

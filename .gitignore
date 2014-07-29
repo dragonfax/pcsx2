@@ -1,0 +1,7 @@
+build/
+**/Makefile.in
+
+**/aclocal.m4
+**/compile
+**/configure
+**/depcomp
