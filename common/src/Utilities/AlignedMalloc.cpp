@@ -49,6 +49,8 @@ void* __fastcall pcsx2_aligned_malloc(size_t size, size_t align)
 #endif
 }
 
+#define MIN(a,b) (((a)<(b))?(a):(b))
+
 void* __fastcall pcsx2_aligned_realloc(void* handle, size_t size, size_t align)
 {
 	pxAssert( align < 0x10000 );
@@ -62,7 +64,7 @@ void* __fastcall pcsx2_aligned_realloc(void* handle, size_t size, size_t align)
 		free( handle );
 #else
 		AlignedMallocHeader* header = (AlignedMallocHeader*)((uptr)handle - headsize);
-		memcpy_fast( newbuf, handle, std::min( size, header->size ) );
+		memcpy_fast( newbuf, handle, MIN( size, header->size ) );
 		free( header->baseptr );
 #endif
 	}

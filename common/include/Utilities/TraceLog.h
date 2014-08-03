@@ -193,6 +193,11 @@ public:
 		return false;
 	}
 
+	bool Write( const wxString fmt ) const
+	{
+		return Write((const char *)fmt.mb_str());
+    }
+
 	// Writes to the console using the specified color.  This overrides the default color setting
 	// for this log.
 	bool Write( ConsoleColors color, const char* fmt, ... ) const

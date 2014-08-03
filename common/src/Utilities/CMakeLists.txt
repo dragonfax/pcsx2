@@ -12,6 +12,7 @@ set(Output Utilities)
 # set common flags
 set(CommonFlags 
 	-fno-strict-aliasing
+	-Wno-non-pod-varargs
     )
 
 # set optimization flags

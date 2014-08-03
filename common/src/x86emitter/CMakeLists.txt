@@ -12,6 +12,7 @@ set(Output x86emitter)
 # set common flags
 set(CommonFlags 
 	-fno-strict-aliasing
+	-Wno-non-pod-varargs
     )
 
 # set optimization flags

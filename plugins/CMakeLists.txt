@@ -67,9 +67,9 @@ endif(EXISTS "${CMAKE_SOURCE_DIR}/plugins/GSnull" AND GSnull)
 #endif(EXISTS "${CMAKE_SOURCE_DIR}/plugins/LilyPad" AND LilyPad)
 
 # make onepad
-if(EXISTS "${CMAKE_SOURCE_DIR}/plugins/onepad" AND onepad)
-	add_subdirectory(onepad)
-endif(EXISTS "${CMAKE_SOURCE_DIR}/plugins/onepad" AND onepad)
+#if(EXISTS "${CMAKE_SOURCE_DIR}/plugins/onepad" AND onepad)
+#	add_subdirectory(onepad)
+#endif(EXISTS "${CMAKE_SOURCE_DIR}/plugins/onepad" AND onepad)
 
 # make PadNull
 if(EXISTS "${CMAKE_SOURCE_DIR}/plugins/PadNull" AND PadNull)

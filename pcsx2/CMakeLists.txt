@@ -18,7 +18,7 @@ set(CommonFlags
     -Wno-char-subscripts # only impact svu which is deprecated
     -Wno-missing-braces
     -Wno-ignored-attributes
-    -Wnon-pod-varargs
+    -Wno-non-pod-varargs
 	)
 
 # set optimization flags
