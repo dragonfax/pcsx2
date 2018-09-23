@@ -555,6 +555,7 @@ void Panels::PluginSelectorPanel::DoRefresh()
 
 bool Panels::PluginSelectorPanel::ValidateEnumerationStatus()
 {
+	Console.WriteLn(L"plugin selectorPanel");
 	if( m_EnumeratorThread ) return true;		// Cant reset file lists while we're busy enumerating...
 
 	bool validated = true;

@@ -62,6 +62,7 @@ if [ -x `which ldd` ]
 then
     for plugin in `find $DIR/plugins -iname "lib*.so"`
     do
+        # use otool -L on macos
         if [ `ldd $plugin | grep -c found` != 0 ]
         then
             echo "ERROR the plugin ($plugin) miss some dependencies"

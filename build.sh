@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License along with PCSX2.
 # If not, see <http://www.gnu.org/licenses/>.
 
-set -e # This terminates the script in case of any error
+# set -e # This terminates the script in case of any error
 
 flags="-DCMAKE_BUILD_PO=FALSE"
 

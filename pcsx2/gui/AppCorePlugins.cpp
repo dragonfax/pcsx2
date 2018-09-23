@@ -410,6 +410,7 @@ protected:
 
 int EnumeratePluginsInFolder(const wxDirName& searchpath, wxArrayString* dest)
 {
+Console.WriteLn(L"Enumerating plugins");
 	if (!searchpath.Exists()) return 0;
 
 	std::unique_ptr<wxArrayString> placebo;
@@ -426,9 +427,14 @@ int EnumeratePluginsInFolder(const wxDirName& searchpath, wxArrayString* dest)
 #else
 	// Other platforms seem to like to version their libs after the .so extension:
 	//    blah.so.3.1.fail?
+	// wxString pattern( L"*%s*" );
 	wxString pattern( L"*%s*" );
 #endif
 
+
+Console.WriteLn(WX_STR(searchpath.ToString()));
+Console.WriteLn(WX_STR(wxDynamicLibrary::GetDllExt()));
+//  Console.WriteLn((wxString)pxsFmt( pattern, WX_STR(wxDynamicLibrary::GetDllExt())));
 	wxDir::GetAllFiles( searchpath.ToString(), realdest, pxsFmt( pattern, WX_STR(wxDynamicLibrary::GetDllExt())), wxDIR_FILES );
 
 	// SECURITY ISSUE:  (applies primarily to Windows, but is a good idea on any platform)
@@ -442,6 +448,7 @@ int EnumeratePluginsInFolder(const wxDirName& searchpath, wxArrayString* dest)
 
 	for (uint i=0; i<realdest->GetCount(); ++i )
 	{
+		Console.WriteLn((*realdest)[i]);
 		(*realdest)[i] = Path::MakeAbsolute((*realdest)[i]);
 	}
 

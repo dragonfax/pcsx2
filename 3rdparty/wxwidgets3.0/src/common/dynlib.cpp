@@ -169,16 +169,6 @@ wxString wxDynamicLibrary::GetDllExt(wxDynamicLibraryCategory cat)
     return ".dll";
 #elif defined(__HPUX__)
     return ".sl";
-#elif defined(__DARWIN__)
-    switch ( cat )
-    {
-        case wxDL_LIBRARY:
-            return ".dylib";
-        case wxDL_MODULE:
-            return ".bundle";
-    }
-    wxFAIL_MSG("unreachable");
-    return wxString(); // silence gcc warning
 #else
     return ".so";
 #endif
@@ -192,7 +182,6 @@ wxDynamicLibrary::CanonicalizeName(const wxString& name,
     wxString nameCanonic;
 
     // under Unix the library names usually start with "lib" prefix, add it
-#if defined(__UNIX__) && !defined(__EMX__)
     switch ( cat )
     {
         case wxDL_LIBRARY:
@@ -203,7 +192,6 @@ wxDynamicLibrary::CanonicalizeName(const wxString& name,
             // Module names are arbitrary and should have no prefix added.
             break;
     }
-#endif
 
     nameCanonic << name << GetDllExt(cat);
 
