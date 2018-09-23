@@ -20,7 +20,6 @@
 #define __PADLINUX_H__
 
 #include "Pad.h"
-#include <X11/Xlib.h>
 
 void _PadUpdate(int pad);
 s32 _PADOpen(void *pDsp);
