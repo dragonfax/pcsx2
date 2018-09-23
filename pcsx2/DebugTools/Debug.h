@@ -348,7 +348,7 @@ extern void __Log( const char* fmt, ... );
 #   define                          SetDoubleBuffered(x)
 
     // TODO OSX OsxKeyCodes.cpp pending
-#   define NewPipeRedir(x)          NULL
+//   define NewPipeRedir(x)          NULL
 #endif
 
 #define macTrace(trace)	SysTraceActive(trace) && SysTrace.trace.Write

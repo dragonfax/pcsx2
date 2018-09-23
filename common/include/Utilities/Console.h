@@ -233,9 +233,7 @@ public:
 
 extern IConsoleWriter Console;
 
-#if defined(__unix__)
 extern void Console_SetStdout(FILE *fp);
-#endif
 extern void Console_SetActiveHandler(const IConsoleWriter &writer, FILE *flushfp = NULL);
 
 extern const IConsoleWriter ConsoleWriter_Null;
