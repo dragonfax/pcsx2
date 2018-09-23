@@ -203,9 +203,7 @@ endif(NOT GLSL_API)
 set(zzoglFinalLibs
     ${zzoglFinalLibs}
     ${GLEW_LIBRARY}
-    ${X11_LIBRARIES}
     ${JPEG_LIBRARIES}
-    ${GTK2_LIBRARIES}
     ${ZLIB_LIBRARIES}
     ${LIBC_LIBRARIES}
 )
@@ -214,6 +212,8 @@ add_pcsx2_plugin(${Output} "${zzoglFinalSources}" "${zzoglFinalLibs}" "${zzoglFi
 
 # Trick that allow to compile zzogl with GSOPEN2 and the replayer with GSOPEN
 set_target_properties(${Output} PROPERTIES COMPILE_DEFINITIONS USE_GSOPEN2)
+
+target_link_libraries(${Output} ${GLFW_LIBRARY})
 
 if(NOT GLSL_API AND NOT REBUILD_SHADER)
     if(PACKAGE_MODE)

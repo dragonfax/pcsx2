@@ -26,6 +26,14 @@
 
 #else
 
+#ifdef __APPLE__
+#include <stdlib.h>
+#include <unistd.h>
+#include <GL/gl.h>
+#include <GLFW/glfw3.h>
+
+#else
+
 #define GL_X11_WINDOW
 #include <stdlib.h>
 #include <X11/Xlib.h>
@@ -37,6 +45,8 @@
 #else
 #define GLX_API
 #include <GL/glx.h>
+
+#endif
 
 #endif
 
@@ -65,46 +75,16 @@ extern void OnFKey(int key, int shift);
 class GLWindow
 {
 	private:
-#if defined(GL_X11_WINDOW)
 		void GetWindowSize();
-		void PrintProtocolVersion();
-#endif
 		bool CreateContextGL(int, int);
 		bool CreateContextGL();
 
-#ifdef GLX_API
-		Display *NativeDisplay;
-		Window NativeWindow;
-
-		GLXContext glxContext;
-
-		_PFNSWAPINTERVAL swapinterval;
-#endif
-
-#ifdef EGL_API
-		EGLNativeWindowType NativeWindow;
-		EGLNativeDisplayType NativeDisplay;
-
-		EGLDisplay eglDisplay;
-		EGLSurface eglSurface;
-		EGLContext eglContext;
-
-
-		EGLBoolean OpenEGLDisplay();
-		void CloseEGLDisplay();
-#endif
-
-#ifdef WGL_API
-		HWND	NativeWindow;
-		HDC		NativeDisplay; // hDC // Private GDI Device Context
-		HGLRC	wglContext; // hRC // Permanent Rendering Context
-
-		bool OpenWGLDisplay();
-		void CloseWGLDisplay();
-#endif
 
 		bool vsync_supported;
 
+#ifdef __APPLE__
+	GLFWwindow* window;
+#endif
 
 	public:
 		char title[256];
@@ -118,8 +98,6 @@ class GLWindow
 		bool DisplayWindow(int _width, int _height);
 		void SetTitle(char *strtitle);
 		void ProcessEvents();
-
-		void* GetProcAddress(const char* function);
 
 		void SetVsync(bool enable);
 		void InitVsync(bool extension); // dummy in EGL
@@ -136,13 +114,9 @@ class GLWindow
 				conf.height = nNewHeight;
 			}
 		}
+
 		
 		GLWindow() {
-#ifdef WGL_API
-			NativeWindow = NULL;
-			NativeDisplay = NULL;
-			wglContext = NULL;
-#endif
 		}
 };
 

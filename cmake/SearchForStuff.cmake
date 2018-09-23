@@ -75,6 +75,7 @@ include(FindLibc)
 if(EXTRA_PLUGINS)
     include(FindCg)
     include(FindGlew)
+    include(FindGlfw)
     find_package(JPEG)
 endif()
 
@@ -155,6 +156,10 @@ endif()
 
 if(GLEW_FOUND)
     include_directories(${GLEW_INCLUDE_DIR})
+endif()
+
+if(GLFW_FOUND)
+    include_directories(${GLFW_INCLUDE_DIR})
 endif()
 
 if(OPENGL_FOUND)

@@ -342,7 +342,6 @@ inline bool CreateFillExtensionsMap()
 	string all_ext("");
 
 	PFNGLGETSTRINGIPROC glGetStringi = 0;
-	glGetStringi = (PFNGLGETSTRINGIPROC)GLWin.GetProcAddress("glGetStringi");
 	glGetIntegerv(GL_NUM_EXTENSIONS, &max_ext);
 
     if (glGetStringi && max_ext) {

@@ -41,9 +41,9 @@
 #include <sys/stat.h>
 
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <GL/gl.h>
 #include <GL/glext.h>
-#include <gtk/gtk.h>
 
 #include <cstring>
 #include <string>

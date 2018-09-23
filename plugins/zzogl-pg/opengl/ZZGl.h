@@ -34,11 +34,21 @@
 
 #else
 
+#ifdef __APPLE__
+#include <GL/glew.h>
+#include <GL/gl.h>
+#include <GL/glext.h>
+#include <GLFW/glfw3.h>
+
+#else
+
 // adding glew support instead of glXGetProcAddress (thanks to scaught)
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glext.h>
 #include <GL/glx.h>
+
+#endif
 
 #endif
 

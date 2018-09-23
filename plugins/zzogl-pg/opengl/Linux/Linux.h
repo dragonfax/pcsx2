@@ -26,6 +26,5 @@ struct confOptsStruct
 } confOpts;
 
 
-void OnToggle_advopts(GtkCellRendererToggle *cell, gchar *path, gpointer user_data);
 
 #endif
