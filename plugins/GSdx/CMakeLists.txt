@@ -43,7 +43,6 @@ if(OPENCL_API)
 endif()
 
 set(GSdxSources
-    GLLoader.cpp
     GLState.cpp
     PSX/GPU.cpp
     PSX/GPUDrawScanline.cpp
@@ -117,7 +116,6 @@ set(GSdxSources
 
 set(GSdxHeaders
     config.h
-    GLLoader.h
     GLState.h
     GSAlignedClass.h
     GSBlock.h
@@ -297,7 +295,7 @@ set(RESOURCE_FILES
 
 add_custom_glib_res("GSdxResources" "gsdx-res.xml" "GSdx_res" ${RESOURCE_FILES})
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR}, ${FREETYPE_INCLUDE_DIRS})
 
 if(BUILTIN_GS)
     add_pcsx2_lib(${Output} "${GSdxFinalSources}" "${GSdxFinalLibs}" "${GSdxFinalFlags}")

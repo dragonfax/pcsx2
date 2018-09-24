@@ -139,9 +139,8 @@ typedef int64 sint64;
 #else
 
 	// Note use GL/glcorearb.h on the future
-	#include <GL/gl.h>
-	#include <GL/glext.h>
-	#include "GLLoader.h"
+	#include <GL/gl3.h>
+	#include <GL/gl3ext.h>
 
 	#include <sys/stat.h> // mkdir
 
@@ -404,26 +403,11 @@ extern void fifo_free(void* ptr, size_t size, size_t repeat);
 #define GL_DBG(...) (void)(0);
 #endif
 
-#if defined(ENABLE_OGL_DEBUG)
-struct GLAutoPop {
-	~GLAutoPop() {
-		if (glPopDebugGroup)
-			glPopDebugGroup();
-	}
-};
-
-#define GL_PUSH_(...)	do if (glPushDebugGroup) glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0xBAD, -1, format(__VA_ARGS__).c_str()); while(0);
-#define GL_PUSH(...)	do if (glPushDebugGroup) glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0xBAD, -1, format(__VA_ARGS__).c_str()); while(0); GLAutoPop gl_auto_pop;
-#define GL_POP()        do if (glPopDebugGroup) glPopDebugGroup(); while(0);
-#define GL_INS(...)		GL_INSERT(GL_DEBUG_TYPE_ERROR, 0xDEAD, GL_DEBUG_SEVERITY_MEDIUM, __VA_ARGS__)
-#define GL_PERF(...)	GL_INSERT(GL_DEBUG_TYPE_PERFORMANCE, 0xFEE1, GL_DEBUG_SEVERITY_NOTIFICATION, __VA_ARGS__)
-#else
 #define GL_PUSH_(...) (void)(0);
 #define GL_PUSH(...) (void)(0);
 #define GL_POP()     (void)(0);
 #define GL_INS(...)  (void)(0);
 #define GL_PERF(...) (void)(0);
-#endif
 
 // Helper path to dump texture
 extern const std::string root_sw;

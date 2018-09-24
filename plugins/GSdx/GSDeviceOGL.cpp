@@ -1800,7 +1800,6 @@ void GSDeviceOGL::OMSetRenderTargets(GSTexture* rt, GSTexture* ds, const GSVecto
 	if(!GLState::scissor.eq(r))
 	{
 		GLState::scissor = r;
-		// FIXME ScissorIndexedv (GL4.1)
 		glScissorIndexed(0, r.x, r.y, r.width(), r.height());
 	}
 }
