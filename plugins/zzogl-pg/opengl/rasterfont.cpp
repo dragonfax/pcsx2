@@ -21,7 +21,7 @@
 #include "Utilities/RedtapeWindows.h"
 #endif
 
-#include <GL/gl.h>
+#include <GL/gl3.h>
 #include <string.h>
 
 #include "rasterfont.h"

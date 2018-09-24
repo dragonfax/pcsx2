@@ -46,8 +46,8 @@
   #include <GL/gl.h>//"gl.h"  /* Include local "gl.h". Don't include vc32 <GL/gl.h>. */
   #include "glprocs.h"
 #else /* GLX */
-  #include <GL/gl.h>
-  #include <GL/glext.h>
+  #include <GL/gl3.h>
+  #include <GL/gl3ext.h>
   #include <GL/glx.h>
 #include "glprocs.h"//<GL/glprocs.h>
 //  #define wglGetProcAddress glXGetProcAddress

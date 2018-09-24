@@ -28,16 +28,18 @@
 
 #include "Utilities/RedtapeWindows.h"
 
-#include <GL/gl.h>
-#include <GL/glext.h>
+#include <GL/gl3.h>
+#include <GL/gl3ext.h>
 #include "glprocs.h"
 
 #else
 
 #ifdef __APPLE__
 #include <GL/glew.h>
-#include <GL/gl.h>
-#include <GL/glext.h>
+#include <GL/gl3.h>
+#include <GL/gl3ext.h>
+#define GLFW_INCLUDE_GLCOREARB
+#define GLFW_INCLUDE_GLEXT
 #include <GLFW/glfw3.h>
 
 #else

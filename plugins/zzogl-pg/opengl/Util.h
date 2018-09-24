@@ -29,8 +29,8 @@
 //#include <windows.h>
 //#include <windowsx.h>
 
-#include <GL/gl.h>
-#include <GL/glext.h>
+#include <GL/gl3.h>
+#include <GL/gl3ext.h>
 #include "glprocs.h"
 #ifdef ZEROGS_SSE2
 #include <emmintrin.h>
@@ -41,9 +41,11 @@
 #include <sys/stat.h>
 
 #include <GL/glew.h>
+#define GLFW_INCLUDE_GLCOREARB
+#define GLFW_INCLUDE_GLEXT
 #include <GLFW/glfw3.h>
-#include <GL/gl.h>
-#include <GL/glext.h>
+#include <GL/gl3.h>
+#include <GL/gl3ext.h>
 
 #include <cstring>
 #include <string>

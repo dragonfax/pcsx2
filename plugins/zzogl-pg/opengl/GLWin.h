@@ -29,7 +29,9 @@
 #ifdef __APPLE__
 #include <stdlib.h>
 #include <unistd.h>
-#include <GL/gl.h>
+#include <GL/gl3.h>
+#define GLFW_INCLUDE_GLCOREARB
+#define GLFW_INCLUDE_GLEXT
 #include <GLFW/glfw3.h>
 
 #else
