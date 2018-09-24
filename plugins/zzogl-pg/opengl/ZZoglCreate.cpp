@@ -753,7 +753,10 @@ bool ZZCreate(int _width, int _height)
 
 	GL_REPORT_ERROR();
 
-	if (err != GL_NO_ERROR) bSuccess = false;
+	if (err != GL_NO_ERROR) {
+		bSuccess = false;
+		ZZLog::Error_Log("got a gl error earlier");
+	}
 
 	vector<u32> conv32to16data(32*32*32);
 
@@ -782,32 +785,76 @@ bool ZZCreate(int _width, int _height)
 
 	if (err != GL_NO_ERROR) bSuccess = false;
 
-	if (!ZZshStartUsingShaders())  bSuccess = false;
+	if (!ZZshStartUsingShaders()) {
+		bSuccess = false;
+		ZZLog::Error_Log("ZZshStartUsingShaders error");
+	}
 
 	GL_REPORT_ERROR();
 
 
-	if (err != GL_NO_ERROR) bSuccess = false;
+	if (err != GL_NO_ERROR) {
+		bSuccess = false;
+		ZZLog::Error_Log("got a gl error somewhere");
+	}
 
 	glDisable(GL_STENCIL_TEST);
+	err = glGetError();
+	if ( err != GL_NO_ERROR ) {
+		ZZLog::Error_Log("glDisable Stencil %d", err);
+	}
 	glEnable(GL_SCISSOR_TEST);
+	err = glGetError();
+	if ( err != GL_NO_ERROR ) {
+		ZZLog::Error_Log("glEnable Scisors");
+	}
 
 	GL_BLEND_ALPHA(GL_ONE, GL_ZERO);
+	err = glGetError();
+	if ( err != GL_NO_ERROR ) {
+		ZZLog::Error_Log("GL_BLEND_ALPHA");
+	}
 
 	glBlendColor(0, 0, 0, 0.5f);
+	err = glGetError();
+	if ( err != GL_NO_ERROR ) {
+		ZZLog::Error_Log("glBlendColor");
+	}
 
 	glDisable(GL_CULL_FACE);
+	err = glGetError();
+	if ( err != GL_NO_ERROR ) {
+		ZZLog::Error_Log("glDisable Cullface");
+	}
 
 	// points
 	// This was changed in SetAA - should we be changing it back?
 	glPointSize(1.0f);
+	err = glGetError();
+	if ( err != GL_NO_ERROR ) {
+		ZZLog::Error_Log("glPoitnSize");
+	}
 
 	// g_nDepthBias = 0;
 
 	glEnable(GL_POLYGON_OFFSET_FILL);
+	err = glGetError();
+	if ( err != GL_NO_ERROR ) {
+		ZZLog::Error_Log("glEnablePolygon");
+	}
+
 	glEnable(GL_POLYGON_OFFSET_LINE);
+	err = glGetError();
+	if ( err != GL_NO_ERROR ) {
+		ZZLog::Error_Log("glEnablePolygon");
+	}
 
 	glPolygonOffset(0, 1);
+
+	err = glGetError();
+	if ( err != GL_NO_ERROR ) {
+		ZZLog::Error_Log("glPolygonOffset");
+	}
 
 	vb[0].Init(VB_BUFFERSIZE);
 	vb[1].Init(VB_BUFFERSIZE);
@@ -820,6 +867,7 @@ bool ZZCreate(int _width, int _height)
 	}
 	else
 	{
+		ZZLog::Error_Log("final error");
 		ZZLog::Debug_Log("Error In final init!");
 		return false;
 	}

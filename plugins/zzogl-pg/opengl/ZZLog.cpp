@@ -361,35 +361,11 @@ void Error_Log(const char *fmt, ...)
 #ifdef OGL4_LOG
 void Check_GL_Error()
 {
-#if defined(ZEROGS_DEVBUILD) || defined(_DEBUG)
-       unsigned int count = 64; // max. num. of messages that will be read from the log
-       int bufsize = 2048;
-       unsigned int* sources      = new unsigned int[count];
-       unsigned int* types        = new unsigned int[count];
-       unsigned int* ids   = new unsigned int[count];
-       unsigned int* severities = new unsigned int[count];
-       int* lengths = new int[count];
-       char* messageLog = new char[bufsize];
-       unsigned int retVal = glGetDebugMessageLog(count, bufsize, sources, types, ids, severities, lengths, messageLog);
-
-       if(retVal > 0)
-       {
-             unsigned int pos = 0;
-             for(unsigned int i=0; i<retVal; i++)
-             {
-                    GL_Error_Log(sources[i], types[i], ids[i], severities[i],
- &messageLog[pos]);
-                    pos += lengths[i];
-              }
-       }
-
-       delete [] sources;
-       delete [] types;
-       delete [] ids;
-       delete [] severities;
-       delete [] lengths;
-       delete [] messageLog;
-#endif
+	GLenum err = glGetError();
+	while ( err != GL_NO_ERROR ) {
+		ZZLog::Error_Log("got a gl error somewhere %d", err);
+		err = glGetError();
+	}
 }
 
 void GL_Error_Log(unsigned int source, unsigned int type, unsigned int id, unsigned int severity, const char* message)
