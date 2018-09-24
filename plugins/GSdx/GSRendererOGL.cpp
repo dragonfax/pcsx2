@@ -977,14 +977,14 @@ void GSRendererOGL::SendDraw()
 
 	if (!m_require_full_barrier && m_require_one_barrier) {
 		// Need only a single barrier
-		glTextureBarrier();
+		glTextureBarrierNV();
 		dev->DrawIndexedPrimitive();
 	} else if (!m_require_full_barrier) {
 		// Don't need any barrier
 		dev->DrawIndexedPrimitive();
 	} else if (m_prim_overlap == PRIM_OVERLAP_NO) {
 		// Need full barrier but a single barrier will be enough
-		glTextureBarrier();
+		glTextureBarrierNV();
 		dev->DrawIndexedPrimitive();
 	} else if (m_vt.m_primclass == GS_SPRITE_CLASS) {
 		size_t nb_vertex = (m_gs_sel.sprite == 1) ? 2 : 6;
@@ -1007,7 +1007,7 @@ void GSRendererOGL::SendDraw()
 
 		for (size_t count, p = 0, n = 0; n < m_drawlist.size(); p += count, ++n) {
 			count = m_drawlist[n] * nb_vertex;
-			glTextureBarrier();
+			glTextureBarrierNV();
 			dev->DrawIndexedPrimitive(p, count);
 		}
 	} else {
@@ -1020,7 +1020,7 @@ void GSRendererOGL::SendDraw()
 		GL_PERF("Split single draw in %d draw", m_index.tail/nb_vertex);
 
 		for (size_t p = 0; p < m_index.tail; p += nb_vertex) {
-			glTextureBarrier();
+			glTextureBarrierNV();
 			dev->DrawIndexedPrimitive(p, nb_vertex);
 		}
 	}

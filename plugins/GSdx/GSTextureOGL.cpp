@@ -47,16 +47,18 @@ namespace PboPool {
 	// the value visible to the server
 	const GLbitfield common_flags = GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT;
 	const GLbitfield map_flags = common_flags | GL_MAP_FLUSH_EXPLICIT_BIT;
-	const GLbitfield create_flags = common_flags | GL_CLIENT_STORAGE_BIT;
+	// const GLbitfield create_flags = common_flags | GL_CLIENT_STORAGE_BIT;
+	const GLenum create_flags = GL_DYNAMIC_DRAW; // worst choice
 
 	void Init() {
 		glGenBuffers(1, &m_buffer);
 
 		BindPbo();
 
-		glObjectLabel(GL_BUFFER, m_buffer, -1, "PBO");
+		glLabelObjectEXT(GL_BUFFER_OBJECT_EXT, m_buffer, -1, "PBO");
 
-		glBufferStorage(GL_PIXEL_UNPACK_BUFFER, m_pbo_size, NULL, create_flags);
+		glBufferData(GL_PIXEL_UNPACK_BUFFER, m_pbo_size, NULL, create_flags);
+		//glBufferStorage(GL_PIXEL_UNPACK_BUFFER, m_pbo_size, NULL, create_flags);
 		m_map    = (char*)glMapBufferRange(GL_PIXEL_UNPACK_BUFFER, 0, m_pbo_size, map_flags);
 		m_offset = 0;
 

@@ -40,7 +40,7 @@ public:
 	{
 		glGenBuffers(1, &m_buffer);
 		bind();
-		glObjectLabel(GL_BUFFER, m_buffer, pretty_name.size(), pretty_name.c_str());
+		glLabelObjectEXT(GL_BUFFER_OBJECT_EXT, m_buffer, pretty_name.size(), pretty_name.c_str());
 		allocate();
 		attach();
 		m_cache = (uint8*)_aligned_malloc(m_size, 32);
@@ -124,7 +124,7 @@ public:
 
 	void allocate()
 	{
-		const GLbitfield common_flags = GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT /*| GL_MAP_COHERENT_BIT */;
+		const GLbitfield common_flags = /* GL_MAP_WRITE_BIT | */ GL_MAP_PERSISTENT_BIT /*| GL_MAP_COHERENT_BIT */;
 		const GLbitfield map_flags = common_flags | GL_MAP_FLUSH_EXPLICIT_BIT;
 		const GLbitfield create_flags = common_flags /*| GL_CLIENT_STORAGE_BIT */;
 
