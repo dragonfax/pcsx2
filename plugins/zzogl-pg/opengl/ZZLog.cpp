@@ -370,7 +370,7 @@ void Check_GL_Error()
        unsigned int* severities = new unsigned int[count];
        int* lengths = new int[count];
        char* messageLog = new char[bufsize];
-       unsigned int retVal = glGetDebugMessageLogARB(count, bufsize, sources, types, ids, severities, lengths, messageLog);
+       unsigned int retVal = glGetDebugMessageLog(count, bufsize, sources, types, ids, severities, lengths, messageLog);
 
        if(retVal > 0)
        {

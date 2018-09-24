@@ -20,6 +20,7 @@
 #include "Util.h"
 #include "GLWin.h"
 
+#include <csignal>
 
 // Need at least MESA 9.0 (plan for october/november 2012)
 // So force the destiny to at least check the compilation
@@ -44,11 +45,16 @@ bool GLWindow::CreateWindow(void *pDisplay)
 
 	glfwInit();
 
-	// glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-	// glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_FOCUSED,0);
 	glfwWindowHint(GLFW_FLOATING,0);
 	window = glfwCreateWindow(640, 480, "My Title", NULL, NULL);
+	if ( window == NULL ) {
+		raise(SIGSEGV);
+	}
 	glfwMakeContextCurrent(window);
 
 	return ret;

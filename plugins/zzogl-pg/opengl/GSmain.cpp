@@ -327,7 +327,12 @@ EXPORT_C_(s32) GSopen2( void* pDsp, u32 flags )
 	ZZLog::GS_Log("Using %s:%d.%d.%d.", libraryName, zgsrevision, zgsbuild, zgsminor);
 
 	ZZLog::WriteLn("Capturing ZZOgl window.");
-	if ((!GLWin.CreateWindow(pDsp)) || (!ZZCreate(conf.width, conf.height))) return -1;
+	if (!GLWin.CreateWindow(pDsp) ) {
+		return -1;
+	} 
+	if (!ZZCreate(conf.width, conf.height))  {
+		return -1;
+	}
 
 	ZZLog::WriteLn("Initialization successful.");
 

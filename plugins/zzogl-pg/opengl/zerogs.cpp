@@ -52,9 +52,9 @@ void HandleGLError()
 		int w = 0;
 		int h = 0;
 		GLint fmt;
-		glGetRenderbufferParameterivEXT(GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_INTERNAL_FORMAT_EXT, &fmt);
-		glGetRenderbufferParameterivEXT(GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_WIDTH_EXT, &w);
-		glGetRenderbufferParameterivEXT(GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_HEIGHT_EXT, &h);
+		glGetRenderbufferParameteriv(GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_INTERNAL_FORMAT_EXT, &fmt);
+		glGetRenderbufferParameteriv(GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_WIDTH_EXT, &w);
+		glGetRenderbufferParameteriv(GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_HEIGHT_EXT, &h);
 
 		switch (error)
 		{
@@ -94,7 +94,7 @@ void HandleGLError()
 				break;
 
 			default:
-				ZZLog::Error_Log("*UNKNOWN ERROR* reported from glCheckFramebufferStatusEXT(0x%x)!", error);
+				ZZLog::Error_Log("*UNKNOWN ERROR* reported from glCheckFramebufferStatus(0x%x)!", error);
 				break;
 		}
 	}

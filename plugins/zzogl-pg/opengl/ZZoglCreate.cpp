@@ -127,10 +127,12 @@ extern void SetAA(int mode);
 //------------------ Code
 
 ///< returns true if the the opengl extension is supported
+/*
 bool IsGLExt(const char* szTargetExtension)
 {
 	return mapGLExtensions.find(string(szTargetExtension)) != mapGLExtensions.end();
 }
+*/
 
 inline bool check_gl_version(uint32 major, uint32 minor) {
 	const GLubyte* s;
@@ -176,11 +178,13 @@ inline bool CreateImportantCheck()
 
 	// GL_EXT_framebuffer_object -> GL3.0
 	// Opensource driver -> Intel OK. Radeon need EXT_packed_depth_stencil
+	/*
 	if (!IsGLExt("GL_EXT_framebuffer_object"))
 	{
 		ZZLog::Error_Log("*********\nZZogl: ERROR: Need GL_EXT_framebuffer_object for multiple render targets\nZZogl: *********");
 		bSuccess = false;
 	}
+	*/
 
 	bSuccess &= ZZshCheckProfilesSupport();
 	
@@ -221,7 +225,7 @@ inline void CreateOtherCheck()
 #ifdef _WIN32
 	GLWin.InitVsync(IsGLExt("WGL_EXT_swap_control") || IsGLExt("EXT_swap_control"));
 #else
-	GLWin.InitVsync(IsGLExt("GLX_SGI_swap_control"));
+	GLWin.InitVsync(1); // IsGLExt("GLX_SGI_swap_control"));
 #endif
 
 	GLWin.SetVsync(false);
@@ -337,12 +341,13 @@ inline bool CreateOpenShadersFile()
 }
 
 // Read all extensions name and fill mapGLExtensions
+/*
 inline bool CreateFillExtensionsMap()
 {
     int max_ext = 0;
 	string all_ext("");
 
-	PFNGLGETSTRINGIPROC glGetStringi = 0;
+	// PFNGLGETSTRINGIPROC glGetStringi = 0;
 	glGetIntegerv(GL_NUM_EXTENSIONS, &max_ext);
 
     if (glGetStringi && max_ext) {
@@ -394,6 +399,7 @@ inline bool CreateFillExtensionsMap()
 	
 	return true;
 }
+*/
 
 
 inline bool TryBlockFormat(GLint fmt, const GLvoid* vBlockData) {
@@ -418,7 +424,7 @@ bool ZZCreate(int _width, int _height)
 
 	conf.mrtdepth = 0; // for now
 
-	if (!CreateFillExtensionsMap()) return false;
+	// if (!CreateFillExtensionsMap()) return false;
 	if (!CreateImportantCheck()) return false;
 
 	CreateOtherCheck();
@@ -565,15 +571,33 @@ bool ZZCreate(int _width, int _height)
 	vector<char> vBlockData, vBilinearData;
 	BLOCK::FillBlocks(vBlockData, vBilinearData);
 
+	// clear errors
+	while ( glGetError() != GL_NO_ERROR) {
+
+	}
+
 	glGenTextures(1, &ptexBlocks);
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		ZZLog::Error_Log("ZZogl ERROR: could not gen texture (%d)", err);
+	}
+	if (ptexBlocks == 0 ) {
+		ZZLog::Error_Log("generated texture number 0");
+	}
+
 	glBindTexture(GL_TEXTURE_2D, ptexBlocks);
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		ZZLog::Error_Log("ZZogl ERROR: could not bind texture (%d)", err);
+	}
 	
 	// Opensource driver -> Intel (need gen4) (enabled by default on mesa 9). Radeon depends on the HW capability
 #ifdef GLSL4_API
 	// texture float -> GL3.0
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, BLOCK_TEXWIDTH, BLOCK_TEXHEIGHT, 0, GL_RED, GL_FLOAT, &vBlockData[0]);
-	if (glGetError() != GL_NO_ERROR) {
-		ZZLog::Error_Log("ZZogl ERROR: could not fill blocks");
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		ZZLog::Error_Log("ZZogl ERROR: could not fill blocks (%d)", err);
 		return false;
 	}
 #else
@@ -591,9 +615,19 @@ bool ZZCreate(int _width, int _height)
 	setTex2DFilters(GL_NEAREST);
 	setTex2DWrap(GL_REPEAT);
 
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		ZZLog::Error_Log("ZZogl ERROR: 1 (%d)", err);
+	}
+
 	// fill in the bilinear blocks (main variant).
 	glGenTextures(1, &ptexBilinearBlocks);
 	glBindTexture(GL_TEXTURE_2D, ptexBilinearBlocks);
+
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		ZZLog::Error_Log("ZZogl ERROR: 2 (%d)", err);
+	}
 
 #ifdef GLSL4_API
 	if 	(!TryBlinearFormat(GL_RGBA32F, &vBilinearData[0]))
@@ -612,19 +646,53 @@ bool ZZCreate(int _width, int _height)
 	setTex2DFilters(GL_NEAREST);
 	setTex2DWrap(GL_REPEAT);
 
+	err = glGetError();
+	while ( err != GL_NO_ERROR ) {
+		ZZLog::Error_Log("ZZogl ERROR: (%d)", err);
+		err = glGetError();
+	}
+
+/*
 	float fpri = 1;
 
 	glPrioritizeTextures(1, &ptexBlocks, &fpri);
 
-	if (ptexBilinearBlocks != 0) glPrioritizeTextures(1, &ptexBilinearBlocks, &fpri);
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		ZZLog::Error_Log("ZZogl ERROR: glPrioritizeTextures (%d)", err);
+	}
+
+	if (ptexBilinearBlocks != 0) {
+		glPrioritizeTextures(1, &ptexBilinearBlocks, &fpri);
+		err = glGetError();
+		if (err != GL_NO_ERROR) {
+			ZZLog::Error_Log("ZZogl ERROR: glPrioritizeTextures again (%d)", err);
+		}
+	}
+
 
 	GL_REPORT_ERROR();
+	*/	
 
 	// fill a simple rect
 	glGenBuffers(1, &vboRect);
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		ZZLog::Error_Log("ZZogl ERROR: glGenBuffers (%d)", err);
+	}
+		
 	glBindBuffer(GL_ARRAY_BUFFER, vboRect);
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		ZZLog::Error_Log("ZZogl ERROR: glBindBuffer (%d)", err);
+	}
+
 #ifdef GLSL4_API
 	vertex_array->set_internal_format();
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		ZZLog::Error_Log("ZZogl ERROR: set_internal_format (%d)", err);
+	}
 #endif
 
 	vector<VertexGPU> verts(4);
@@ -643,7 +711,12 @@ bool ZZCreate(int _width, int _height)
 	pvert->set_xyzst(0x7fff, -0x7fff, 0, 1, 1);
 	pvert++;
 
-	glBufferDataARB(GL_ARRAY_BUFFER, 4*sizeof(VertexGPU), &verts[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 4*sizeof(VertexGPU), &verts[0], GL_STATIC_DRAW);
+
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		ZZLog::Error_Log("ZZogl ERROR: 5 (%d)", err);
+	}
 
 #ifndef GLSL4_API
 	// setup the default vertex declaration
@@ -658,6 +731,11 @@ bool ZZCreate(int _width, int _height)
 	// create the conversion textures
 	glGenTextures(1, &ptexConv16to32);
 	glBindTexture(GL_TEXTURE_2D, ptexConv16to32);
+
+	err = glGetError();
+	if (err != GL_NO_ERROR) {
+		ZZLog::Error_Log("ZZogl ERROR: 6 (%d)", err);
+	}
 
 	vector<u32> conv16to32data(256*256);
 
@@ -716,7 +794,7 @@ bool ZZCreate(int _width, int _height)
 
 	GL_BLEND_ALPHA(GL_ONE, GL_ZERO);
 
-	glBlendColorEXT(0, 0, 0, 0.5f);
+	glBlendColor(0, 0, 0, 0.5f);
 
 	glDisable(GL_CULL_FACE);
 

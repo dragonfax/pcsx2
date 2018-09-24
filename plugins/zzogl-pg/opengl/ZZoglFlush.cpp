@@ -2119,7 +2119,7 @@ if( a.fix <= 0x80 ) { \
  dwTemp = (a.fix*2)>255?255:(a.fix*2); \
  dwTemp = dwTemp|(dwTemp<<8)|(dwTemp<<16)|0x80000000; \
  ZZLog::Debug_Log("bfactor: %8.8x", dwTemp); \
- glBlendColorEXT(dwTemp); \
+ glBlendColor(dwTemp); \
  } \
  else { \
 

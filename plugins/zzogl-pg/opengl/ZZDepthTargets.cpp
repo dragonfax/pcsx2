@@ -55,21 +55,21 @@ bool CDepthTarget::Create(const frameInfo& frame)
 
 	GL_REPORT_ERROR();
 
-	glGenRenderbuffersEXT(1, &pdepth);
-	glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, pdepth);
-	glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH24_STENCIL8_EXT, RW(fbw), RH(fbh));
+	glGenRenderbuffers(1, &pdepth);
+	glBindRenderbuffer(GL_RENDERBUFFER_EXT, pdepth);
+	glRenderbufferStorage(GL_RENDERBUFFER_EXT, GL_DEPTH24_STENCIL8_EXT, RW(fbw), RH(fbh));
 
 	if (glGetError() != GL_NO_ERROR)
 	{
 		// try a separate depth and stencil buffer
-		glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, pdepth);
-		glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, RW(fbw), RH(fbh));
+		glBindRenderbuffer(GL_RENDERBUFFER_EXT, pdepth);
+		glRenderbufferStorage(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, RW(fbw), RH(fbh));
 
 		if (g_bUpdateStencil)
 		{
-			glGenRenderbuffersEXT(1, &pstencil);
-			glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, pstencil);
-			glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_STENCIL_INDEX8_EXT, RW(fbw), RH(fbh));
+			glGenRenderbuffers(1, &pstencil);
+			glBindRenderbuffer(GL_RENDERBUFFER_EXT, pstencil);
+			glRenderbufferStorage(GL_RENDERBUFFER_EXT, GL_STENCIL_INDEX8_EXT, RW(fbw), RH(fbh));
 
 			if (glGetError() != GL_NO_ERROR)
 			{
@@ -105,13 +105,13 @@ void CDepthTarget::Destroy()
 
 		if (pstencil != 0)
 		{
-			if (pstencil != pdepth) glDeleteRenderbuffersEXT(1, &pstencil);
+			if (pstencil != pdepth) glDeleteRenderbuffers(1, &pstencil);
 			pstencil = 0;
 		}
 
 		if (pdepth != 0)
 		{
-			glDeleteRenderbuffersEXT(1, &pdepth);
+			glDeleteRenderbuffers(1, &pdepth);
 			pdepth = 0;
 		}
 
@@ -239,8 +239,8 @@ void CDepthTarget::Update(int context, CRenderTarget* prndr)
 	//GLint h1 = 0;
 
 	FB::Attach2D(0, ptex);
-	//glGetRenderbufferParameterivEXT(GL_RENDERBUFFER_EXT, GL_RENDERBUFFER_WIDTH_EXT, &w1);
-	//glGetRenderbufferParameterivEXT(GL_RENDERBUFFER_EXT, GL_RENDERBUFFER_HEIGHT_EXT, &h1);
+	//glGetRenderbufferParameteriv(GL_RENDERBUFFER_EXT, GL_RENDERBUFFER_WIDTH_EXT, &w1);
+	//glGetRenderbufferParameteriv(GL_RENDERBUFFER_EXT, GL_RENDERBUFFER_HEIGHT_EXT, &h1);
 	SetDepthStencilSurface();
 
 	FB::Attach2D(1);
@@ -300,7 +300,7 @@ void CDepthTarget::SetDepthStencilSurface()
 			{
 				FB::Attach(GL_STENCIL_ATTACHMENT_EXT);
 
-				if (pstencil != pdepth) glDeleteRenderbuffersEXT(1, &pstencil);
+				if (pstencil != pdepth) glDeleteRenderbuffers(1, &pstencil);
 
 				pstencil = 0;
 				g_bUpdateStencil = 0;

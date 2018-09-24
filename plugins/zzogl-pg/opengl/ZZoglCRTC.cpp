@@ -319,7 +319,7 @@ inline void RenderSetupBlending()
 	if (PMODE->MMOD)
 	{
 		// Use the ALP register for alpha blending.
-		glBlendColorEXT(PMODE->ALP*(1 / 255.0f), PMODE->ALP*(1 / 255.0f), PMODE->ALP*(1 / 255.0f), 0.5f);
+		glBlendColor(PMODE->ALP*(1 / 255.0f), PMODE->ALP*(1 / 255.0f), PMODE->ALP*(1 / 255.0f), 0.5f);
 		s_srcrgb = GL_CONSTANT_COLOR_EXT;
 		s_dstrgb = GL_ONE_MINUS_CONSTANT_COLOR_EXT;
 	}

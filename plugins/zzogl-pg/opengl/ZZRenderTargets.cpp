@@ -770,7 +770,7 @@ void CRenderTarget::SetRenderTarget(int targ)
 	FB::Attach2D(targ, ptex);
 
 	//GL_REPORT_ERRORD();
-	//if (glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT) != GL_FRAMEBUFFER_COMPLETE_EXT)
+	//if (glCheckFramebufferStatus(GL_FRAMEBUFFER_EXT) != GL_FRAMEBUFFER_COMPLETE_EXT)
 		//ERROR_LOG_SPAM("The Framebuffer is not complete. Glitches could appear onscreen.\n");
 }
 

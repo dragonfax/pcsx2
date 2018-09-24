@@ -175,7 +175,7 @@ class GSVertexBufferStateOGL {
 public:
 	GSVertexBufferStateOGL(size_t stride, GSInputLayoutOGL* layout, uint32 layout_nbr)
 	{
-		glGenVertexArraysAPPLE(1, &m_va);
+		glGenVertexArrays(1, &m_va);
 		layout_store.clear();
 
 		m_vb = new GSBufferOGL(GL_ARRAY_BUFFER, stride);
@@ -192,7 +192,7 @@ public:
 
 	void bind()
 	{
-		glBindVertexArrayAPPLE(m_va);
+		glBindVertexArray(m_va);
 		m_vb->bind();
 	}
 
@@ -256,7 +256,7 @@ public:
 
 	~GSVertexBufferStateOGL()
 	{
-		glDeleteVertexArraysAPPLE(1, &m_va);
+		glDeleteVertexArrays(1, &m_va);
 		delete m_vb;
 		delete m_ib;
 	}
