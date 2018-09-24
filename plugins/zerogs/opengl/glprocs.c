@@ -5668,7 +5668,7 @@ static void APIENTRY InitBlendColorEXT (GLclampf red, GLclampf green, GLclampf b
 
 	glBlendColorEXT = extproc;
 
-	glBlendColorEXT(red, green, blue, alpha);
+	glBlendColor(red, green, blue, alpha);
 }
 
 static void APIENTRY InitPolygonOffsetEXT (GLfloat factor, GLfloat bias)
@@ -5684,7 +5684,7 @@ static void APIENTRY InitPolygonOffsetEXT (GLfloat factor, GLfloat bias)
 
 	glPolygonOffsetEXT = extproc;
 
-	glPolygonOffsetEXT(factor, bias);
+	glPolygonOffset(factor, bias);
 }
 
 static void APIENTRY InitTexImage3DEXT (GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type, const GLvoid *pixels)
@@ -5700,7 +5700,7 @@ static void APIENTRY InitTexImage3DEXT (GLenum target, GLint level, GLenum inter
 
 	glTexImage3DEXT = extproc;
 
-	glTexImage3DEXT(target, level, internalformat, width, height, depth, border, format, type, pixels);
+	glTexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels);
 }
 
 static void APIENTRY InitTexSubImage3DEXT (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const GLvoid *pixels)
@@ -5716,7 +5716,7 @@ static void APIENTRY InitTexSubImage3DEXT (GLenum target, GLint level, GLint xof
 
 	glTexSubImage3DEXT = extproc;
 
-	glTexSubImage3DEXT(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+	glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
 }
 
 static void APIENTRY InitGetTexFilterFuncSGIS (GLenum target, GLenum filter, GLfloat *weights)
@@ -5764,7 +5764,7 @@ static void APIENTRY InitTexSubImage1DEXT (GLenum target, GLint level, GLint xof
 
 	glTexSubImage1DEXT = extproc;
 
-	glTexSubImage1DEXT(target, level, xoffset, width, format, type, pixels);
+	glTexSubImage1D(target, level, xoffset, width, format, type, pixels);
 }
 
 static void APIENTRY InitTexSubImage2DEXT (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels)
@@ -5780,7 +5780,7 @@ static void APIENTRY InitTexSubImage2DEXT (GLenum target, GLint level, GLint xof
 
 	glTexSubImage2DEXT = extproc;
 
-	glTexSubImage2DEXT(target, level, xoffset, yoffset, width, height, format, type, pixels);
+	glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
 }
 
 static void APIENTRY InitCopyTexImage1DEXT (GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLint border)
@@ -5796,7 +5796,7 @@ static void APIENTRY InitCopyTexImage1DEXT (GLenum target, GLint level, GLenum i
 
 	glCopyTexImage1DEXT = extproc;
 
-	glCopyTexImage1DEXT(target, level, internalformat, x, y, width, border);
+	glCopyTexImage1D(target, level, internalformat, x, y, width, border);
 }
 
 static void APIENTRY InitCopyTexImage2DEXT (GLenum target, GLint level, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border)
@@ -5812,7 +5812,7 @@ static void APIENTRY InitCopyTexImage2DEXT (GLenum target, GLint level, GLenum i
 
 	glCopyTexImage2DEXT = extproc;
 
-	glCopyTexImage2DEXT(target, level, internalformat, x, y, width, height, border);
+	glCopyTexImage2D(target, level, internalformat, x, y, width, height, border);
 }
 
 static void APIENTRY InitCopyTexSubImage1DEXT (GLenum target, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width)
@@ -5828,7 +5828,7 @@ static void APIENTRY InitCopyTexSubImage1DEXT (GLenum target, GLint level, GLint
 
 	glCopyTexSubImage1DEXT = extproc;
 
-	glCopyTexSubImage1DEXT(target, level, xoffset, x, y, width);
+	glCopyTexSubImage1D(target, level, xoffset, x, y, width);
 }
 
 static void APIENTRY InitCopyTexSubImage2DEXT (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height)
@@ -5844,7 +5844,7 @@ static void APIENTRY InitCopyTexSubImage2DEXT (GLenum target, GLint level, GLint
 
 	glCopyTexSubImage2DEXT = extproc;
 
-	glCopyTexSubImage2DEXT(target, level, xoffset, yoffset, x, y, width, height);
+	glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
 }
 
 static void APIENTRY InitCopyTexSubImage3DEXT (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
@@ -5860,7 +5860,7 @@ static void APIENTRY InitCopyTexSubImage3DEXT (GLenum target, GLint level, GLint
 
 	glCopyTexSubImage3DEXT = extproc;
 
-	glCopyTexSubImage3DEXT(target, level, xoffset, yoffset, zoffset, x, y, width, height);
+	glCopyTexSubImage3D(target, level, xoffset, yoffset, zoffset, x, y, width, height);
 }
 
 static void APIENTRY InitGetHistogramEXT (GLenum target, GLboolean reset, GLenum format, GLenum type, GLvoid *values)
@@ -5876,7 +5876,7 @@ static void APIENTRY InitGetHistogramEXT (GLenum target, GLboolean reset, GLenum
 
 	glGetHistogramEXT = extproc;
 
-	glGetHistogramEXT(target, reset, format, type, values);
+	glGetHistogram(target, reset, format, type, values);
 }
 
 static void APIENTRY InitGetHistogramParameterfvEXT (GLenum target, GLenum pname, GLfloat *params)
@@ -5892,7 +5892,7 @@ static void APIENTRY InitGetHistogramParameterfvEXT (GLenum target, GLenum pname
 
 	glGetHistogramParameterfvEXT = extproc;
 
-	glGetHistogramParameterfvEXT(target, pname, params);
+	glGetHistogramParameterfv(target, pname, params);
 }
 
 static void APIENTRY InitGetHistogramParameterivEXT (GLenum target, GLenum pname, GLint *params)
@@ -5908,7 +5908,7 @@ static void APIENTRY InitGetHistogramParameterivEXT (GLenum target, GLenum pname
 
 	glGetHistogramParameterivEXT = extproc;
 
-	glGetHistogramParameterivEXT(target, pname, params);
+	glGetHistogramParameteriv(target, pname, params);
 }
 
 static void APIENTRY InitGetMinmaxEXT (GLenum target, GLboolean reset, GLenum format, GLenum type, GLvoid *values)
@@ -5924,7 +5924,7 @@ static void APIENTRY InitGetMinmaxEXT (GLenum target, GLboolean reset, GLenum fo
 
 	glGetMinmaxEXT = extproc;
 
-	glGetMinmaxEXT(target, reset, format, type, values);
+	glGetMinmax(target, reset, format, type, values);
 }
 
 static void APIENTRY InitGetMinmaxParameterfvEXT (GLenum target, GLenum pname, GLfloat *params)
@@ -5940,7 +5940,7 @@ static void APIENTRY InitGetMinmaxParameterfvEXT (GLenum target, GLenum pname, G
 
 	glGetMinmaxParameterfvEXT = extproc;
 
-	glGetMinmaxParameterfvEXT(target, pname, params);
+	glGetMinmaxParameterfv(target, pname, params);
 }
 
 static void APIENTRY InitGetMinmaxParameterivEXT (GLenum target, GLenum pname, GLint *params)
@@ -5956,7 +5956,7 @@ static void APIENTRY InitGetMinmaxParameterivEXT (GLenum target, GLenum pname, G
 
 	glGetMinmaxParameterivEXT = extproc;
 
-	glGetMinmaxParameterivEXT(target, pname, params);
+	glGetMinmaxParameteriv(target, pname, params);
 }
 
 static void APIENTRY InitHistogramEXT (GLenum target, GLsizei width, GLenum internalformat, GLboolean sink)
@@ -5972,7 +5972,7 @@ static void APIENTRY InitHistogramEXT (GLenum target, GLsizei width, GLenum inte
 
 	glHistogramEXT = extproc;
 
-	glHistogramEXT(target, width, internalformat, sink);
+	glHistogram(target, width, internalformat, sink);
 }
 
 static void APIENTRY InitMinmaxEXT (GLenum target, GLenum internalformat, GLboolean sink)
@@ -5988,7 +5988,7 @@ static void APIENTRY InitMinmaxEXT (GLenum target, GLenum internalformat, GLbool
 
 	glMinmaxEXT = extproc;
 
-	glMinmaxEXT(target, internalformat, sink);
+	glMinmax(target, internalformat, sink);
 }
 
 static void APIENTRY InitResetHistogramEXT (GLenum target)
@@ -6004,7 +6004,7 @@ static void APIENTRY InitResetHistogramEXT (GLenum target)
 
 	glResetHistogramEXT = extproc;
 
-	glResetHistogramEXT(target);
+	glResetHistogram(target);
 }
 
 static void APIENTRY InitResetMinmaxEXT (GLenum target)
@@ -6020,7 +6020,7 @@ static void APIENTRY InitResetMinmaxEXT (GLenum target)
 
 	glResetMinmaxEXT = extproc;
 
-	glResetMinmaxEXT(target);
+	glResetMinmax(target);
 }
 
 static void APIENTRY InitConvolutionFilter1DEXT (GLenum target, GLenum internalformat, GLsizei width, GLenum format, GLenum type, const GLvoid *image)
@@ -6036,7 +6036,7 @@ static void APIENTRY InitConvolutionFilter1DEXT (GLenum target, GLenum internalf
 
 	glConvolutionFilter1DEXT = extproc;
 
-	glConvolutionFilter1DEXT(target, internalformat, width, format, type, image);
+	glConvolutionFilter1D(target, internalformat, width, format, type, image);
 }
 
 static void APIENTRY InitConvolutionFilter2DEXT (GLenum target, GLenum internalformat, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *image)
@@ -6052,7 +6052,7 @@ static void APIENTRY InitConvolutionFilter2DEXT (GLenum target, GLenum internalf
 
 	glConvolutionFilter2DEXT = extproc;
 
-	glConvolutionFilter2DEXT(target, internalformat, width, height, format, type, image);
+	glConvolutionFilter2D(target, internalformat, width, height, format, type, image);
 }
 
 static void APIENTRY InitConvolutionParameterfEXT (GLenum target, GLenum pname, GLfloat params)
@@ -6068,7 +6068,7 @@ static void APIENTRY InitConvolutionParameterfEXT (GLenum target, GLenum pname, 
 
 	glConvolutionParameterfEXT = extproc;
 
-	glConvolutionParameterfEXT(target, pname, params);
+	glConvolutionParameterf(target, pname, params);
 }
 
 static void APIENTRY InitConvolutionParameterfvEXT (GLenum target, GLenum pname, const GLfloat *params)
@@ -6084,7 +6084,7 @@ static void APIENTRY InitConvolutionParameterfvEXT (GLenum target, GLenum pname,
 
 	glConvolutionParameterfvEXT = extproc;
 
-	glConvolutionParameterfvEXT(target, pname, params);
+	glConvolutionParameterfv(target, pname, params);
 }
 
 static void APIENTRY InitConvolutionParameteriEXT (GLenum target, GLenum pname, GLint params)
@@ -6100,7 +6100,7 @@ static void APIENTRY InitConvolutionParameteriEXT (GLenum target, GLenum pname, 
 
 	glConvolutionParameteriEXT = extproc;
 
-	glConvolutionParameteriEXT(target, pname, params);
+	glConvolutionParameteri(target, pname, params);
 }
 
 static void APIENTRY InitConvolutionParameterivEXT (GLenum target, GLenum pname, const GLint *params)
@@ -6116,7 +6116,7 @@ static void APIENTRY InitConvolutionParameterivEXT (GLenum target, GLenum pname,
 
 	glConvolutionParameterivEXT = extproc;
 
-	glConvolutionParameterivEXT(target, pname, params);
+	glConvolutionParameteriv(target, pname, params);
 }
 
 static void APIENTRY InitCopyConvolutionFilter1DEXT (GLenum target, GLenum internalformat, GLint x, GLint y, GLsizei width)
@@ -6132,7 +6132,7 @@ static void APIENTRY InitCopyConvolutionFilter1DEXT (GLenum target, GLenum inter
 
 	glCopyConvolutionFilter1DEXT = extproc;
 
-	glCopyConvolutionFilter1DEXT(target, internalformat, x, y, width);
+	glCopyConvolutionFilter1D(target, internalformat, x, y, width);
 }
 
 static void APIENTRY InitCopyConvolutionFilter2DEXT (GLenum target, GLenum internalformat, GLint x, GLint y, GLsizei width, GLsizei height)
@@ -6148,7 +6148,7 @@ static void APIENTRY InitCopyConvolutionFilter2DEXT (GLenum target, GLenum inter
 
 	glCopyConvolutionFilter2DEXT = extproc;
 
-	glCopyConvolutionFilter2DEXT(target, internalformat, x, y, width, height);
+	glCopyConvolutionFilter2D(target, internalformat, x, y, width, height);
 }
 
 static void APIENTRY InitGetConvolutionFilterEXT (GLenum target, GLenum format, GLenum type, GLvoid *image)
@@ -6164,7 +6164,7 @@ static void APIENTRY InitGetConvolutionFilterEXT (GLenum target, GLenum format, 
 
 	glGetConvolutionFilterEXT = extproc;
 
-	glGetConvolutionFilterEXT(target, format, type, image);
+	glGetConvolutionFilter(target, format, type, image);
 }
 
 static void APIENTRY InitGetConvolutionParameterfvEXT (GLenum target, GLenum pname, GLfloat *params)
@@ -6180,7 +6180,7 @@ static void APIENTRY InitGetConvolutionParameterfvEXT (GLenum target, GLenum pna
 
 	glGetConvolutionParameterfvEXT = extproc;
 
-	glGetConvolutionParameterfvEXT(target, pname, params);
+	glGetConvolutionParameterfv(target, pname, params);
 }
 
 static void APIENTRY InitGetConvolutionParameterivEXT (GLenum target, GLenum pname, GLint *params)
@@ -6196,7 +6196,7 @@ static void APIENTRY InitGetConvolutionParameterivEXT (GLenum target, GLenum pna
 
 	glGetConvolutionParameterivEXT = extproc;
 
-	glGetConvolutionParameterivEXT(target, pname, params);
+	glGetConvolutionParameteriv(target, pname, params);
 }
 
 static void APIENTRY InitGetSeparableFilterEXT (GLenum target, GLenum format, GLenum type, GLvoid *row, GLvoid *column, GLvoid *span)
@@ -6212,7 +6212,7 @@ static void APIENTRY InitGetSeparableFilterEXT (GLenum target, GLenum format, GL
 
 	glGetSeparableFilterEXT = extproc;
 
-	glGetSeparableFilterEXT(target, format, type, row, column, span);
+	glGetSeparableFilter(target, format, type, row, column, span);
 }
 
 static void APIENTRY InitSeparableFilter2DEXT (GLenum target, GLenum internalformat, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *row, const GLvoid *column)
@@ -6228,7 +6228,7 @@ static void APIENTRY InitSeparableFilter2DEXT (GLenum target, GLenum internalfor
 
 	glSeparableFilter2DEXT = extproc;
 
-	glSeparableFilter2DEXT(target, internalformat, width, height, format, type, row, column);
+	glSeparableFilter2D(target, internalformat, width, height, format, type, row, column);
 }
 
 static void APIENTRY InitColorTableSGI (GLenum target, GLenum internalformat, GLsizei width, GLenum format, GLenum type, const GLvoid *table)
@@ -6500,7 +6500,7 @@ static GLboolean APIENTRY InitAreTexturesResidentEXT (GLsizei n, const GLuint *t
 
 	glAreTexturesResidentEXT = extproc;
 
-	return glAreTexturesResidentEXT(n, textures, residences);
+	return glAreTexturesResident(n, textures, residences);
 }
 
 static void APIENTRY InitBindTextureEXT (GLenum target, GLuint texture)
@@ -6516,7 +6516,7 @@ static void APIENTRY InitBindTextureEXT (GLenum target, GLuint texture)
 
 	glBindTextureEXT = extproc;
 
-	glBindTextureEXT(target, texture);
+	glBindTexture(target, texture);
 }
 
 static void APIENTRY InitDeleteTexturesEXT (GLsizei n, const GLuint *textures)
@@ -6532,7 +6532,7 @@ static void APIENTRY InitDeleteTexturesEXT (GLsizei n, const GLuint *textures)
 
 	glDeleteTexturesEXT = extproc;
 
-	glDeleteTexturesEXT(n, textures);
+	glDeleteTextures(n, textures);
 }
 
 static void APIENTRY InitGenTexturesEXT (GLsizei n, GLuint *textures)
@@ -6548,7 +6548,7 @@ static void APIENTRY InitGenTexturesEXT (GLsizei n, GLuint *textures)
 
 	glGenTexturesEXT = extproc;
 
-	glGenTexturesEXT(n, textures);
+	glGenTextures(n, textures);
 }
 
 static GLboolean APIENTRY InitIsTextureEXT (GLuint texture)
@@ -6564,7 +6564,7 @@ static GLboolean APIENTRY InitIsTextureEXT (GLuint texture)
 
 	glIsTextureEXT = extproc;
 
-	return glIsTextureEXT(texture);
+	return glIsTexture(texture);
 }
 
 static void APIENTRY InitPrioritizeTexturesEXT (GLsizei n, const GLuint *textures, const GLclampf *priorities)
@@ -6580,7 +6580,7 @@ static void APIENTRY InitPrioritizeTexturesEXT (GLsizei n, const GLuint *texture
 
 	glPrioritizeTexturesEXT = extproc;
 
-	glPrioritizeTexturesEXT(n, textures, priorities);
+	glPrioritizeTextures(n, textures, priorities);
 }
 
 static void APIENTRY InitDetailTexFuncSGIS (GLenum target, GLsizei n, const GLfloat *points)
@@ -6692,7 +6692,7 @@ static void APIENTRY InitArrayElementEXT (GLint i)
 
 	glArrayElementEXT = extproc;
 
-	glArrayElementEXT(i);
+	glArrayElement(i);
 }
 
 static void APIENTRY InitColorPointerEXT (GLint size, GLenum type, GLsizei stride, GLsizei count, const GLvoid *pointer)
@@ -6708,7 +6708,7 @@ static void APIENTRY InitColorPointerEXT (GLint size, GLenum type, GLsizei strid
 
 	glColorPointerEXT = extproc;
 
-	glColorPointerEXT(size, type, stride, count, pointer);
+	glColorPointer(size, type, stride, count, pointer);
 }
 
 static void APIENTRY InitDrawArraysEXT (GLenum mode, GLint first, GLsizei count)
@@ -6724,7 +6724,7 @@ static void APIENTRY InitDrawArraysEXT (GLenum mode, GLint first, GLsizei count)
 
 	glDrawArraysEXT = extproc;
 
-	glDrawArraysEXT(mode, first, count);
+	glDrawArrays(mode, first, count);
 }
 
 static void APIENTRY InitEdgeFlagPointerEXT (GLsizei stride, GLsizei count, const GLboolean *pointer)
@@ -6740,7 +6740,7 @@ static void APIENTRY InitEdgeFlagPointerEXT (GLsizei stride, GLsizei count, cons
 
 	glEdgeFlagPointerEXT = extproc;
 
-	glEdgeFlagPointerEXT(stride, count, pointer);
+	glEdgeFlagPointer(stride, count, pointer);
 }
 
 static void APIENTRY InitGetPointervEXT (GLenum pname, GLvoid* *params)
@@ -6756,7 +6756,7 @@ static void APIENTRY InitGetPointervEXT (GLenum pname, GLvoid* *params)
 
 	glGetPointervEXT = extproc;
 
-	glGetPointervEXT(pname, params);
+	glGetPointerv(pname, params);
 }
 
 static void APIENTRY InitIndexPointerEXT (GLenum type, GLsizei stride, GLsizei count, const GLvoid *pointer)
@@ -6772,7 +6772,7 @@ static void APIENTRY InitIndexPointerEXT (GLenum type, GLsizei stride, GLsizei c
 
 	glIndexPointerEXT = extproc;
 
-	glIndexPointerEXT(type, stride, count, pointer);
+	glIndexPointer(type, stride, count, pointer);
 }
 
 static void APIENTRY InitNormalPointerEXT (GLenum type, GLsizei stride, GLsizei count, const GLvoid *pointer)
@@ -6788,7 +6788,7 @@ static void APIENTRY InitNormalPointerEXT (GLenum type, GLsizei stride, GLsizei 
 
 	glNormalPointerEXT = extproc;
 
-	glNormalPointerEXT(type, stride, count, pointer);
+	glNormalPointer(type, stride, count, pointer);
 }
 
 static void APIENTRY InitTexCoordPointerEXT (GLint size, GLenum type, GLsizei stride, GLsizei count, const GLvoid *pointer)
@@ -6804,7 +6804,7 @@ static void APIENTRY InitTexCoordPointerEXT (GLint size, GLenum type, GLsizei st
 
 	glTexCoordPointerEXT = extproc;
 
-	glTexCoordPointerEXT(size, type, stride, count, pointer);
+	glTexCoordPointer(size, type, stride, count, pointer);
 }
 
 static void APIENTRY InitVertexPointerEXT (GLint size, GLenum type, GLsizei stride, GLsizei count, const GLvoid *pointer)
@@ -6820,7 +6820,7 @@ static void APIENTRY InitVertexPointerEXT (GLint size, GLenum type, GLsizei stri
 
 	glVertexPointerEXT = extproc;
 
-	glVertexPointerEXT(size, type, stride, count, pointer);
+	glVertexPointer(size, type, stride, count, pointer);
 }
 
 static void APIENTRY InitBlendEquationEXT (GLenum mode)
@@ -6836,7 +6836,7 @@ static void APIENTRY InitBlendEquationEXT (GLenum mode)
 
 	glBlendEquationEXT = extproc;
 
-	glBlendEquationEXT(mode);
+	glBlendEquation(mode);
 }
 
 static void APIENTRY InitSpriteParameterfSGIX (GLenum pname, GLfloat param)
@@ -6916,7 +6916,7 @@ static void APIENTRY InitPointParameterfEXT (GLenum pname, GLfloat param)
 
 	glPointParameterfEXT = extproc;
 
-	glPointParameterfEXT(pname, param);
+	glPointParameterf(pname, param);
 }
 
 static void APIENTRY InitPointParameterfvEXT (GLenum pname, const GLfloat *params)
@@ -6932,7 +6932,7 @@ static void APIENTRY InitPointParameterfvEXT (GLenum pname, const GLfloat *param
 
 	glPointParameterfvEXT = extproc;
 
-	glPointParameterfvEXT(pname, params);
+	glPointParameterfv(pname, params);
 }
 
 static void APIENTRY InitPointParameterfSGIS (GLenum pname, GLfloat param)
@@ -7332,7 +7332,7 @@ static void APIENTRY InitColorSubTableEXT (GLenum target, GLsizei start, GLsizei
 
 	glColorSubTableEXT = extproc;
 
-	glColorSubTableEXT(target, start, count, format, type, data);
+	glColorSubTable(target, start, count, format, type, data);
 }
 
 static void APIENTRY InitCopyColorSubTableEXT (GLenum target, GLsizei start, GLint x, GLint y, GLsizei width)
@@ -7348,7 +7348,7 @@ static void APIENTRY InitCopyColorSubTableEXT (GLenum target, GLsizei start, GLi
 
 	glCopyColorSubTableEXT = extproc;
 
-	glCopyColorSubTableEXT(target, start, x, y, width);
+	glCopyColorSubTable(target, start, x, y, width);
 }
 
 static void APIENTRY InitHintPGI (GLenum target, GLint mode)
@@ -7380,7 +7380,7 @@ static void APIENTRY InitColorTableEXT (GLenum target, GLenum internalFormat, GL
 
 	glColorTableEXT = extproc;
 
-	glColorTableEXT(target, internalFormat, width, format, type, table);
+	glColorTable(target, internalFormat, width, format, type, table);
 }
 
 static void APIENTRY InitGetColorTableEXT (GLenum target, GLenum format, GLenum type, GLvoid *data)
@@ -7396,7 +7396,7 @@ static void APIENTRY InitGetColorTableEXT (GLenum target, GLenum format, GLenum 
 
 	glGetColorTableEXT = extproc;
 
-	glGetColorTableEXT(target, format, type, data);
+	glGetColorTable(target, format, type, data);
 }
 
 static void APIENTRY InitGetColorTableParameterivEXT (GLenum target, GLenum pname, GLint *params)
@@ -7412,7 +7412,7 @@ static void APIENTRY InitGetColorTableParameterivEXT (GLenum target, GLenum pnam
 
 	glGetColorTableParameterivEXT = extproc;
 
-	glGetColorTableParameterivEXT(target, pname, params);
+	glGetColorTableParameteriv(target, pname, params);
 }
 
 static void APIENTRY InitGetColorTableParameterfvEXT (GLenum target, GLenum pname, GLfloat *params)
@@ -7428,7 +7428,7 @@ static void APIENTRY InitGetColorTableParameterfvEXT (GLenum target, GLenum pnam
 
 	glGetColorTableParameterfvEXT = extproc;
 
-	glGetColorTableParameterfvEXT(target, pname, params);
+	glGetColorTableParameterfv(target, pname, params);
 }
 
 static void APIENTRY InitGetListParameterfvSGIX (GLuint list, GLenum pname, GLfloat *params)
@@ -7540,7 +7540,7 @@ static void APIENTRY InitIndexMaterialEXT (GLenum face, GLenum mode)
 
 	glIndexMaterialEXT = extproc;
 
-	glIndexMaterialEXT(face, mode);
+	glIndexMaterial(face, mode);
 }
 
 static void APIENTRY InitIndexFuncEXT (GLenum func, GLclampf ref)
@@ -7556,7 +7556,7 @@ static void APIENTRY InitIndexFuncEXT (GLenum func, GLclampf ref)
 
 	glIndexFuncEXT = extproc;
 
-	glIndexFuncEXT(func, ref);
+	glIndexFunc(func, ref);
 }
 
 static void APIENTRY InitLockArraysEXT (GLint first, GLsizei count)
@@ -7572,7 +7572,7 @@ static void APIENTRY InitLockArraysEXT (GLint first, GLsizei count)
 
 	glLockArraysEXT = extproc;
 
-	glLockArraysEXT(first, count);
+	glLockArrays(first, count);
 }
 
 static void APIENTRY InitUnlockArraysEXT (void)
@@ -7588,7 +7588,7 @@ static void APIENTRY InitUnlockArraysEXT (void)
 
 	glUnlockArraysEXT = extproc;
 
-	glUnlockArraysEXT();
+	glUnlockArrays();
 }
 
 static void APIENTRY InitCullParameterdvEXT (GLenum pname, GLdouble *params)
@@ -7604,7 +7604,7 @@ static void APIENTRY InitCullParameterdvEXT (GLenum pname, GLdouble *params)
 
 	glCullParameterdvEXT = extproc;
 
-	glCullParameterdvEXT(pname, params);
+	glCullParameterdv(pname, params);
 }
 
 static void APIENTRY InitCullParameterfvEXT (GLenum pname, GLfloat *params)
@@ -7620,7 +7620,7 @@ static void APIENTRY InitCullParameterfvEXT (GLenum pname, GLfloat *params)
 
 	glCullParameterfvEXT = extproc;
 
-	glCullParameterfvEXT(pname, params);
+	glCullParameterfv(pname, params);
 }
 
 static void APIENTRY InitFragmentColorMaterialSGIX (GLenum face, GLenum mode)
@@ -7924,7 +7924,7 @@ static void APIENTRY InitDrawRangeElementsEXT (GLenum mode, GLuint start, GLuint
 
 	glDrawRangeElementsEXT = extproc;
 
-	glDrawRangeElementsEXT(mode, start, end, count, type, indices);
+	glDrawRangeElements(mode, start, end, count, type, indices);
 }
 
 static void APIENTRY InitApplyTextureEXT (GLenum mode)
@@ -7940,7 +7940,7 @@ static void APIENTRY InitApplyTextureEXT (GLenum mode)
 
 	glApplyTextureEXT = extproc;
 
-	glApplyTextureEXT(mode);
+	glApplyTexture(mode);
 }
 
 static void APIENTRY InitTextureLightEXT (GLenum pname)
@@ -7956,7 +7956,7 @@ static void APIENTRY InitTextureLightEXT (GLenum pname)
 
 	glTextureLightEXT = extproc;
 
-	glTextureLightEXT(pname);
+	glTextureLight(pname);
 }
 
 static void APIENTRY InitTextureMaterialEXT (GLenum face, GLenum mode)
@@ -7972,7 +7972,7 @@ static void APIENTRY InitTextureMaterialEXT (GLenum face, GLenum mode)
 
 	glTextureMaterialEXT = extproc;
 
-	glTextureMaterialEXT(face, mode);
+	glTextureMaterial(face, mode);
 }
 
 static void APIENTRY InitAsyncMarkerSGIX (GLuint marker)
@@ -8148,7 +8148,7 @@ static void APIENTRY InitPixelTransformParameteriEXT (GLenum target, GLenum pnam
 
 	glPixelTransformParameteriEXT = extproc;
 
-	glPixelTransformParameteriEXT(target, pname, param);
+	glPixelTransformParameteri(target, pname, param);
 }
 
 static void APIENTRY InitPixelTransformParameterfEXT (GLenum target, GLenum pname, GLfloat param)
@@ -8164,7 +8164,7 @@ static void APIENTRY InitPixelTransformParameterfEXT (GLenum target, GLenum pnam
 
 	glPixelTransformParameterfEXT = extproc;
 
-	glPixelTransformParameterfEXT(target, pname, param);
+	glPixelTransformParameterf(target, pname, param);
 }
 
 static void APIENTRY InitPixelTransformParameterivEXT (GLenum target, GLenum pname, const GLint *params)
@@ -8180,7 +8180,7 @@ static void APIENTRY InitPixelTransformParameterivEXT (GLenum target, GLenum pna
 
 	glPixelTransformParameterivEXT = extproc;
 
-	glPixelTransformParameterivEXT(target, pname, params);
+	glPixelTransformParameteriv(target, pname, params);
 }
 
 static void APIENTRY InitPixelTransformParameterfvEXT (GLenum target, GLenum pname, const GLfloat *params)
@@ -8196,7 +8196,7 @@ static void APIENTRY InitPixelTransformParameterfvEXT (GLenum target, GLenum pna
 
 	glPixelTransformParameterfvEXT = extproc;
 
-	glPixelTransformParameterfvEXT(target, pname, params);
+	glPixelTransformParameterfv(target, pname, params);
 }
 
 static void APIENTRY InitSecondaryColor3bEXT (GLbyte red, GLbyte green, GLbyte blue)
@@ -8212,7 +8212,7 @@ static void APIENTRY InitSecondaryColor3bEXT (GLbyte red, GLbyte green, GLbyte b
 
 	glSecondaryColor3bEXT = extproc;
 
-	glSecondaryColor3bEXT(red, green, blue);
+	glSecondaryColor3b(red, green, blue);
 }
 
 static void APIENTRY InitSecondaryColor3bvEXT (const GLbyte *v)
@@ -8228,7 +8228,7 @@ static void APIENTRY InitSecondaryColor3bvEXT (const GLbyte *v)
 
 	glSecondaryColor3bvEXT = extproc;
 
-	glSecondaryColor3bvEXT(v);
+	glSecondaryColor3bv(v);
 }
 
 static void APIENTRY InitSecondaryColor3dEXT (GLdouble red, GLdouble green, GLdouble blue)
@@ -8244,7 +8244,7 @@ static void APIENTRY InitSecondaryColor3dEXT (GLdouble red, GLdouble green, GLdo
 
 	glSecondaryColor3dEXT = extproc;
 
-	glSecondaryColor3dEXT(red, green, blue);
+	glSecondaryColor3d(red, green, blue);
 }
 
 static void APIENTRY InitSecondaryColor3dvEXT (const GLdouble *v)
@@ -8260,7 +8260,7 @@ static void APIENTRY InitSecondaryColor3dvEXT (const GLdouble *v)
 
 	glSecondaryColor3dvEXT = extproc;
 
-	glSecondaryColor3dvEXT(v);
+	glSecondaryColor3dv(v);
 }
 
 static void APIENTRY InitSecondaryColor3fEXT (GLfloat red, GLfloat green, GLfloat blue)
@@ -8276,7 +8276,7 @@ static void APIENTRY InitSecondaryColor3fEXT (GLfloat red, GLfloat green, GLfloa
 
 	glSecondaryColor3fEXT = extproc;
 
-	glSecondaryColor3fEXT(red, green, blue);
+	glSecondaryColor3f(red, green, blue);
 }
 
 static void APIENTRY InitSecondaryColor3fvEXT (const GLfloat *v)
@@ -8292,7 +8292,7 @@ static void APIENTRY InitSecondaryColor3fvEXT (const GLfloat *v)
 
 	glSecondaryColor3fvEXT = extproc;
 
-	glSecondaryColor3fvEXT(v);
+	glSecondaryColor3fv(v);
 }
 
 static void APIENTRY InitSecondaryColor3iEXT (GLint red, GLint green, GLint blue)
@@ -8308,7 +8308,7 @@ static void APIENTRY InitSecondaryColor3iEXT (GLint red, GLint green, GLint blue
 
 	glSecondaryColor3iEXT = extproc;
 
-	glSecondaryColor3iEXT(red, green, blue);
+	glSecondaryColor3i(red, green, blue);
 }
 
 static void APIENTRY InitSecondaryColor3ivEXT (const GLint *v)
@@ -8324,7 +8324,7 @@ static void APIENTRY InitSecondaryColor3ivEXT (const GLint *v)
 
 	glSecondaryColor3ivEXT = extproc;
 
-	glSecondaryColor3ivEXT(v);
+	glSecondaryColor3iv(v);
 }
 
 static void APIENTRY InitSecondaryColor3sEXT (GLshort red, GLshort green, GLshort blue)
@@ -8340,7 +8340,7 @@ static void APIENTRY InitSecondaryColor3sEXT (GLshort red, GLshort green, GLshor
 
 	glSecondaryColor3sEXT = extproc;
 
-	glSecondaryColor3sEXT(red, green, blue);
+	glSecondaryColor3s(red, green, blue);
 }
 
 static void APIENTRY InitSecondaryColor3svEXT (const GLshort *v)
@@ -8356,7 +8356,7 @@ static void APIENTRY InitSecondaryColor3svEXT (const GLshort *v)
 
 	glSecondaryColor3svEXT = extproc;
 
-	glSecondaryColor3svEXT(v);
+	glSecondaryColor3sv(v);
 }
 
 static void APIENTRY InitSecondaryColor3ubEXT (GLubyte red, GLubyte green, GLubyte blue)
@@ -8372,7 +8372,7 @@ static void APIENTRY InitSecondaryColor3ubEXT (GLubyte red, GLubyte green, GLuby
 
 	glSecondaryColor3ubEXT = extproc;
 
-	glSecondaryColor3ubEXT(red, green, blue);
+	glSecondaryColor3ub(red, green, blue);
 }
 
 static void APIENTRY InitSecondaryColor3ubvEXT (const GLubyte *v)
@@ -8388,7 +8388,7 @@ static void APIENTRY InitSecondaryColor3ubvEXT (const GLubyte *v)
 
 	glSecondaryColor3ubvEXT = extproc;
 
-	glSecondaryColor3ubvEXT(v);
+	glSecondaryColor3ubv(v);
 }
 
 static void APIENTRY InitSecondaryColor3uiEXT (GLuint red, GLuint green, GLuint blue)
@@ -8404,7 +8404,7 @@ static void APIENTRY InitSecondaryColor3uiEXT (GLuint red, GLuint green, GLuint 
 
 	glSecondaryColor3uiEXT = extproc;
 
-	glSecondaryColor3uiEXT(red, green, blue);
+	glSecondaryColor3ui(red, green, blue);
 }
 
 static void APIENTRY InitSecondaryColor3uivEXT (const GLuint *v)
@@ -8420,7 +8420,7 @@ static void APIENTRY InitSecondaryColor3uivEXT (const GLuint *v)
 
 	glSecondaryColor3uivEXT = extproc;
 
-	glSecondaryColor3uivEXT(v);
+	glSecondaryColor3uiv(v);
 }
 
 static void APIENTRY InitSecondaryColor3usEXT (GLushort red, GLushort green, GLushort blue)
@@ -8436,7 +8436,7 @@ static void APIENTRY InitSecondaryColor3usEXT (GLushort red, GLushort green, GLu
 
 	glSecondaryColor3usEXT = extproc;
 
-	glSecondaryColor3usEXT(red, green, blue);
+	glSecondaryColor3us(red, green, blue);
 }
 
 static void APIENTRY InitSecondaryColor3usvEXT (const GLushort *v)
@@ -8452,7 +8452,7 @@ static void APIENTRY InitSecondaryColor3usvEXT (const GLushort *v)
 
 	glSecondaryColor3usvEXT = extproc;
 
-	glSecondaryColor3usvEXT(v);
+	glSecondaryColor3usv(v);
 }
 
 static void APIENTRY InitSecondaryColorPointerEXT (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)
@@ -8468,7 +8468,7 @@ static void APIENTRY InitSecondaryColorPointerEXT (GLint size, GLenum type, GLsi
 
 	glSecondaryColorPointerEXT = extproc;
 
-	glSecondaryColorPointerEXT(size, type, stride, pointer);
+	glSecondaryColorPointer(size, type, stride, pointer);
 }
 
 static void APIENTRY InitTextureNormalEXT (GLenum mode)
@@ -8484,7 +8484,7 @@ static void APIENTRY InitTextureNormalEXT (GLenum mode)
 
 	glTextureNormalEXT = extproc;
 
-	glTextureNormalEXT(mode);
+	glTextureNormal(mode);
 }
 
 static void APIENTRY InitMultiDrawArraysEXT (GLenum mode, GLint *first, GLsizei *count, GLsizei primcount)
@@ -8500,7 +8500,7 @@ static void APIENTRY InitMultiDrawArraysEXT (GLenum mode, GLint *first, GLsizei 
 
 	glMultiDrawArraysEXT = extproc;
 
-	glMultiDrawArraysEXT(mode, first, count, primcount);
+	glMultiDrawArrays(mode, first, count, primcount);
 }
 
 static void APIENTRY InitMultiDrawElementsEXT (GLenum mode, const GLsizei *count, GLenum type, const GLvoid* *indices, GLsizei primcount)
@@ -8516,7 +8516,7 @@ static void APIENTRY InitMultiDrawElementsEXT (GLenum mode, const GLsizei *count
 
 	glMultiDrawElementsEXT = extproc;
 
-	glMultiDrawElementsEXT(mode, count, type, indices, primcount);
+	glMultiDrawElements(mode, count, type, indices, primcount);
 }
 
 static void APIENTRY InitFogCoordfEXT (GLfloat coord)
@@ -8532,7 +8532,7 @@ static void APIENTRY InitFogCoordfEXT (GLfloat coord)
 
 	glFogCoordfEXT = extproc;
 
-	glFogCoordfEXT(coord);
+	glFogCoordf(coord);
 }
 
 static void APIENTRY InitFogCoordfvEXT (const GLfloat *coord)
@@ -8548,7 +8548,7 @@ static void APIENTRY InitFogCoordfvEXT (const GLfloat *coord)
 
 	glFogCoordfvEXT = extproc;
 
-	glFogCoordfvEXT(coord);
+	glFogCoordfv(coord);
 }
 
 static void APIENTRY InitFogCoorddEXT (GLdouble coord)
@@ -8564,7 +8564,7 @@ static void APIENTRY InitFogCoorddEXT (GLdouble coord)
 
 	glFogCoorddEXT = extproc;
 
-	glFogCoorddEXT(coord);
+	glFogCoordd(coord);
 }
 
 static void APIENTRY InitFogCoorddvEXT (const GLdouble *coord)
@@ -8580,7 +8580,7 @@ static void APIENTRY InitFogCoorddvEXT (const GLdouble *coord)
 
 	glFogCoorddvEXT = extproc;
 
-	glFogCoorddvEXT(coord);
+	glFogCoorddv(coord);
 }
 
 static void APIENTRY InitFogCoordPointerEXT (GLenum type, GLsizei stride, const GLvoid *pointer)
@@ -8596,7 +8596,7 @@ static void APIENTRY InitFogCoordPointerEXT (GLenum type, GLsizei stride, const 
 
 	glFogCoordPointerEXT = extproc;
 
-	glFogCoordPointerEXT(type, stride, pointer);
+	glFogCoordPointer(type, stride, pointer);
 }
 
 static void APIENTRY InitTangent3bEXT (GLbyte tx, GLbyte ty, GLbyte tz)
@@ -8612,7 +8612,7 @@ static void APIENTRY InitTangent3bEXT (GLbyte tx, GLbyte ty, GLbyte tz)
 
 	glTangent3bEXT = extproc;
 
-	glTangent3bEXT(tx, ty, tz);
+	glTangent3b(tx, ty, tz);
 }
 
 static void APIENTRY InitTangent3bvEXT (const GLbyte *v)
@@ -8628,7 +8628,7 @@ static void APIENTRY InitTangent3bvEXT (const GLbyte *v)
 
 	glTangent3bvEXT = extproc;
 
-	glTangent3bvEXT(v);
+	glTangent3bv(v);
 }
 
 static void APIENTRY InitTangent3dEXT (GLdouble tx, GLdouble ty, GLdouble tz)
@@ -8644,7 +8644,7 @@ static void APIENTRY InitTangent3dEXT (GLdouble tx, GLdouble ty, GLdouble tz)
 
 	glTangent3dEXT = extproc;
 
-	glTangent3dEXT(tx, ty, tz);
+	glTangent3d(tx, ty, tz);
 }
 
 static void APIENTRY InitTangent3dvEXT (const GLdouble *v)
@@ -8660,7 +8660,7 @@ static void APIENTRY InitTangent3dvEXT (const GLdouble *v)
 
 	glTangent3dvEXT = extproc;
 
-	glTangent3dvEXT(v);
+	glTangent3dv(v);
 }
 
 static void APIENTRY InitTangent3fEXT (GLfloat tx, GLfloat ty, GLfloat tz)
@@ -8676,7 +8676,7 @@ static void APIENTRY InitTangent3fEXT (GLfloat tx, GLfloat ty, GLfloat tz)
 
 	glTangent3fEXT = extproc;
 
-	glTangent3fEXT(tx, ty, tz);
+	glTangent3f(tx, ty, tz);
 }
 
 static void APIENTRY InitTangent3fvEXT (const GLfloat *v)
@@ -8692,7 +8692,7 @@ static void APIENTRY InitTangent3fvEXT (const GLfloat *v)
 
 	glTangent3fvEXT = extproc;
 
-	glTangent3fvEXT(v);
+	glTangent3fv(v);
 }
 
 static void APIENTRY InitTangent3iEXT (GLint tx, GLint ty, GLint tz)
@@ -8708,7 +8708,7 @@ static void APIENTRY InitTangent3iEXT (GLint tx, GLint ty, GLint tz)
 
 	glTangent3iEXT = extproc;
 
-	glTangent3iEXT(tx, ty, tz);
+	glTangent3i(tx, ty, tz);
 }
 
 static void APIENTRY InitTangent3ivEXT (const GLint *v)
@@ -8724,7 +8724,7 @@ static void APIENTRY InitTangent3ivEXT (const GLint *v)
 
 	glTangent3ivEXT = extproc;
 
-	glTangent3ivEXT(v);
+	glTangent3iv(v);
 }
 
 static void APIENTRY InitTangent3sEXT (GLshort tx, GLshort ty, GLshort tz)
@@ -8740,7 +8740,7 @@ static void APIENTRY InitTangent3sEXT (GLshort tx, GLshort ty, GLshort tz)
 
 	glTangent3sEXT = extproc;
 
-	glTangent3sEXT(tx, ty, tz);
+	glTangent3s(tx, ty, tz);
 }
 
 static void APIENTRY InitTangent3svEXT (const GLshort *v)
@@ -8756,7 +8756,7 @@ static void APIENTRY InitTangent3svEXT (const GLshort *v)
 
 	glTangent3svEXT = extproc;
 
-	glTangent3svEXT(v);
+	glTangent3sv(v);
 }
 
 static void APIENTRY InitBinormal3bEXT (GLbyte bx, GLbyte by, GLbyte bz)
@@ -8772,7 +8772,7 @@ static void APIENTRY InitBinormal3bEXT (GLbyte bx, GLbyte by, GLbyte bz)
 
 	glBinormal3bEXT = extproc;
 
-	glBinormal3bEXT(bx, by, bz);
+	glBinormal3b(bx, by, bz);
 }
 
 static void APIENTRY InitBinormal3bvEXT (const GLbyte *v)
@@ -8788,7 +8788,7 @@ static void APIENTRY InitBinormal3bvEXT (const GLbyte *v)
 
 	glBinormal3bvEXT = extproc;
 
-	glBinormal3bvEXT(v);
+	glBinormal3bv(v);
 }
 
 static void APIENTRY InitBinormal3dEXT (GLdouble bx, GLdouble by, GLdouble bz)
@@ -8804,7 +8804,7 @@ static void APIENTRY InitBinormal3dEXT (GLdouble bx, GLdouble by, GLdouble bz)
 
 	glBinormal3dEXT = extproc;
 
-	glBinormal3dEXT(bx, by, bz);
+	glBinormal3d(bx, by, bz);
 }
 
 static void APIENTRY InitBinormal3dvEXT (const GLdouble *v)
@@ -8820,7 +8820,7 @@ static void APIENTRY InitBinormal3dvEXT (const GLdouble *v)
 
 	glBinormal3dvEXT = extproc;
 
-	glBinormal3dvEXT(v);
+	glBinormal3dv(v);
 }
 
 static void APIENTRY InitBinormal3fEXT (GLfloat bx, GLfloat by, GLfloat bz)
@@ -8836,7 +8836,7 @@ static void APIENTRY InitBinormal3fEXT (GLfloat bx, GLfloat by, GLfloat bz)
 
 	glBinormal3fEXT = extproc;
 
-	glBinormal3fEXT(bx, by, bz);
+	glBinormal3f(bx, by, bz);
 }
 
 static void APIENTRY InitBinormal3fvEXT (const GLfloat *v)
@@ -8852,7 +8852,7 @@ static void APIENTRY InitBinormal3fvEXT (const GLfloat *v)
 
 	glBinormal3fvEXT = extproc;
 
-	glBinormal3fvEXT(v);
+	glBinormal3fv(v);
 }
 
 static void APIENTRY InitBinormal3iEXT (GLint bx, GLint by, GLint bz)
@@ -8868,7 +8868,7 @@ static void APIENTRY InitBinormal3iEXT (GLint bx, GLint by, GLint bz)
 
 	glBinormal3iEXT = extproc;
 
-	glBinormal3iEXT(bx, by, bz);
+	glBinormal3i(bx, by, bz);
 }
 
 static void APIENTRY InitBinormal3ivEXT (const GLint *v)
@@ -8884,7 +8884,7 @@ static void APIENTRY InitBinormal3ivEXT (const GLint *v)
 
 	glBinormal3ivEXT = extproc;
 
-	glBinormal3ivEXT(v);
+	glBinormal3iv(v);
 }
 
 static void APIENTRY InitBinormal3sEXT (GLshort bx, GLshort by, GLshort bz)
@@ -8900,7 +8900,7 @@ static void APIENTRY InitBinormal3sEXT (GLshort bx, GLshort by, GLshort bz)
 
 	glBinormal3sEXT = extproc;
 
-	glBinormal3sEXT(bx, by, bz);
+	glBinormal3s(bx, by, bz);
 }
 
 static void APIENTRY InitBinormal3svEXT (const GLshort *v)
@@ -8916,7 +8916,7 @@ static void APIENTRY InitBinormal3svEXT (const GLshort *v)
 
 	glBinormal3svEXT = extproc;
 
-	glBinormal3svEXT(v);
+	glBinormal3sv(v);
 }
 
 static void APIENTRY InitTangentPointerEXT (GLenum type, GLsizei stride, const GLvoid *pointer)
@@ -8932,7 +8932,7 @@ static void APIENTRY InitTangentPointerEXT (GLenum type, GLsizei stride, const G
 
 	glTangentPointerEXT = extproc;
 
-	glTangentPointerEXT(type, stride, pointer);
+	glTangentPointer(type, stride, pointer);
 }
 
 static void APIENTRY InitBinormalPointerEXT (GLenum type, GLsizei stride, const GLvoid *pointer)
@@ -8948,7 +8948,7 @@ static void APIENTRY InitBinormalPointerEXT (GLenum type, GLsizei stride, const 
 
 	glBinormalPointerEXT = extproc;
 
-	glBinormalPointerEXT(type, stride, pointer);
+	glBinormalPointer(type, stride, pointer);
 }
 
 static void APIENTRY InitFinishTextureSUNX (void)
@@ -9860,7 +9860,7 @@ static void APIENTRY InitBlendFuncSeparateEXT (GLenum sfactorRGB, GLenum dfactor
 
 	glBlendFuncSeparateEXT = extproc;
 
-	glBlendFuncSeparateEXT(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
+	glBlendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
 }
 
 static void APIENTRY InitBlendFuncSeparateINGR (GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha)
@@ -9892,7 +9892,7 @@ static void APIENTRY InitVertexWeightfEXT (GLfloat weight)
 
 	glVertexWeightfEXT = extproc;
 
-	glVertexWeightfEXT(weight);
+	glVertexWeightf(weight);
 }
 
 static void APIENTRY InitVertexWeightfvEXT (const GLfloat *weight)
@@ -9908,7 +9908,7 @@ static void APIENTRY InitVertexWeightfvEXT (const GLfloat *weight)
 
 	glVertexWeightfvEXT = extproc;
 
-	glVertexWeightfvEXT(weight);
+	glVertexWeightfv(weight);
 }
 
 static void APIENTRY InitVertexWeightPointerEXT (GLsizei size, GLenum type, GLsizei stride, const GLvoid *pointer)
@@ -9924,7 +9924,7 @@ static void APIENTRY InitVertexWeightPointerEXT (GLsizei size, GLenum type, GLsi
 
 	glVertexWeightPointerEXT = extproc;
 
-	glVertexWeightPointerEXT(size, type, stride, pointer);
+	glVertexWeightPointer(size, type, stride, pointer);
 }
 
 static void APIENTRY InitFlushVertexArrayRangeNV (void)
@@ -10756,7 +10756,7 @@ static void APIENTRY InitSampleMaskEXT (GLclampf value, GLboolean invert)
 
 	glSampleMaskEXT = extproc;
 
-	glSampleMaskEXT(value, invert);
+	glSampleMask(value, invert);
 }
 
 static void APIENTRY InitSamplePatternEXT (GLenum pattern)
@@ -10772,7 +10772,7 @@ static void APIENTRY InitSamplePatternEXT (GLenum pattern)
 
 	glSamplePatternEXT = extproc;
 
-	glSamplePatternEXT(pattern);
+	glSamplePattern(pattern);
 }
 
 static void APIENTRY InitTextureColorMaskSGIS (GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha)
@@ -12644,7 +12644,7 @@ static void APIENTRY InitBeginVertexShaderEXT (void)
 
 	glBeginVertexShaderEXT = extproc;
 
-	glBeginVertexShaderEXT();
+	glBeginVertexShader();
 }
 
 static void APIENTRY InitEndVertexShaderEXT (void)
@@ -12660,7 +12660,7 @@ static void APIENTRY InitEndVertexShaderEXT (void)
 
 	glEndVertexShaderEXT = extproc;
 
-	glEndVertexShaderEXT();
+	glEndVertexShader();
 }
 
 static void APIENTRY InitBindVertexShaderEXT (GLuint id)
@@ -12676,7 +12676,7 @@ static void APIENTRY InitBindVertexShaderEXT (GLuint id)
 
 	glBindVertexShaderEXT = extproc;
 
-	glBindVertexShaderEXT(id);
+	glBindVertexShader(id);
 }
 
 static GLuint APIENTRY InitGenVertexShadersEXT (GLuint range)
@@ -12692,7 +12692,7 @@ static GLuint APIENTRY InitGenVertexShadersEXT (GLuint range)
 
 	glGenVertexShadersEXT = extproc;
 
-	return glGenVertexShadersEXT(range);
+	return glGenVertexShaders(range);
 }
 
 static void APIENTRY InitDeleteVertexShaderEXT (GLuint id)
@@ -12708,7 +12708,7 @@ static void APIENTRY InitDeleteVertexShaderEXT (GLuint id)
 
 	glDeleteVertexShaderEXT = extproc;
 
-	glDeleteVertexShaderEXT(id);
+	glDeleteVertexShader(id);
 }
 
 static void APIENTRY InitShaderOp1EXT (GLenum op, GLuint res, GLuint arg1)
@@ -12724,7 +12724,7 @@ static void APIENTRY InitShaderOp1EXT (GLenum op, GLuint res, GLuint arg1)
 
 	glShaderOp1EXT = extproc;
 
-	glShaderOp1EXT(op, res, arg1);
+	glShaderOp1(op, res, arg1);
 }
 
 static void APIENTRY InitShaderOp2EXT (GLenum op, GLuint res, GLuint arg1, GLuint arg2)
@@ -12740,7 +12740,7 @@ static void APIENTRY InitShaderOp2EXT (GLenum op, GLuint res, GLuint arg1, GLuin
 
 	glShaderOp2EXT = extproc;
 
-	glShaderOp2EXT(op, res, arg1, arg2);
+	glShaderOp2(op, res, arg1, arg2);
 }
 
 static void APIENTRY InitShaderOp3EXT (GLenum op, GLuint res, GLuint arg1, GLuint arg2, GLuint arg3)
@@ -12756,7 +12756,7 @@ static void APIENTRY InitShaderOp3EXT (GLenum op, GLuint res, GLuint arg1, GLuin
 
 	glShaderOp3EXT = extproc;
 
-	glShaderOp3EXT(op, res, arg1, arg2, arg3);
+	glShaderOp3(op, res, arg1, arg2, arg3);
 }
 
 static void APIENTRY InitSwizzleEXT (GLuint res, GLuint in, GLenum outX, GLenum outY, GLenum outZ, GLenum outW)
@@ -12772,7 +12772,7 @@ static void APIENTRY InitSwizzleEXT (GLuint res, GLuint in, GLenum outX, GLenum 
 
 	glSwizzleEXT = extproc;
 
-	glSwizzleEXT(res, in, outX, outY, outZ, outW);
+	glSwizzle(res, in, outX, outY, outZ, outW);
 }
 
 static void APIENTRY InitWriteMaskEXT (GLuint res, GLuint in, GLenum outX, GLenum outY, GLenum outZ, GLenum outW)
@@ -12788,7 +12788,7 @@ static void APIENTRY InitWriteMaskEXT (GLuint res, GLuint in, GLenum outX, GLenu
 
 	glWriteMaskEXT = extproc;
 
-	glWriteMaskEXT(res, in, outX, outY, outZ, outW);
+	glWriteMask(res, in, outX, outY, outZ, outW);
 }
 
 static void APIENTRY InitInsertComponentEXT (GLuint res, GLuint src, GLuint num)
@@ -12804,7 +12804,7 @@ static void APIENTRY InitInsertComponentEXT (GLuint res, GLuint src, GLuint num)
 
 	glInsertComponentEXT = extproc;
 
-	glInsertComponentEXT(res, src, num);
+	glInsertComponent(res, src, num);
 }
 
 static void APIENTRY InitExtractComponentEXT (GLuint res, GLuint src, GLuint num)
@@ -12820,7 +12820,7 @@ static void APIENTRY InitExtractComponentEXT (GLuint res, GLuint src, GLuint num
 
 	glExtractComponentEXT = extproc;
 
-	glExtractComponentEXT(res, src, num);
+	glExtractComponent(res, src, num);
 }
 
 static GLuint APIENTRY InitGenSymbolsEXT (GLenum datatype, GLenum storagetype, GLenum range, GLuint components)
@@ -12836,7 +12836,7 @@ static GLuint APIENTRY InitGenSymbolsEXT (GLenum datatype, GLenum storagetype, G
 
 	glGenSymbolsEXT = extproc;
 
-	return glGenSymbolsEXT(datatype, storagetype, range, components);
+	return glGenSymbols(datatype, storagetype, range, components);
 }
 
 static void APIENTRY InitSetInvariantEXT (GLuint id, GLenum type, const GLvoid *addr)
@@ -12852,7 +12852,7 @@ static void APIENTRY InitSetInvariantEXT (GLuint id, GLenum type, const GLvoid *
 
 	glSetInvariantEXT = extproc;
 
-	glSetInvariantEXT(id, type, addr);
+	glSetInvariant(id, type, addr);
 }
 
 static void APIENTRY InitSetLocalConstantEXT (GLuint id, GLenum type, const GLvoid *addr)
@@ -12868,7 +12868,7 @@ static void APIENTRY InitSetLocalConstantEXT (GLuint id, GLenum type, const GLvo
 
 	glSetLocalConstantEXT = extproc;
 
-	glSetLocalConstantEXT(id, type, addr);
+	glSetLocalConstant(id, type, addr);
 }
 
 static void APIENTRY InitVariantbvEXT (GLuint id, const GLbyte *addr)
@@ -12884,7 +12884,7 @@ static void APIENTRY InitVariantbvEXT (GLuint id, const GLbyte *addr)
 
 	glVariantbvEXT = extproc;
 
-	glVariantbvEXT(id, addr);
+	glVariantbv(id, addr);
 }
 
 static void APIENTRY InitVariantsvEXT (GLuint id, const GLshort *addr)
@@ -12900,7 +12900,7 @@ static void APIENTRY InitVariantsvEXT (GLuint id, const GLshort *addr)
 
 	glVariantsvEXT = extproc;
 
-	glVariantsvEXT(id, addr);
+	glVariantsv(id, addr);
 }
 
 static void APIENTRY InitVariantivEXT (GLuint id, const GLint *addr)
@@ -12916,7 +12916,7 @@ static void APIENTRY InitVariantivEXT (GLuint id, const GLint *addr)
 
 	glVariantivEXT = extproc;
 
-	glVariantivEXT(id, addr);
+	glVariantiv(id, addr);
 }
 
 static void APIENTRY InitVariantfvEXT (GLuint id, const GLfloat *addr)
@@ -12932,7 +12932,7 @@ static void APIENTRY InitVariantfvEXT (GLuint id, const GLfloat *addr)
 
 	glVariantfvEXT = extproc;
 
-	glVariantfvEXT(id, addr);
+	glVariantfv(id, addr);
 }
 
 static void APIENTRY InitVariantdvEXT (GLuint id, const GLdouble *addr)
@@ -12948,7 +12948,7 @@ static void APIENTRY InitVariantdvEXT (GLuint id, const GLdouble *addr)
 
 	glVariantdvEXT = extproc;
 
-	glVariantdvEXT(id, addr);
+	glVariantdv(id, addr);
 }
 
 static void APIENTRY InitVariantubvEXT (GLuint id, const GLubyte *addr)
@@ -12964,7 +12964,7 @@ static void APIENTRY InitVariantubvEXT (GLuint id, const GLubyte *addr)
 
 	glVariantubvEXT = extproc;
 
-	glVariantubvEXT(id, addr);
+	glVariantubv(id, addr);
 }
 
 static void APIENTRY InitVariantusvEXT (GLuint id, const GLushort *addr)
@@ -12980,7 +12980,7 @@ static void APIENTRY InitVariantusvEXT (GLuint id, const GLushort *addr)
 
 	glVariantusvEXT = extproc;
 
-	glVariantusvEXT(id, addr);
+	glVariantusv(id, addr);
 }
 
 static void APIENTRY InitVariantuivEXT (GLuint id, const GLuint *addr)
@@ -12996,7 +12996,7 @@ static void APIENTRY InitVariantuivEXT (GLuint id, const GLuint *addr)
 
 	glVariantuivEXT = extproc;
 
-	glVariantuivEXT(id, addr);
+	glVariantuiv(id, addr);
 }
 
 static void APIENTRY InitVariantPointerEXT (GLuint id, GLenum type, GLuint stride, const GLvoid *addr)
@@ -13012,7 +13012,7 @@ static void APIENTRY InitVariantPointerEXT (GLuint id, GLenum type, GLuint strid
 
 	glVariantPointerEXT = extproc;
 
-	glVariantPointerEXT(id, type, stride, addr);
+	glVariantPointer(id, type, stride, addr);
 }
 
 static void APIENTRY InitEnableVariantClientStateEXT (GLuint id)
@@ -13028,7 +13028,7 @@ static void APIENTRY InitEnableVariantClientStateEXT (GLuint id)
 
 	glEnableVariantClientStateEXT = extproc;
 
-	glEnableVariantClientStateEXT(id);
+	glEnableVariantClientState(id);
 }
 
 static void APIENTRY InitDisableVariantClientStateEXT (GLuint id)
@@ -13044,7 +13044,7 @@ static void APIENTRY InitDisableVariantClientStateEXT (GLuint id)
 
 	glDisableVariantClientStateEXT = extproc;
 
-	glDisableVariantClientStateEXT(id);
+	glDisableVariantClientState(id);
 }
 
 static GLuint APIENTRY InitBindLightParameterEXT (GLenum light, GLenum value)
@@ -13060,7 +13060,7 @@ static GLuint APIENTRY InitBindLightParameterEXT (GLenum light, GLenum value)
 
 	glBindLightParameterEXT = extproc;
 
-	return glBindLightParameterEXT(light, value);
+	return glBindLightParameter(light, value);
 }
 
 static GLuint APIENTRY InitBindMaterialParameterEXT (GLenum face, GLenum value)
@@ -13076,7 +13076,7 @@ static GLuint APIENTRY InitBindMaterialParameterEXT (GLenum face, GLenum value)
 
 	glBindMaterialParameterEXT = extproc;
 
-	return glBindMaterialParameterEXT(face, value);
+	return glBindMaterialParameter(face, value);
 }
 
 static GLuint APIENTRY InitBindTexGenParameterEXT (GLenum unit, GLenum coord, GLenum value)
@@ -13092,7 +13092,7 @@ static GLuint APIENTRY InitBindTexGenParameterEXT (GLenum unit, GLenum coord, GL
 
 	glBindTexGenParameterEXT = extproc;
 
-	return glBindTexGenParameterEXT(unit, coord, value);
+	return glBindTexGenParameter(unit, coord, value);
 }
 
 static GLuint APIENTRY InitBindTextureUnitParameterEXT (GLenum unit, GLenum value)
@@ -13108,7 +13108,7 @@ static GLuint APIENTRY InitBindTextureUnitParameterEXT (GLenum unit, GLenum valu
 
 	glBindTextureUnitParameterEXT = extproc;
 
-	return glBindTextureUnitParameterEXT(unit, value);
+	return glBindTextureUnitParameter(unit, value);
 }
 
 static GLuint APIENTRY InitBindParameterEXT (GLenum value)
@@ -13124,7 +13124,7 @@ static GLuint APIENTRY InitBindParameterEXT (GLenum value)
 
 	glBindParameterEXT = extproc;
 
-	return glBindParameterEXT(value);
+	return glBindParameter(value);
 }
 
 static GLboolean APIENTRY InitIsVariantEnabledEXT (GLuint id, GLenum cap)
@@ -13140,7 +13140,7 @@ static GLboolean APIENTRY InitIsVariantEnabledEXT (GLuint id, GLenum cap)
 
 	glIsVariantEnabledEXT = extproc;
 
-	return glIsVariantEnabledEXT(id, cap);
+	return glIsVariantEnabled(id, cap);
 }
 
 static void APIENTRY InitGetVariantBooleanvEXT (GLuint id, GLenum value, GLboolean *data)
@@ -13156,7 +13156,7 @@ static void APIENTRY InitGetVariantBooleanvEXT (GLuint id, GLenum value, GLboole
 
 	glGetVariantBooleanvEXT = extproc;
 
-	glGetVariantBooleanvEXT(id, value, data);
+	glGetVariantBooleanv(id, value, data);
 }
 
 static void APIENTRY InitGetVariantIntegervEXT (GLuint id, GLenum value, GLint *data)
@@ -13172,7 +13172,7 @@ static void APIENTRY InitGetVariantIntegervEXT (GLuint id, GLenum value, GLint *
 
 	glGetVariantIntegervEXT = extproc;
 
-	glGetVariantIntegervEXT(id, value, data);
+	glGetVariantIntegerv(id, value, data);
 }
 
 static void APIENTRY InitGetVariantFloatvEXT (GLuint id, GLenum value, GLfloat *data)
@@ -13188,7 +13188,7 @@ static void APIENTRY InitGetVariantFloatvEXT (GLuint id, GLenum value, GLfloat *
 
 	glGetVariantFloatvEXT = extproc;
 
-	glGetVariantFloatvEXT(id, value, data);
+	glGetVariantFloatv(id, value, data);
 }
 
 static void APIENTRY InitGetVariantPointervEXT (GLuint id, GLenum value, GLvoid* *data)
@@ -13204,7 +13204,7 @@ static void APIENTRY InitGetVariantPointervEXT (GLuint id, GLenum value, GLvoid*
 
 	glGetVariantPointervEXT = extproc;
 
-	glGetVariantPointervEXT(id, value, data);
+	glGetVariantPointerv(id, value, data);
 }
 
 static void APIENTRY InitGetInvariantBooleanvEXT (GLuint id, GLenum value, GLboolean *data)
@@ -13220,7 +13220,7 @@ static void APIENTRY InitGetInvariantBooleanvEXT (GLuint id, GLenum value, GLboo
 
 	glGetInvariantBooleanvEXT = extproc;
 
-	glGetInvariantBooleanvEXT(id, value, data);
+	glGetInvariantBooleanv(id, value, data);
 }
 
 static void APIENTRY InitGetInvariantIntegervEXT (GLuint id, GLenum value, GLint *data)
@@ -13236,7 +13236,7 @@ static void APIENTRY InitGetInvariantIntegervEXT (GLuint id, GLenum value, GLint
 
 	glGetInvariantIntegervEXT = extproc;
 
-	glGetInvariantIntegervEXT(id, value, data);
+	glGetInvariantIntegerv(id, value, data);
 }
 
 static void APIENTRY InitGetInvariantFloatvEXT (GLuint id, GLenum value, GLfloat *data)
@@ -13252,7 +13252,7 @@ static void APIENTRY InitGetInvariantFloatvEXT (GLuint id, GLenum value, GLfloat
 
 	glGetInvariantFloatvEXT = extproc;
 
-	glGetInvariantFloatvEXT(id, value, data);
+	glGetInvariantFloatv(id, value, data);
 }
 
 static void APIENTRY InitGetLocalConstantBooleanvEXT (GLuint id, GLenum value, GLboolean *data)
@@ -13268,7 +13268,7 @@ static void APIENTRY InitGetLocalConstantBooleanvEXT (GLuint id, GLenum value, G
 
 	glGetLocalConstantBooleanvEXT = extproc;
 
-	glGetLocalConstantBooleanvEXT(id, value, data);
+	glGetLocalConstantBooleanv(id, value, data);
 }
 
 static void APIENTRY InitGetLocalConstantIntegervEXT (GLuint id, GLenum value, GLint *data)
@@ -13284,7 +13284,7 @@ static void APIENTRY InitGetLocalConstantIntegervEXT (GLuint id, GLenum value, G
 
 	glGetLocalConstantIntegervEXT = extproc;
 
-	glGetLocalConstantIntegervEXT(id, value, data);
+	glGetLocalConstantIntegerv(id, value, data);
 }
 
 static void APIENTRY InitGetLocalConstantFloatvEXT (GLuint id, GLenum value, GLfloat *data)
@@ -13300,7 +13300,7 @@ static void APIENTRY InitGetLocalConstantFloatvEXT (GLuint id, GLenum value, GLf
 
 	glGetLocalConstantFloatvEXT = extproc;
 
-	glGetLocalConstantFloatvEXT(id, value, data);
+	glGetLocalConstantFloatv(id, value, data);
 }
 
 static void APIENTRY InitVertexStream1sATI (GLenum stream, GLshort x)
@@ -14244,7 +14244,7 @@ static void APIENTRY InitActiveStencilFaceEXT (GLenum face)
 
 	glActiveStencilFaceEXT = extproc;
 
-	glActiveStencilFaceEXT(face);
+	glActiveStencilFace(face);
 }
 
 static void APIENTRY InitElementPointerAPPLE (GLenum type, const GLvoid *pointer)
@@ -15604,7 +15604,7 @@ static void APIENTRY InitDepthBoundsEXT (GLclampd zmin, GLclampd zmax)
 
 	glDepthBoundsEXT = extproc;
 
-	glDepthBoundsEXT(zmin, zmax);
+	glDepthBounds(zmin, zmax);
 }
 
 static void APIENTRY InitBlendEquationSeparateEXT (GLenum modeRGB, GLenum modeAlpha)
@@ -15620,7 +15620,7 @@ static void APIENTRY InitBlendEquationSeparateEXT (GLenum modeRGB, GLenum modeAl
 
 	glBlendEquationSeparateEXT = extproc;
 
-	glBlendEquationSeparateEXT(modeRGB, modeAlpha);
+	glBlendEquationSeparate(modeRGB, modeAlpha);
 }
 
 static void APIENTRY InitAddSwapHintRectWIN (GLint x, GLint y, GLsizei width, GLsizei height)
@@ -15942,7 +15942,7 @@ static GLboolean WINAPI InitCreateDisplayColorTableEXT (GLushort id)
 
 	wglCreateDisplayColorTableEXT = extproc;
 
-	return wglCreateDisplayColorTableEXT(id);
+	return wglCreateDisplayColorTable(id);
 }
 
 static GLboolean WINAPI InitLoadDisplayColorTableEXT (const GLushort *table, GLuint length)
@@ -15958,7 +15958,7 @@ static GLboolean WINAPI InitLoadDisplayColorTableEXT (const GLushort *table, GLu
 
 	wglLoadDisplayColorTableEXT = extproc;
 
-	return wglLoadDisplayColorTableEXT(table, length);
+	return wglLoadDisplayColorTable(table, length);
 }
 
 static GLboolean WINAPI InitBindDisplayColorTableEXT (GLushort id)
@@ -15974,7 +15974,7 @@ static GLboolean WINAPI InitBindDisplayColorTableEXT (GLushort id)
 
 	wglBindDisplayColorTableEXT = extproc;
 
-	return wglBindDisplayColorTableEXT(id);
+	return wglBindDisplayColorTable(id);
 }
 
 static VOID WINAPI InitDestroyDisplayColorTableEXT (GLushort id)
@@ -15990,7 +15990,7 @@ static VOID WINAPI InitDestroyDisplayColorTableEXT (GLushort id)
 
 	wglDestroyDisplayColorTableEXT = extproc;
 
-	wglDestroyDisplayColorTableEXT(id);
+	wglDestroyDisplayColorTable(id);
 }
 
 static const WINAPI InitGetExtensionsStringEXT (void)
@@ -16006,7 +16006,7 @@ static const WINAPI InitGetExtensionsStringEXT (void)
 
 	wglGetExtensionsStringEXT = extproc;
 
-	return wglGetExtensionsStringEXT();
+	return wglGetExtensionsString();
 }
 
 static BOOL WINAPI InitMakeContextCurrentEXT (HDC hDrawDC, HDC hReadDC, HGLRC hglrc)
@@ -16022,7 +16022,7 @@ static BOOL WINAPI InitMakeContextCurrentEXT (HDC hDrawDC, HDC hReadDC, HGLRC hg
 
 	wglMakeContextCurrentEXT = extproc;
 
-	return wglMakeContextCurrentEXT(hDrawDC, hReadDC, hglrc);
+	return wglMakeContextCurrent(hDrawDC, hReadDC, hglrc);
 }
 
 static HDC WINAPI InitGetCurrentReadDCEXT (void)
@@ -16038,7 +16038,7 @@ static HDC WINAPI InitGetCurrentReadDCEXT (void)
 
 	wglGetCurrentReadDCEXT = extproc;
 
-	return wglGetCurrentReadDCEXT();
+	return wglGetCurrentReadDC();
 }
 
 static HPBUFFEREXT WINAPI InitCreatePbufferEXT (HDC hDC, int iPixelFormat, int iWidth, int iHeight, const int *piAttribList)
@@ -16054,7 +16054,7 @@ static HPBUFFEREXT WINAPI InitCreatePbufferEXT (HDC hDC, int iPixelFormat, int i
 
 	wglCreatePbufferEXT = extproc;
 
-	return wglCreatePbufferEXT(hDC, iPixelFormat, iWidth, iHeight, piAttribList);
+	return wglCreatePbuffer(hDC, iPixelFormat, iWidth, iHeight, piAttribList);
 }
 
 static HDC WINAPI InitGetPbufferDCEXT (HPBUFFEREXT hPbuffer)
@@ -16070,7 +16070,7 @@ static HDC WINAPI InitGetPbufferDCEXT (HPBUFFEREXT hPbuffer)
 
 	wglGetPbufferDCEXT = extproc;
 
-	return wglGetPbufferDCEXT(hPbuffer);
+	return wglGetPbufferDC(hPbuffer);
 }
 
 static int WINAPI InitReleasePbufferDCEXT (HPBUFFEREXT hPbuffer, HDC hDC)
@@ -16086,7 +16086,7 @@ static int WINAPI InitReleasePbufferDCEXT (HPBUFFEREXT hPbuffer, HDC hDC)
 
 	wglReleasePbufferDCEXT = extproc;
 
-	return wglReleasePbufferDCEXT(hPbuffer, hDC);
+	return wglReleasePbufferDC(hPbuffer, hDC);
 }
 
 static BOOL WINAPI InitDestroyPbufferEXT (HPBUFFEREXT hPbuffer)
@@ -16102,7 +16102,7 @@ static BOOL WINAPI InitDestroyPbufferEXT (HPBUFFEREXT hPbuffer)
 
 	wglDestroyPbufferEXT = extproc;
 
-	return wglDestroyPbufferEXT(hPbuffer);
+	return wglDestroyPbuffer(hPbuffer);
 }
 
 static BOOL WINAPI InitQueryPbufferEXT (HPBUFFEREXT hPbuffer, int iAttribute, int *piValue)
@@ -16118,7 +16118,7 @@ static BOOL WINAPI InitQueryPbufferEXT (HPBUFFEREXT hPbuffer, int iAttribute, in
 
 	wglQueryPbufferEXT = extproc;
 
-	return wglQueryPbufferEXT(hPbuffer, iAttribute, piValue);
+	return wglQueryPbuffer(hPbuffer, iAttribute, piValue);
 }
 
 static BOOL WINAPI InitGetPixelFormatAttribivEXT (HDC hdc, int iPixelFormat, int iLayerPlane, UINT nAttributes, int *piAttributes, int *piValues)
@@ -16134,7 +16134,7 @@ static BOOL WINAPI InitGetPixelFormatAttribivEXT (HDC hdc, int iPixelFormat, int
 
 	wglGetPixelFormatAttribivEXT = extproc;
 
-	return wglGetPixelFormatAttribivEXT(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
+	return wglGetPixelFormatAttribiv(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
 }
 
 static BOOL WINAPI InitGetPixelFormatAttribfvEXT (HDC hdc, int iPixelFormat, int iLayerPlane, UINT nAttributes, int *piAttributes, FLOAT *pfValues)
@@ -16150,7 +16150,7 @@ static BOOL WINAPI InitGetPixelFormatAttribfvEXT (HDC hdc, int iPixelFormat, int
 
 	wglGetPixelFormatAttribfvEXT = extproc;
 
-	return wglGetPixelFormatAttribfvEXT(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, pfValues);
+	return wglGetPixelFormatAttribfv(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, pfValues);
 }
 
 static BOOL WINAPI InitChoosePixelFormatEXT (HDC hdc, const int *piAttribIList, const FLOAT *pfAttribFList, UINT nMaxFormats, int *piFormats, UINT *nNumFormats)
@@ -16166,7 +16166,7 @@ static BOOL WINAPI InitChoosePixelFormatEXT (HDC hdc, const int *piAttribIList, 
 
 	wglChoosePixelFormatEXT = extproc;
 
-	return wglChoosePixelFormatEXT(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
+	return wglChoosePixelFormat(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
 }
 
 static BOOL WINAPI InitSwapIntervalEXT (int interval)
@@ -16182,7 +16182,7 @@ static BOOL WINAPI InitSwapIntervalEXT (int interval)
 
 	wglSwapIntervalEXT = extproc;
 
-	return wglSwapIntervalEXT(interval);
+	return wglSwapInterval(interval);
 }
 
 static int WINAPI InitGetSwapIntervalEXT (void)
@@ -16198,7 +16198,7 @@ static int WINAPI InitGetSwapIntervalEXT (void)
 
 	wglGetSwapIntervalEXT = extproc;
 
-	return wglGetSwapIntervalEXT();
+	return wglGetSwapInterval();
 }
 
 static void* WINAPI InitAllocateMemoryNV (GLsizei size, GLfloat readfreq, GLfloat writefreq, GLfloat priority)

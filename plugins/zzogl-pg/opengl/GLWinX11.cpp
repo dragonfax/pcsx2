@@ -46,6 +46,8 @@ bool GLWindow::CreateWindow(void *pDisplay)
 
 	// glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	// glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+	glfwWindowHint(GLFW_FOCUSED,0);
+	glfwWindowHint(GLFW_FLOATING,0);
 	window = glfwCreateWindow(640, 480, "My Title", NULL, NULL);
 	glfwMakeContextCurrent(window);
 

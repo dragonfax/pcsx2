@@ -125,13 +125,13 @@ BOOL g_bUpdateStencil = 1;	  // only needed for dest alpha test (unfortunately, 
 #define GL_BLEND_RGB(src, dst) { \
 	s_srcrgb = src; \
 	s_dstrgb = dst; \
-	zgsBlendFuncSeparateEXT(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha); \
+	zgsBlendFuncSeparate(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha); \
 }
 
 #define GL_BLEND_ALPHA(src, dst) { \
 	s_srcalpha = src; \
 	s_dstalpha = dst; \
-	zgsBlendFuncSeparateEXT(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha); \
+	zgsBlendFuncSeparate(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha); \
 }
 
 #define GL_BLEND_ALL(srcrgb, dstrgb, srcalpha, dstalpha) { \
@@ -139,10 +139,10 @@ BOOL g_bUpdateStencil = 1;	  // only needed for dest alpha test (unfortunately, 
 	s_dstrgb = dstrgb; \
 	s_srcalpha = srcalpha; \
 	s_dstalpha = dstalpha; \
-	zgsBlendFuncSeparateEXT(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha); \
+	zgsBlendFuncSeparate(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha); \
 }
 
-#define GL_BLEND_SET() zgsBlendFuncSeparateEXT(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha)
+#define GL_BLEND_SET() zgsBlendFuncSeparate(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha)
 
 #define GL_ZTEST(enable) { \
 	if( enable ) glEnable(GL_DEPTH_TEST); \
@@ -156,12 +156,12 @@ BOOL g_bUpdateStencil = 1;	  // only needed for dest alpha test (unfortunately, 
 
 #define GL_BLENDEQ_RGB(eq) { \
 	s_rgbeq = eq; \
-	zgsBlendEquationSeparateEXT(s_rgbeq, s_alphaeq); \
+	zgsBlendEquationSeparate(s_rgbeq, s_alphaeq); \
 }
 
 #define GL_BLENDEQ_ALPHA(eq) { \
 	s_alphaeq = eq; \
-	zgsBlendEquationSeparateEXT(s_rgbeq, s_alphaeq); \
+	zgsBlendEquationSeparate(s_rgbeq, s_alphaeq); \
 }
 
 #define GL_STENCILFUNC(func, ref, mask) { \
@@ -246,7 +246,7 @@ PFNGLGETRENDERBUFFERPARAMETERIVEXTPROC glGetRenderbufferParameterivEXT = NULL;
 PFNGLISFRAMEBUFFEREXTPROC glIsFramebufferEXT = NULL;
 PFNGLBINDFRAMEBUFFEREXTPROC glBindFramebufferEXT = NULL;
 PFNGLDELETEFRAMEBUFFERSEXTPROC glDeleteFramebuffersEXT = NULL;
-PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffersEXT = NULL;
+// PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffersEXT = NULL;
 PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC glCheckFramebufferStatusEXT = NULL;
 PFNGLFRAMEBUFFERTEXTURE1DEXTPROC glFramebufferTexture1DEXT = NULL;
 PFNGLFRAMEBUFFERTEXTURE2DEXTPROC glFramebufferTexture2DEXT = NULL;
@@ -437,7 +437,7 @@ namespace ZeroGS
 	}
 
 	void ResetRenderTarget(int index) {
-		glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT+index, GL_TEXTURE_RECTANGLE_NV, 0, 0 );
+		glFramebufferTexture2D(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT+index, GL_TEXTURE_RECTANGLE_NV, 0, 0 );
 	}
 
 	DrawFn drawfn[8] = { KickDummy, KickDummy, KickDummy, KickDummy,
@@ -877,15 +877,15 @@ void HandleCgError(CGcontext ctx, CGerror err, void* appdata)
 void ZeroGS::HandleGLError()
 {
 	// check the error status of this framebuffer */
-	GLenum error = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+	GLenum error = glCheckFramebufferStatus(GL_FRAMEBUFFER_EXT);
 
 	// if error != GL_FRAMEBUFFER_COMPLETE_EXT, there's an error of some sort
 	if( error != 0 ) {
 		int w, h;
 		GLint fmt;
-		glGetRenderbufferParameterivEXT(GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_INTERNAL_FORMAT_EXT, &fmt);
-		glGetRenderbufferParameterivEXT(GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_WIDTH_EXT, &w);
-		glGetRenderbufferParameterivEXT(GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_HEIGHT_EXT, &h);
+		glGetRenderbufferParameteriv(GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_INTERNAL_FORMAT_EXT, &fmt);
+		glGetRenderbufferParameteriv(GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_WIDTH_EXT, &w);
+		glGetRenderbufferParameteriv(GL_COLOR_ATTACHMENT0_EXT, GL_RENDERBUFFER_HEIGHT_EXT, &h);
 
 		switch(error)
 		{
@@ -916,7 +916,7 @@ void ZeroGS::HandleGLError()
 				ERROR_LOG("Error! format is not supported by current graphics card/driver!\n");
 				break;
 			default:
-				ERROR_LOG("*UNKNOWN ERROR* reported from glCheckFramebufferStatusEXT() for %s!\n");
+				ERROR_LOG("*UNKNOWN ERROR* reported from glCheckFramebufferStatus() for %s!\n");
 				break;
 		}
 	}
@@ -1145,7 +1145,7 @@ bool ZeroGS::Create(int _width, int _height)
 
 #ifdef _WIN32
 	if( IsGLExt("WGL_EXT_swap_control") || IsGLExt("EXT_swap_control") )
-		wglSwapIntervalEXT(0);
+		wglSwapInterval(0);
 #else
 	if( IsGLExt("GLX_SGI_swap_control") ) {
 		_PFNSWAPINTERVAL swapinterval = (_PFNSWAPINTERVAL)wglGetProcAddress("glXSwapInterval");
@@ -1245,7 +1245,7 @@ bool ZeroGS::Create(int _width, int _height)
 	GL_LOADFN(glIsFramebufferEXT);
 	GL_LOADFN(glBindFramebufferEXT);
 	GL_LOADFN(glDeleteFramebuffersEXT);
-	GL_LOADFN(glGenFramebuffersEXT);
+	// GL_LOADFN(glGenFramebuffersEXT);
 	GL_LOADFN(glCheckFramebufferStatusEXT);
 	GL_LOADFN(glFramebufferTexture1DEXT);
 	GL_LOADFN(glFramebufferTexture2DEXT);
@@ -1264,13 +1264,13 @@ bool ZeroGS::Create(int _width, int _height)
 	GL_REPORT_ERROR();
 	if( err != GL_NO_ERROR ) bSuccess = false;
 
-	glGenFramebuffersEXT( 1, &s_uFramebuffer);
+	glGenFramebuffers( 1, &s_uFramebuffer);
 	if( s_uFramebuffer == 0 ) {
 		ERROR_LOG("failed to create the renderbuffer\n");
 	}
 
-	assert( glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT) == GL_FRAMEBUFFER_COMPLETE_EXT );
-	glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, s_uFramebuffer );
+	assert( glCheckFramebufferStatus(GL_FRAMEBUFFER_EXT) == GL_FRAMEBUFFER_COMPLETE_EXT );
+	glBindFramebuffer( GL_FRAMEBUFFER_EXT, s_uFramebuffer );
 
 	if( glDrawBuffers != NULL )
 		glDrawBuffers(1, s_drawbuffers);
@@ -1534,7 +1534,7 @@ bool ZeroGS::Create(int _width, int _height)
 	glEnable(GL_SCISSOR_TEST);
 
 	GL_BLEND_ALPHA(GL_ONE, GL_ZERO);
-	glBlendColorEXT(0, 0, 0, 0.5f);
+	glBlendColor(0, 0, 0, 0.5f);
 
 	glDisable(GL_CULL_FACE);
 
@@ -2586,9 +2586,9 @@ void ZeroGS::Flush(int context)
 #ifdef _DEBUG
 	//curvb.prndr->SetRenderTarget(0);
 	//curvb.pdepth->SetDepthStencilSurface();
-	//glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT1_EXT, GL_TEXTURE_RECTANGLE_NV, 0, 0 );
-	GLenum status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
-	assert( glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT) == GL_FRAMEBUFFER_COMPLETE_EXT );
+	//glFramebufferTexture2D(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT1_EXT, GL_TEXTURE_RECTANGLE_NV, 0, 0 );
+	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER_EXT);
+	assert( glCheckFramebufferStatus(GL_FRAMEBUFFER_EXT) == GL_FRAMEBUFFER_COMPLETE_EXT );
 #endif
 	s_dwColorWrite = (curvb.prndr->psm&0xf) == 1 ? (COLORMASK_BLUE|COLORMASK_GREEN|COLORMASK_RED) : 0xf;
 
@@ -3162,7 +3162,7 @@ void ZeroGS::Flush(int context)
 		char str[255];
 		sprintf(str, "frames/frame%.4d.tga", g_SaveFrameNum++);
 		if( (g_bSaveFlushedFrame & 2) ) {
-			//glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, 0 ); // switch to the backbuffer
+			//glBindFramebufferE GL_FRAMEBUFFER_EXT, 0 ); // switch to the backbuffer
 			//glFlush();
 			//SaveTexture("tex.jpg", GL_TEXTURE_RECTANGLE_NV, curvb.prndr->ptex, curvb.prndr->fbw<<s_AAx, curvb.prndr->fbh<<s_AAx);
 			SaveRenderTarget(str, curvb.prndr->fbw<<s_AAx, curvb.prndr->fbh<<s_AAx, 0);
@@ -3276,7 +3276,7 @@ void ZeroGS::RenderCustom(float fAlpha)
 	GL_REPORT_ERROR();
 
 	fAlpha = 1;
-	glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, 0 ); // switch to the backbuffer
+	glBindFramebuffer( GL_FRAMEBUFFER_EXT, 0 ); // switch to the backbuffer
 
 	glDisable(GL_STENCIL_TEST);
 	glDisable(GL_DEPTH_TEST);
@@ -3331,7 +3331,7 @@ void ZeroGS::RenderCustom(float fAlpha)
 	vb[1].bSyncVars = 0;
 
 	GL_REPORT_ERROR();
-	GLint status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+	GLint status = glCheckFramebufferStatus(GL_FRAMEBUFFER_EXT);
 	assert( status == GL_FRAMEBUFFER_COMPLETE_EXT || status == GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT_EXT );
 }
 
@@ -3451,7 +3451,7 @@ void ZeroGS::RenderCRTC(int interlace)
 //	static int counter = 0;
 //	counter++;
 	u32 bInterlace = SMODE2->INT && SMODE2->FFMD && (conf.interlace<2);
-	glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, 0 ); // switch to the backbuffer
+	glBindFramebuffer( GL_FRAMEBUFFER_EXT, 0 ); // switch to the backbuffer
 	glViewport(0, 0, nBackbufferWidth, nBackbufferHeight);
 
 	// if interlace, only clear every other vsync
@@ -3570,10 +3570,10 @@ void ZeroGS::RenderCRTC(int interlace)
 		if( i == 0 ) {
 			// setup right blending
 			glEnable(GL_BLEND);
-			zgsBlendEquationSeparateEXT(GL_FUNC_ADD, GL_FUNC_ADD);
+			zgsBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
 
 			if( PMODE->MMOD ) {
-				glBlendColorEXT(PMODE->ALP*(1/255.0f), PMODE->ALP*(1/255.0f), PMODE->ALP*(1/255.0f), 0.5f);
+				glBlendColor(PMODE->ALP*(1/255.0f), PMODE->ALP*(1/255.0f), PMODE->ALP*(1/255.0f), 0.5f);
 				s_srcrgb = GL_CONSTANT_COLOR_EXT;
 				s_dstrgb = GL_ONE_MINUS_CONSTANT_COLOR_EXT;
 			}
@@ -3584,7 +3584,7 @@ void ZeroGS::RenderCRTC(int interlace)
 
 			s_srcalpha = PMODE->AMOD ? GL_ZERO : GL_ONE;
 			s_dstalpha = PMODE->AMOD? GL_ONE : GL_ZERO;
-			zgsBlendFuncSeparateEXT(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha);
+			zgsBlendFuncSeparate(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha);
 		}
 
 		if( bUsingStencil ) {
@@ -3873,7 +3873,7 @@ void ZeroGS::RenderCRTC(int interlace)
 	}
 
 	// switch back to rendering to textures
-	glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, s_uFramebuffer );
+	glBindFramebuffer( GL_FRAMEBUFFER_EXT, s_uFramebuffer );
 
 	g_MemTargs.DestroyCleared();
 
@@ -4833,7 +4833,7 @@ void ZeroGS::SetTexVariablesInt(int context, int bilinear, const tex0Info& tex0,
 // dwTemp = (a.fix*2)>255?255:(a.fix*2); \
 // dwTemp = dwTemp|(dwTemp<<8)|(dwTemp<<16)|0x80000000; \
 // printf("bfactor: %8.8x\n", dwTemp); \
-// glBlendColorEXT(dwTemp); \
+// glBlendColor(dwTemp); \
 // } \
 // else { \
 
@@ -5035,7 +5035,7 @@ void ZeroGS::SetAlphaVariables(const alphaInfo& a)
 	EndSetAlpha:
 
 	GL_BLEND_SET();
-	zgsBlendEquationSeparateEXT(s_rgbeq, s_alphaeq);
+	zgsBlendEquationSeparate(s_rgbeq, s_alphaeq);
 
 	if( alphaenable )
 		glEnable(GL_BLEND); // always set
@@ -5505,7 +5505,7 @@ bool ZeroGS::Load(char* pbydata)
 
 		icurctx = -1;
 
-		glBindFramebufferEXT( GL_FRAMEBUFFER_EXT, s_uFramebuffer ); // switch to the backbuffer
+		glBindFramebuffer( GL_FRAMEBUFFER_EXT, s_uFramebuffer ); // switch to the backbuffer
 		SetFogColor(gs.fogcol);
 
 		GL_REPORT_ERRORD();

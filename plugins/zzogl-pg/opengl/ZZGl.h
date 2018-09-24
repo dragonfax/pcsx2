@@ -55,7 +55,7 @@
 #include "Mem.h"
 
 extern u32 s_stencilfunc, s_stencilref, s_stencilmask;
-extern GLenum s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha; // set by zgsBlendFuncSeparateEXT
+extern GLenum s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha; // set by zgsBlendFuncSeparate
 extern GLenum s_rgbeq, s_alphaeq;
 
 #ifndef GL_DEPTH24_STENCIL8_EXT // allows FBOs to support stencils
@@ -97,7 +97,7 @@ static __forceinline void SET_STREAM()
 {
 #ifndef GLSL4_API
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(VertexGPU), (void*)8);
-	glSecondaryColorPointerEXT(4, GL_UNSIGNED_BYTE, sizeof(VertexGPU), (void*)12);
+	glSecondaryColorPointer(4, GL_UNSIGNED_BYTE, sizeof(VertexGPU), (void*)12);
 	glTexCoordPointer(3, GL_FLOAT, sizeof(VertexGPU), (void*)16);
 	glVertexPointer(4, GL_SHORT, sizeof(VertexGPU), (void*)0);
 #else
@@ -131,31 +131,12 @@ inline void DisableAllgl()
 //--------------------- Dummies
 
 #ifdef _WIN32
-extern void (__stdcall *zgsBlendEquationSeparateEXT)(GLenum, GLenum);
-extern void (__stdcall *zgsBlendFuncSeparateEXT)(GLenum, GLenum, GLenum, GLenum);
+extern void (__stdcall *zgsBlendEquationSeparatT)(GLenum, GLenum);
+extern void (__stdcall *zgsBlendFuncSeparate)(GLenum, GLenum, GLenum, GLenum);
 #else
-extern void (APIENTRY *zgsBlendEquationSeparateEXT)(GLenum, GLenum);
-extern void (APIENTRY *zgsBlendFuncSeparateEXT)(GLenum, GLenum, GLenum, GLenum);
+extern void (APIENTRY *zgsBlendEquationSeparate)(GLenum, GLenum);
+extern void (APIENTRY *zgsBlendFuncSeparate)(GLenum, GLenum, GLenum, GLenum);
 #endif
-
-// GL prototypes
-extern PFNGLISRENDERBUFFEREXTPROC glIsRenderbufferEXT;
-extern PFNGLBINDRENDERBUFFEREXTPROC glBindRenderbufferEXT;
-extern PFNGLDELETERENDERBUFFERSEXTPROC glDeleteRenderbuffersEXT;
-extern PFNGLGENRENDERBUFFERSEXTPROC glGenRenderbuffersEXT;
-extern PFNGLRENDERBUFFERSTORAGEEXTPROC glRenderbufferStorageEXT;
-extern PFNGLGETRENDERBUFFERPARAMETERIVEXTPROC glGetRenderbufferParameterivEXT;
-extern PFNGLISFRAMEBUFFEREXTPROC glIsFramebufferEXT;
-extern PFNGLBINDFRAMEBUFFEREXTPROC glBindFramebufferEXT;
-extern PFNGLDELETEFRAMEBUFFERSEXTPROC glDeleteFramebuffersEXT;
-extern PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffersEXT;
-extern PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC glCheckFramebufferStatusEXT;
-extern PFNGLFRAMEBUFFERTEXTURE1DEXTPROC glFramebufferTexture1DEXT;
-extern PFNGLFRAMEBUFFERTEXTURE2DEXTPROC glFramebufferTexture2DEXT;
-extern PFNGLFRAMEBUFFERTEXTURE3DEXTPROC glFramebufferTexture3DEXT;
-extern PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC glFramebufferRenderbufferEXT;
-extern PFNGLGETFRAMEBUFFERATTACHMENTPARAMETERIVEXTPROC glGetFramebufferAttachmentParameterivEXT;
-extern PFNGLDRAWBUFFERSPROC glDrawBuffers;
 
 #ifdef GLSL4_API
 #include "ZZoglShaders.h"
@@ -187,7 +168,7 @@ namespace FB
 	static __forceinline void Create()
 	{
 		assert(buf == 0);
-		glGenFramebuffersEXT(1, &buf);
+		glGenFramebuffers(1, &buf);
 		if (buf == 0)
 			ZZLog::Error_Log("Failed to create the renderbuffer.");
 	}
@@ -195,35 +176,35 @@ namespace FB
 	static __forceinline void Delete()
 	{
 		if (buf != 0) {
-			glDeleteFramebuffersEXT(1, &buf);
+			glDeleteFramebuffers(1, &buf);
 			buf = 0;
 		}
 	}
 	
 	static __forceinline void Bind()
 	{
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, buf);
+		glBindFramebuffer(GL_FRAMEBUFFER_EXT, buf);
 	}
 	
 	static __forceinline void Unbind()
 	{
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+		glBindFramebuffer(GL_FRAMEBUFFER_EXT, 0);
 	}
 		
 	static __forceinline GLenum State()
 	{
-		return glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+		return glCheckFramebufferStatus(GL_FRAMEBUFFER_EXT);
 	}
 
 	static __forceinline void Attach2D(int attach, int id = 0)
 	{
-		glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT + attach, GL_TEXTURE_RECTANGLE_NV, id, 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT + attach, GL_TEXTURE_RECTANGLE_NV, id, 0);
 		GL_REPORT_ERRORD();
 	}
 
 	static __forceinline void Attach(GLenum rend, GLuint id = 0)
 	{
-		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, rend, GL_RENDERBUFFER_EXT, id);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER_EXT, rend, GL_RENDERBUFFER_EXT, id);
 	}	
 };
 
@@ -307,7 +288,7 @@ static __forceinline void setRectWrap2(GLint type)
 
 static __forceinline void GL_BLEND_SET()
 {
-	zgsBlendFuncSeparateEXT(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha);
+	zgsBlendFuncSeparate(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha);
 }
 
 static __forceinline void GL_BLEND_RGB(GLenum src, GLenum dst)
@@ -352,13 +333,13 @@ static __forceinline void GL_ALPHATEST(bool enable)
 static __forceinline void GL_BLENDEQ_RGB(GLenum eq)
 {
 	s_rgbeq = eq;
-	zgsBlendEquationSeparateEXT(s_rgbeq, s_alphaeq);
+	zgsBlendEquationSeparate(s_rgbeq, s_alphaeq);
 }
 
 static __forceinline void GL_BLENDEQ_ALPHA(GLenum eq)
 {
 	s_alphaeq = eq;
-	zgsBlendEquationSeparateEXT(s_rgbeq, s_alphaeq);
+	zgsBlendEquationSeparate(s_rgbeq, s_alphaeq);
 }
 
 #endif // ZZGL_H_INCLUDED

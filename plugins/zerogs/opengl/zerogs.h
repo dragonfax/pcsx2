@@ -147,7 +147,7 @@ static __forceinline const char *error_name(int err)
 // sets the data stream
 #define SET_STREAM() { \
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(VertexGPU), (void*)8); \
-	glSecondaryColorPointerEXT(4, GL_UNSIGNED_BYTE, sizeof(VertexGPU), (void*)12); \
+	glSecondaryColorPointer(4, GL_UNSIGNED_BYTE, sizeof(VertexGPU), (void*)12); \
 	glTexCoordPointer(3, GL_FLOAT, sizeof(VertexGPU), (void*)16); \
 	glVertexPointer(4, GL_SHORT, sizeof(VertexGPU), (void*)0); \
 }
@@ -597,7 +597,7 @@ extern PFNGLGETRENDERBUFFERPARAMETERIVEXTPROC glGetRenderbufferParameterivEXT;
 extern PFNGLISFRAMEBUFFEREXTPROC glIsFramebufferEXT;
 extern PFNGLBINDFRAMEBUFFEREXTPROC glBindFramebufferEXT;
 extern PFNGLDELETEFRAMEBUFFERSEXTPROC glDeleteFramebuffersEXT;
-extern PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffersEXT;
+// extern PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffersEXT;
 extern PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC glCheckFramebufferStatusEXT;
 extern PFNGLFRAMEBUFFERTEXTURE1DEXTPROC glFramebufferTexture1DEXT;
 extern PFNGLFRAMEBUFFERTEXTURE2DEXTPROC glFramebufferTexture2DEXT;

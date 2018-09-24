@@ -46,7 +46,7 @@ bool g_bUpdateStencil = true;
 bool bCanRenderStencil = true;
 
 // local alpha blending settings
-GLenum s_rgbeq, s_alphaeq; // set by zgsBlendEquationSeparateEXT			// ZZ
+GLenum s_rgbeq, s_alphaeq; // set by zgsBlendEquationSeparate			// ZZ
 
 // Note: blendalpha[2] & blendinvalpha[2] are never used !!! The index 2 is changed to 0
 // Note: blendalpha[3] & blendinvalpha[3] are special case for dest blending on 24bits. FIXME: I was expected GL_ONE & GL_ZERO ! -- greg
@@ -2693,8 +2693,8 @@ void SetAlphaVariables(const alphaInfo& a)
 
 	if (alphaenable)
 	{
-		zgsBlendFuncSeparateEXT(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha);
-		zgsBlendEquationSeparateEXT(s_rgbeq, s_alphaeq);
+		zgsBlendFuncSeparate(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha);
+		zgsBlendEquationSeparate(s_rgbeq, s_alphaeq);
 		glEnable(GL_BLEND); // always set
 	}
 	else

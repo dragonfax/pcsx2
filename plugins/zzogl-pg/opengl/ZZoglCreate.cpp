@@ -71,11 +71,11 @@ void APIENTRY glBlendEquationSeparateDummy(GLenum e1, GLenum e2)
 
 #ifdef _WIN32
 extern HINSTANCE hInst;
-void (__stdcall *zgsBlendEquationSeparateEXT)(GLenum, GLenum) = NULL;
-void (__stdcall *zgsBlendFuncSeparateEXT)(GLenum, GLenum, GLenum, GLenum) = NULL;
+void (__stdcall *zgsBlendEquationSeparate)(GLenum, GLenum) = NULL;
+void (__stdcall *zgsBlendFuncSeparate)(GLenum, GLenum, GLenum, GLenum) = NULL;
 #else
-void (APIENTRY *zgsBlendEquationSeparateEXT)(GLenum, GLenum) = NULL;
-void (APIENTRY *zgsBlendFuncSeparateEXT)(GLenum, GLenum, GLenum, GLenum) = NULL;
+void (APIENTRY *zgsBlendEquationSeparate)(GLenum, GLenum) = NULL;
+void (APIENTRY *zgsBlendFuncSeparate)(GLenum, GLenum, GLenum, GLenum) = NULL;
 #endif
 
 //------------------ variables
@@ -92,7 +92,7 @@ char EFFECT_DIR[256];
 
 /////////////////////
 // graphics resources
-GLenum s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha; // set by zgsBlendFuncSeparateEXT
+GLenum s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha; // set by zgsBlendFuncSeparate
 u32 s_stencilfunc, s_stencilref, s_stencilmask;
 GLenum s_drawbuffers[] = { GL_COLOR_ATTACHMENT0_EXT, GL_COLOR_ATTACHMENT1_EXT };
 
@@ -159,6 +159,7 @@ inline bool check_gl_version(uint32 major, uint32 minor) {
 inline bool CreateImportantCheck()
 {
 	bool bSuccess = true;
+	glewInit();
 
 #ifndef _WIN32
 	int const glew_ok = glewInit();
@@ -191,11 +192,11 @@ inline void CreateOtherCheck()
 {
 	// GL_EXT_blend_equation_separate -> GL2.0
 	// Opensource driver -> Intel OK. Radeon OK.
-	zgsBlendEquationSeparateEXT = glBlendEquationSeparateEXT;
+	zgsBlendEquationSeparate = glBlendEquationSeparate;
 
 	// GL_EXT_blend_func_separate -> GL1.4
 	// Opensource driver -> Intel OK. Radeon OK.
-	zgsBlendFuncSeparateEXT = glBlendFuncSeparateEXT;
+	zgsBlendFuncSeparate = glBlendFuncSeparate;
 
 	// GL_ARB_draw_buffers -> GL2.0
 	// Opensource driver -> Intel (need gen4). Radeon OK.
@@ -394,30 +395,6 @@ inline bool CreateFillExtensionsMap()
 	return true;
 }
 
-void LoadglFunctions()
-{
-	// GL_EXT_framebuffer_object
-	// CORE -> 3.0 and replaced by GL_ARB_framebuffer_object
-	GL_LOADFN(glIsRenderbufferEXT);
-	GL_LOADFN(glBindRenderbufferEXT);
-	GL_LOADFN(glDeleteRenderbuffersEXT);
-	GL_LOADFN(glGenRenderbuffersEXT);
-	GL_LOADFN(glRenderbufferStorageEXT);
-	GL_LOADFN(glGetRenderbufferParameterivEXT);
-	GL_LOADFN(glIsFramebufferEXT);
-	GL_LOADFN(glBindFramebufferEXT);
-	GL_LOADFN(glDeleteFramebuffersEXT);
-	GL_LOADFN(glGenFramebuffersEXT);
-	GL_LOADFN(glCheckFramebufferStatusEXT);
-	GL_LOADFN(glFramebufferTexture1DEXT);
-	GL_LOADFN(glFramebufferTexture2DEXT);
-	GL_LOADFN(glFramebufferTexture3DEXT);
-	GL_LOADFN(glFramebufferRenderbufferEXT);
-	GL_LOADFN(glGetFramebufferAttachmentParameterivEXT);
-
-	// CORE -> 2.0
-	GL_LOADFN(glDrawBuffers);
-}
 
 inline bool TryBlockFormat(GLint fmt, const GLvoid* vBlockData) {
 	glTexImage2D(GL_TEXTURE_2D, 0, fmt, BLOCK_TEXWIDTH, BLOCK_TEXHEIGHT, 0, GL_ALPHA, GL_FLOAT, vBlockData);
@@ -468,8 +445,6 @@ bool ZZCreate(int _width, int _height)
 	if (err != GL_NO_ERROR) bSuccess = false;
 
 	s_srcrgb = s_dstrgb = s_srcalpha = s_dstalpha = GL_ONE;
-
-	LoadglFunctions();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	GL_REPORT_ERROR();

@@ -314,7 +314,7 @@ inline void RenderSetupBlending()
 {
 	// setup right blending
 	glEnable(GL_BLEND);
-	zgsBlendEquationSeparateEXT(GL_FUNC_ADD, GL_FUNC_ADD);
+	zgsBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
 
 	if (PMODE->MMOD)
 	{
@@ -341,7 +341,7 @@ inline void RenderSetupBlending()
 		s_dstalpha = GL_ZERO;
 	}
 	
-	zgsBlendFuncSeparateEXT(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha);
+	zgsBlendFuncSeparate(s_srcrgb, s_dstrgb, s_srcalpha, s_dstalpha);
 }
 
 // each frame could be drawn in two stages, so blending should be different for them
