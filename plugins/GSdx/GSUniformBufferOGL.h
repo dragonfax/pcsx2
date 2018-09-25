@@ -124,12 +124,12 @@ public:
 
 	void allocate()
 	{
-		const GLbitfield common_flags = /* GL_MAP_WRITE_BIT | */ GL_MAP_PERSISTENT_BIT /*| GL_MAP_COHERENT_BIT */;
+		const GLbitfield common_flags = GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT ;
 		const GLbitfield map_flags = common_flags | GL_MAP_FLUSH_EXPLICIT_BIT;
-		const GLbitfield create_flags = common_flags /*| GL_CLIENT_STORAGE_BIT */;
+		const GLbitfield create_flags = common_flags | GL_CLIENT_STORAGE_BIT ;
 
 		GLsizei buffer_size = UBO_BUFFER_SIZE;
-		glBufferStorage(GL_UNIFORM_BUFFER, buffer_size, NULL, create_flags);
+		glBufferData(GL_UNIFORM_BUFFER, buffer_size, NULL, create_flags);
 		m_buffer_ptr = (uint8*) glMapBufferRange(GL_UNIFORM_BUFFER, 0, buffer_size, map_flags);
 		ASSERT(m_buffer_ptr);
 	}

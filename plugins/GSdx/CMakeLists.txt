@@ -43,6 +43,7 @@ if(OPENCL_API)
 endif()
 
 set(GSdxSources
+    GLLoader.cpp
     GLState.cpp
     PSX/GPU.cpp
     PSX/GPUDrawScanline.cpp
@@ -116,6 +117,7 @@ set(GSdxSources
 
 set(GSdxHeaders
     config.h
+    GLLoader.h
     GLState.h
     GSAlignedClass.h
     GSBlock.h
@@ -135,7 +137,6 @@ set(GSdxHeaders
     GSDrawScanline.h
     GSDump.h
     GSdx.h
-    GSdxResources.h
     GSFastList.h
     GSFunctionMap.h
     GS.h

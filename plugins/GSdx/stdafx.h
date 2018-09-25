@@ -139,6 +139,7 @@ typedef int64 sint64;
 #else
 
 	// Note use GL/glcorearb.h on the future
+	#include "GLLoader.h"
 	#include <GL/gl3.h>
 	#include <GL/gl3ext.h>
 

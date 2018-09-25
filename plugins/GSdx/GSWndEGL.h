@@ -85,10 +85,6 @@ public:
 
 #if GS_EGL_X11
 
-#include <xcb/xcb.h>
-#include <X11/Xlib.h>
-#include <X11/Xlib-xcb.h>
-
 class GSWndEGL_X11 : public GSWndEGL
 {
 	Display  *m_NativeDisplay;

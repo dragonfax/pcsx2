@@ -74,11 +74,11 @@ class GSBufferOGL {
 			glLabelObjectEXT(GL_BUFFER_OBJECT_EXT, m_buffer_name, -1, "VBO");
 
 		// coherency will be done by flushing
-		const GLbitfield common_flags = /* GL_MAP_WRITE_BIT | */ GL_MAP_PERSISTENT_BIT;
+		const GLbitfield common_flags = GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT;
 		const GLbitfield map_flags = common_flags | GL_MAP_FLUSH_EXPLICIT_BIT;
 		const GLbitfield create_flags = common_flags | GL_CLIENT_STORAGE_BIT;
 
-		glBufferStorage(m_target, STRIDE * m_limit, NULL, create_flags );
+		glBufferData(m_target, STRIDE * m_limit, NULL, create_flags );
 		m_buffer_ptr = (uint8*) glMapBufferRange(m_target, 0, STRIDE * m_limit, map_flags);
 		if (!m_buffer_ptr) {
 			fprintf(stderr, "Failed to map buffer\n");

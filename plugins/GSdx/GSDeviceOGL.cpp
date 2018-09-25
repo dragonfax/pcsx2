@@ -32,7 +32,7 @@
 #ifdef _WIN32
 #include "resource.h"
 #else
-#include "GSdxResources.h"
+// #include "GSdxResources.h"
 #endif
 
 // TODO port those value into PerfMon API
@@ -911,7 +911,7 @@ void GSDeviceOGL::RecycleDateTexture()
 
 void GSDeviceOGL::Barrier(GLbitfield b)
 {
-	glMemoryBarrier(b);
+	// glMemoryBarrier(b);
 }
 
 GLuint GSDeviceOGL::CompileVS(VSSelector sel)

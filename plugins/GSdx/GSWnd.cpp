@@ -23,10 +23,19 @@
 #include "stdafx.h"
 #include "GSWnd.h"
 
+void GSWndGL::PopulateGlFunction()
+{
+	// Check openGL requirement as soon as possible so we can switch to another
+	// renderer/device
+	GLLoader::check_gl_requirements();
+}
+
 void GSWndGL::FullContextInit()
 {
 	CreateContext(3, 3);
 	AttachContext();
+	PopulateGlFunction();
+	PopulateWndGlFunction();
 }
 
 void GSWndGL::SetVSync(int vsync)

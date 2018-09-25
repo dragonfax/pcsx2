@@ -58,7 +58,6 @@ namespace PboPool {
 		glLabelObjectEXT(GL_BUFFER_OBJECT_EXT, m_buffer, -1, "PBO");
 
 		glBufferData(GL_PIXEL_UNPACK_BUFFER, m_pbo_size, NULL, create_flags);
-		//glBufferStorage(GL_PIXEL_UNPACK_BUFFER, m_pbo_size, NULL, create_flags);
 		m_map    = (char*)glMapBufferRange(GL_PIXEL_UNPACK_BUFFER, 0, m_pbo_size, map_flags);
 		m_offset = 0;
 
